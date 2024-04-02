@@ -2,16 +2,20 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
 /* Global styles */
+html {
+  font-size: 0.625rem;
+}
+
 body {
   font-family: "Poppins", sans-serif;
-  font-size: 0.9375rem;
+  font-size: 1.2rem;
   font-weight: 400;
   line-height: 1.5;
   margin: 0;
   padding: 0;
-  color: #aba8ce; /* Text color update */
+  color: #aba8ce;
   text-align: left;
-  background-color: #363175; /* Background color update */
+  background-color: #363175;
 }
 
 /* Header styles */
@@ -19,13 +23,12 @@ body {
   background-color: #4d498c;
   color: #bdc586;
   text-align: center;
-  margin-top: 0; /* Remove top margin */
-  margin-bottom: 0; /* Remove bottom margin */
+  margin: 0;
 }
 
 h1 {
-  margin-top: 0; /* Remove top margin */
-  margin-bottom: 20px; /* Remove bottom margin */
+  margin: 0;
+  margin-bottom: 20px;
 }
 
 /* Container for game items */
@@ -35,46 +38,36 @@ h1 {
   max-width: 1200px;
   margin: 0 auto;
   justify-content: center;
-  align-items: flex-start;
-  align-content: center;
-  flex-direction: row;
 }
 
 /* Base styles */
+.card,
 .giveaway__card {
+  position: relative; /* Adicionando position: relative aqui */
+  z-index: 1; /* Definindo z-index para 1 */
   border: 1px solid #6965a1;
   background-color: #4d498c;
   border-radius: 4px;
   margin: 10px;
   box-sizing: border-box;
-  position: relative;
   max-height: fit-content;
-  transition: z-index 0.3s ease-in-out; /* Add transition property for z-index */
-  z-index: 0; /* Set initial z-index */
-}
-
-/* Adjust z-index on hover to bring the hovered card to the top */
-.container:hover .giveaway__card,
-.giveaway__card:hover {
-  z-index: 1; /* Bring hovered card to the top */
 }
 
 /* Modifier classes */
 .card--primary {
-  background-color: #8884b6; /* Background color update */
+  background-color: #8884b6;
   color: #fff;
 }
 
 .card--info {
-  background-color: #6965a1; /* Background color update */
+  background-color: #6965a1;
   color: #fff;
 }
 
 /* Utility classes */
 .card-title {
-  font-size: 18px;
   font-weight: bold;
-  color: #aba8ce; /* Text color update */
+  color: #aba8ce;
   text-align: center;
   max-width: 300px;
   overflow: hidden;
@@ -89,33 +82,37 @@ h1 {
 
 .card-title a:link,
 .card-title a:visited {
-  color: #aba8ce; /* Default link color */
+  color: #aba8ce;
   text-decoration: none;
 }
 
 .card-title a:hover {
-  color: #8884b6; /* Link color on hover */
+  color: #8884b6;
 }
 
 .card-title a:active {
-  color: #fff; /* Link color when clicked */
+  color: #fff;
 }
 
 .card-text {
-  font-size: 14px;
-  color: #aba8ce; /* Text color update */
+  font-size: 1.2rem;
+  color: #aba8ce;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   margin: 0;
   margin-top: 10px;
   padding: 0;
 }
 
+.card-text.expanded {
+  white-space: normal;
+  overflow: visible;
+}
+
 /* Custom giveaway styles */
 .game-item {
-  display: flex;
-  flex-direction: column;
-  width: calc(
-    25% - 20px
-  ); /* Calculating width for four game items with margin */
+  position: relative; /* Adicionando position: relative aqui */
 }
 
 .giveaway__thumbnail-container {
@@ -133,11 +130,11 @@ h1 {
 .giveaway__badge--position {
   position: absolute;
   top: 8px;
-  right: 0; /* Align badges to the right side */
+  right: 0;
   display: flex;
-  justify-content: flex-start; /* Align items to the right */
+  justify-content: flex-start;
   align-items: center;
-  width: calc(100% - 10px); /* Take full width minus margin */
+  width: calc(100% - 10px);
 }
 
 .giveaway__badge--no-end-date {
@@ -149,40 +146,37 @@ h1 {
 }
 
 .giveaway__platform-icons {
-  display: inline-flex; /* Change to inline-flex */
+  display: inline-flex;
   align-items: center;
-  justify-content: center; /* Center the icons horizontally and vertically */
-  padding: 4px; /* Padding to add space between icons and the box */
-  margin-left: auto; /* Move the platform icons to the right */
-  margin-right: 10px; /* Add some margin between badges and icons */
+  justify-content: center;
+  padding: 4px;
+  margin-left: auto;
+  margin-right: 10px;
 }
 
 .giveaway__platform-icons i {
-  color: #fff; /* Icon color */
-  margin-left: 8px; /* Add margin between icons */
-  background-color: #303136bd; /* Background color for the rounded box */
-  border-radius: 9999rem; /* Rounded corners */
-  box-shadow: 0rem 0rem 3rem rgb(0, 0, 0) !important; /* Box shadow for the rounded box */
+  color: #fff;
+  margin-left: 8px;
+  background-color: #303136bd;
+  border-radius: 9999rem;
+  box-shadow: 0rem 0rem 3rem rgb(0, 0, 0) !important;
 }
 
 .giveaway__section {
-  padding: 16px;
+  padding: 12px;
 }
 
 /* Custom giveaway styles */
 .giveaway__title {
-  display: flex;
-  align-items: center; /* Center items vertically */
-  font-size: 1rem; /* Adjust the font size relative to the root font size */
+  font-size: 1.4rem;
   font-weight: bold;
   margin: 0;
   margin-bottom: 10px;
-  padding: 0;
 }
 
 .badges {
   display: flex;
-  align-items: center; /* Center items vertically */
+  align-items: center;
 }
 
 .badge,
@@ -202,14 +196,14 @@ h1 {
 
 .badge--free,
 .giveaway__original-price {
-  flex-grow: 1; /* Let both elements grow to fill available space */
-  text-align: left; /* Align text to the left */
+  flex-grow: 1;
+  text-align: left;
 }
 
 .badge--free {
   color: #fff !important;
   order: 1;
-  margin-right: 6px; /* Add margin to create spacing */
+  margin-right: 6px;
   max-width: fit-content;
   border: 1px solid #aaa;
   color: #aaa;
@@ -228,10 +222,7 @@ h1 {
 
 /* Adjust transition for description only */
 .giveaway__description {
-  max-height: 3.6em; /* Initial collapsed height */
-  margin-bottom: 14px;
-  overflow: hidden;
-  transition: max-height 0.3s ease-in-out; /* Apply transition only to max-height */
+  z-index: 0 !important;
 }
 
 .giveaway__button-container {
@@ -308,42 +299,31 @@ h1 {
   color: #bdc586;
   text-align: center;
   font-weight: 500;
-  width: 100%; /* Make footer span full width */
+  width: 100%;
   padding: 10px 0;
 }
 
 /* Media queries */
-/* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
   .game-item {
-    width: calc(25% - 20px); /* Adjusted width for large devices */
+    width: calc(25% - 20px);
   }
 }
 
-/* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) and (max-width: 991.98px) {
   .game-item {
-    width: calc(33.33% - 20px); /* Adjusted width for medium devices */
+    width: calc(33.33% - 20px);
   }
 }
 
-/* Small devices (phones, 576px and up) */
 @media (min-width: 576px) and (max-width: 767.98px) {
   .game-item {
-    width: calc(40.4% - 20px); /* Adjusted width for small devices */
+    width: calc(40.4% - 20px);
   }
 }
 
-/* Extra small devices (phones, 575.98px and down) */
 @media (max-width: 575.98px) {
   .game-item {
-    width: calc(100% - 20px); /* Adjusted width for extra small devices */
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .badge {
-    -webkit-transition: none;
-    transition: none;
+    width: calc(100% - 20px);
   }
 }

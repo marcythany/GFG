@@ -20,23 +20,23 @@ function delay(ms) {
 }
 
 // Function to collapse the description when the mouse leaves the giveaway item
-function collapseDescription(event) {
-  const description = event.currentTarget.querySelector(
-    ".giveaway__description"
-  ); // Adjusted class name
+function collapseCardText(event) {
+  const description = event.currentTarget.querySelector(".card-text");
   if (description) {
-    description.style.maxHeight = "3.6em"; // Collapse the description
+    description.classList.remove("expanded");
+    description.style.maxHeight = ""; // Reset height (remains important!)
   }
 }
 
 // Function to expand the description of the hovered giveaway item
-function expandDescription(event) {
-  const description = event.currentTarget.querySelector(
-    ".giveaway__description"
-  ); // Adjusted class name
+function expandCardText(event) {
+  const description = event.currentTarget.querySelector(".card-text");
   if (description) {
-    description.style.maxHeight = description.scrollHeight + "px"; // Expand the description
-    description.style.transition = "max-height 0.3s ease-in-out"; // Smooth transition
+    description.classList.add("expanded");
+
+    // Calculate and set height
+    const contentHeight = description.scrollHeight;
+    description.style.maxHeight = `${contentHeight}px`;
   }
 }
 
@@ -58,23 +58,23 @@ function expandTitle(event) {
 
 // Function to adjust z-index of other cards on mouse enter to bring hovered card to the top
 function adjustZIndex(event) {
-  const allCards = document.querySelectorAll(".container .giveaway__card");
+  const allCards = document.querySelectorAll(".card", ".giveaway__card");
   const hoveredCard = event.currentTarget;
 
   // Bring hovered card to the top
-  hoveredCard.style.zIndex = 1;
+  hoveredCard.style.zIndex = 1000; // Set a high z-index for the expanded card
 
-  // Remove transition from other cards
+  // Adjust z-index of other cards
   allCards.forEach((card) => {
     if (card !== hoveredCard) {
-      card.style.transition = "none";
+      card.style.zIndex = 1; // Lower the z-index of other cards
     }
   });
 }
 
 // Function to reset transition and z-index of all cards
 function resetCardTransitions() {
-  const allCards = document.querySelectorAll(".container .giveaway__card");
+  const allCards = document.querySelectorAll(".card", ".giveaway__card");
   allCards.forEach((card) => {
     card.style.transition = "none";
     card.style.zIndex = 0;
@@ -83,17 +83,17 @@ function resetCardTransitions() {
 
 // Add event listeners to handle mouse enter and leave events for each giveaway item
 function addEventListenersToItems() {
-  document.querySelectorAll(".container .giveaway__card").forEach((item) => {
+  document.querySelectorAll(".card", ".giveaway__card").forEach((item) => {
     // Adjusted class name
     item.addEventListener("mouseenter", (event) => {
-      expandDescription(event);
+      expandCardText(event);
       expandTitle(event);
-      adjustZIndex(event); // Adjust z-index and position of cards
+      adjustZIndex(event);
     });
     item.addEventListener("mouseleave", (event) => {
-      collapseDescription(event);
+      collapseCardText(event);
       collapseTitle(event);
-      resetCardTransitions(); // Reset transitions and z-index of cards
+      resetCardTransitions();
     });
   });
 }
@@ -397,13 +397,11 @@ function displayGiveawaysData(giveaways, page) {
   }
 
   // Add event listener to the container to reset transitions and z-index when mouse leaves
-  document
-    .querySelector(".container")
-    .addEventListener("mouseleave", (event) => {
-      collapseDescription(event);
-      collapseTitle(event);
-      resetCardTransitions(); // Reset transitions and z-index of cards
-    });
+  container.addEventListener("mouseleave", (event) => {
+    collapseCardText(event);
+    collapseTitle(event);
+    resetCardTransitions(); // Reset transitions and z-index of cards
+  });
 
   // Clear previous data
   container.innerHTML = "";
@@ -420,13 +418,13 @@ function displayGiveawaysData(giveaways, page) {
 
   addEventListenersToItems(); // Add event listeners after displaying data
 
-  resetDescriptions(); // Reset descriptions when the page changes
+  resetCardTexts(); // Reset descriptions when the page changes
 }
 
 // Function to reset descriptions to collapsed state
-function resetDescriptions() {
+function resetCardTexts() {
   document.querySelectorAll(".container .giveaway__card").forEach((item) => {
-    collapseDescription({ currentTarget: item }); // Collapse descriptions
+    collapseCardText({ currentTarget: item }); // Collapse descriptions
     collapseTitle({ currentTarget: item }); // Remove expanded class from titles
   });
 }
@@ -477,14 +475,15 @@ async function initializeGiveaways() {
       allGiveaways = data;
       displayGiveawaysData(allGiveaways, 1); // Display first page
       updatePagination(allGiveaways.length, 1); // Update pagination
-      resetDescriptions(); // Reset descriptions when the page loads
+      resetCardTexts(); // Reset descriptions when the page loads
     }
   } catch (error) {
     console.error("Error initializing giveaways:", error);
   }
 }
 
-initializeGiveaways();
+// Execute a função initializeGiveaways após o carregamento completo do documento HTML
+document.addEventListener("DOMContentLoaded", initializeGiveaways);
 
 // Update year in copyright every year
 const currentYear = new Date().getFullYear();
