@@ -36,6 +36,7 @@ function expandDescription(event) {
   ); // Adjusted class name
   if (description) {
     description.style.maxHeight = description.scrollHeight + "px"; // Expand the description
+    description.style.transition = "max-height 0.3s ease-in-out"; // Smooth transition
   }
 }
 
@@ -55,6 +56,31 @@ function expandTitle(event) {
   }
 }
 
+// Function to adjust z-index of other cards on mouse enter to bring hovered card to the top
+function adjustZIndex(event) {
+  const allCards = document.querySelectorAll(".container .giveaway__card");
+  const hoveredCard = event.currentTarget;
+
+  // Bring hovered card to the top
+  hoveredCard.style.zIndex = 1;
+
+  // Remove transition from other cards
+  allCards.forEach((card) => {
+    if (card !== hoveredCard) {
+      card.style.transition = "none";
+    }
+  });
+}
+
+// Function to reset transition and z-index of all cards
+function resetCardTransitions() {
+  const allCards = document.querySelectorAll(".container .giveaway__card");
+  allCards.forEach((card) => {
+    card.style.transition = "none";
+    card.style.zIndex = 0;
+  });
+}
+
 // Add event listeners to handle mouse enter and leave events for each giveaway item
 function addEventListenersToItems() {
   document.querySelectorAll(".container .giveaway__card").forEach((item) => {
@@ -62,10 +88,12 @@ function addEventListenersToItems() {
     item.addEventListener("mouseenter", (event) => {
       expandDescription(event);
       expandTitle(event);
+      adjustZIndex(event); // Adjust z-index and position of cards
     });
     item.addEventListener("mouseleave", (event) => {
       collapseDescription(event);
       collapseTitle(event);
+      resetCardTransitions(); // Reset transitions and z-index of cards
     });
   });
 }
@@ -367,6 +395,15 @@ function displayGiveawaysData(giveaways, page) {
     console.error("Container element not found");
     return;
   }
+
+  // Add event listener to the container to reset transitions and z-index when mouse leaves
+  document
+    .querySelector(".container")
+    .addEventListener("mouseleave", (event) => {
+      collapseDescription(event);
+      collapseTitle(event);
+      resetCardTransitions(); // Reset transitions and z-index of cards
+    });
 
   // Clear previous data
   container.innerHTML = "";

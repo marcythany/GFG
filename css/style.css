@@ -31,23 +31,32 @@ h1 {
 /* Container for game items */
 .container {
   display: flex;
-  flex-wrap: wrap; /* Allow flex items to wrap to the next line */
-  max-width: 1200px; /* Set maximum width for the container */
-  margin: 0 auto; /* Center the container horizontally */
-  justify-content: center; /* Center items horizontally */
-  align-items: center; /* Center items vertically */
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: flex-start;
+  align-content: center;
+  flex-direction: row;
 }
 
 /* Base styles */
-.card,
 .giveaway__card {
-  border: 1px solid #6965a1; /* Border color update */
-  background-color: #4d498c; /* Background color update */
+  border: 1px solid #6965a1;
+  background-color: #4d498c;
   border-radius: 4px;
-  margin: 10px; /* Adding margin between cards */
-  box-sizing: border-box; /* Include padding and border in the element's total width and height */
-  position: relative; /* Ensure relative positioning for absolute positioning of children */
+  margin: 10px;
+  box-sizing: border-box;
+  position: relative;
   max-height: fit-content;
+  transition: z-index 0.3s ease-in-out; /* Add transition property for z-index */
+  z-index: 0; /* Set initial z-index */
+}
+
+/* Adjust z-index on hover to bring the hovered card to the top */
+.container:hover .giveaway__card,
+.giveaway__card:hover {
+  z-index: 1; /* Bring hovered card to the top */
 }
 
 /* Modifier classes */
@@ -107,8 +116,6 @@ h1 {
   width: calc(
     25% - 20px
   ); /* Calculating width for four game items with margin */
-  margin-bottom: 20px; /* Adding margin between game items */
-  height: fit-content;
 }
 
 .giveaway__thumbnail-container {
@@ -219,9 +226,12 @@ h1 {
   order: 3;
 }
 
+/* Adjust transition for description only */
 .giveaway__description {
+  max-height: 3.6em; /* Initial collapsed height */
   margin-bottom: 14px;
   overflow: hidden;
+  transition: max-height 0.3s ease-in-out; /* Apply transition only to max-height */
 }
 
 .giveaway__button-container {
