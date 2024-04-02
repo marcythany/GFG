@@ -9,9 +9,9 @@ body {
     line-height: 1.5;
     margin: 0;
     padding: 0;
-    color: #aaa;
+    color: #ABA8CE; /* Text color update */
     text-align: left;
-    background-color: #303136;
+    background-color: #363175; /* Background color update */
 }
 
 /* Header styles */
@@ -28,226 +28,212 @@ h1 {
     margin-bottom: 20px; /* Remover margem inferior */
 }
 
-/* Container styles */
+/* Container for game items */
 .container {
-    width:auto;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
-    display: flex; /* Make the container a flex container */
-    flex-wrap: wrap; /* Allow items to wrap to the next line */
-    justify-content: space-between; /* Distribute items evenly along the container */
-}
-
-/* Giveaway item styles */
-.giveaway {
-    margin: 0; /* Remove margin */
-    justify-content: flex-start; /* Align items to the start of the container */
-    align-items: flex-start; /* Align items vertically to the start */
-}
-
-.giveaway__card {
-    position: relative;
     display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    min-width: 0;
-    margin-left: 7px;
-    margin-right: 7px;
-    margin-bottom: 14px;
-    word-wrap: break-word;
-    background-color: #2f2342;
-    background-clip: border-box;
-    border: 0 solid rgba(0, 0, 0, .6);
-    border-radius: 5px;
+    flex-wrap: wrap; /* Allow flex items to wrap to the next line */
+    max-width: 1200px; /* Set maximum width for the container */
+    margin: 0 auto; /* Center the container horizontally */
+    justify-content: center; /* Center items horizontally */
+    align-items: center; /* Center items vertically */
 }
 
-.giveaway__thumbnail-container {
-    position: relative;
-    display: block;
-    float: none;
-}
-.giveaway__badge--time-left {
-    position: absolute;
-    top: 5px;
-    left: 5px;
-}
+        /* Base styles */
+        .card,
+        .giveaway__card {
+            border: 1px solid #6965A1; /* Border color update */
+            background-color: #4D498C; /* Background color update */
+            border-radius: 4px;
+            margin: 10px; /* Adding margin between cards */
+            box-sizing: border-box; /* Include padding and border in the element's total width and height */
+            position: relative; /* Ensure relative positioning for absolute positioning of children */
+            max-height: fit-content;
+        }
 
-.giveaway__thumbnail {
-    width: 100%;
-    height: auto;
-    border-radius: 5px 5px 0 0;
-}
+        /* Modifier classes */
+        .card--primary {
+            background-color: #8884B6; /* Background color update */
+            color: #fff;
+        }
 
+        .card--info {
+            background-color: #6965A1; /* Background color update */
+            color: #fff;
+        }
 
-.card-img-top {
-    width: 100%;
-    height: auto;
-    border-radius: 5px 5px 0 0;
-}
+        /* Utility classes */
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ABA8CE; /* Text color update */
+            text-align: center;
+        }
 
+        .card-title a:link,
+        .card-title a:visited {
+            color: #ABA8CE; /* Default link color */
+            text-decoration: none;
+        }
+
+        .card-title a:hover {
+            color: #8884B6; /* Link color on hover */
+        }
+
+        .card-title a:active {
+            color: #FFF; /* Link color when clicked */
+        }
+
+        .card-text {
+            font-size: 14px;
+            color: #ABA8CE; /* Text color update */
+            margin: 0;
+            margin-top: 10px;
+            padding: 0;
+        }
+
+        /* Custom giveaway styles */
+        .game-item {
+            display: flex;
+            flex-direction: column;
+            width: calc(25% - 20px); /* Calculating width for four game items with margin */
+            margin-bottom: 20px; /* Adding margin between game items */
+            height: fit-content;
+        }
+
+        .giveaway__thumbnail-container {
+            position: relative;
+        }
+
+        .giveaway__thumbnail-container img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+        }
+
+        .giveaway__badge--position {
+            position: absolute;
+            top: 8px;
+            right: 0; /* Align badges to the right side */
+            display: flex;
+            justify-content: flex-start; /* Align items to the right */
+            align-items: center;
+            width: calc(100% - 10px); /* Take full width minus margin */
+        }
+
+        .giveaway__badge--no-end-date {
+            Display: none !important;
+        }
+
+        .badge--pill {
+            border-radius: 50rem !important;
+        }
+
+        .giveaway__platform-icons {
+            display: inline-flex; /* Change to inline-flex */
+            align-items: center;
+            justify-content: center; /* Center the icons horizontally and vertically */
+            padding: 4px; /* Padding to add space between icons and the box */
+            margin-left: auto; /* Move the platform icons to the right */
+            margin-right: 10px; /* Add some margin between badges and icons */
+        }
+        
+        .giveaway__platform-icons i {
+            color: #FFF; /* Icon color */
+            margin-left: 8px; /* Add margin between icons */
+            background-color: #303136bd; /* Background color for the rounded box */
+            border-radius: 9999rem; /* Rounded corners */
+            box-shadow: 0rem 0rem 3rem rgb(0, 0, 0) !important; /* Box shadow for the rounded box */
+        }              
+
+        .giveaway__section {
+            padding: 16px;
+        }
+
+/* Custom giveaway styles */
 .giveaway__title {
-    margin-bottom: 5px;
-    font-size: 16px;
-    color: #7f5e8f;
-}
-
-/* Giveaway header styles */
-.giveaway__header {
-    text-align: center;
-    padding-left: 1rem !important;
-    padding-right: 1rem !important;
-    padding-bottom: .5rem !important;
-}
-
-/* Giveaway title styles */
-.giveaway__title {
-    margin-bottom: 5px;
-    font-size: 16px;
-    color: #7f5e8f;
-}
-
-/* Giveaway title link styles */
-.giveaway__title-link {
-    color: inherit;
-    text-decoration: none;
-}
-
-/* Giveaway badge styles */
-.giveaway__badge {
-    display: inline-block;
-    padding: .25em .4em;
-    font-size: 75%;
-    font-weight: 700;
-    line-height: 1;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: baseline;
-    border-radius: .25rem;
-}
-
-.giveaway__badge--free {
-    margin-right: .25rem; /* Add margin to separate from other elements */
-    color: #fff !important;
-}
-
-/* Giveaway original price styles */
-.giveaway__original-price {
-    color: #fff !important;
-    font-weight: bold;
-}
-
-.giveaway__badge--type {
-    float: right;
-    margin-right: .25rem !important;
-    color: #fff !important;
-    background-color: #7f5e8f;
-}
-
-/* Giveaway description styles */
-.giveaway__description {
-    max-height: 3.6em;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin-bottom: 5px;
-    font-size: 14px;
-    color: #7f5e8f;
-    transition: max-height 0.3s ease; /* Add transition for smooth expansion */
-}
-
-.giveaway__description-label {
-    font-weight: bold;
-    text-align: center;
-}
-
-.giveaway__description-text {
-    margin-top: 5px;
-}
-
-/* Giveaway button container styles */
-.giveaway__button-container {
-    margin-top: 10px;
     display: flex;
-    justify-content: center;
-}
+    align-items: center; /* Center items vertically */
+    font-size: 1.0rem; /* Adjust the font size relative to the root font size */
+    font-weight: bold;
+    margin: 0;
+    margin-bottom: 10px;
+    padding: 0;
+} 
 
-/* Giveaway button group styles */
-.giveaway__button-group {
-    margin-right: 10px;
-}
+        .badges {
+            display: flex;
+            align-items: center; /* Center items vertically */
+        }
 
-/* Giveaway button styles */
-.giveaway__button {
-    cursor: pointer;
-    border-radius: 5px;
-    background-color: #7f5e8f;
-    color: white;
-    padding: 8px 16px;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-}
+        .badge,
+        .giveaway__badge,
+        .badge--pill,
+        .badge--primary {
+            background-color: #8884B6;
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
 
-.giveaway__button:hover {
-    background-color: #916bbf;
-}
+        .badge--danger {
+            background-color: #FF0000;
+            font-weight: bold;
+        }
 
-/* Giveaway users claimed styles */
-.giveaway__users-claimed {
-    margin-top: 10px;
-    color: #7f5e8f;
-}
+        .badge--free,
+        .giveaway__original-price {
+            flex-grow: 1; /* Let both elements grow to fill available space */
+            text-align: left; /* Align text to the left */
+        }
 
-/* Giveaway platform icons styles */
-.giveaway__platform-icons {
-    display: inline-block;
-    position: absolute; 
-    top: 4px; 
-    right: 4px;
-}
+        .badge--free {
+            color: #FFF !important;
+            order: 1; 
+            margin-right: 6px; /* Add margin to create spacing */
+            max-width: fit-content;
+            border: 1px solid #aaa;
+            color: #aaa;
+            background-color: transparent;
+        }
+        
+        .giveaway__original-price {
+            color: #ABA8CE;
+            font-size: 14px;
+            order: 2;
+        }        
 
-/* Badge styles */
-.badge {
-    display: inline-block;
-    padding: .25em .4em;
-    font-size: 75%;
-    font-weight: 700;
-    line-height: 1;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: baseline;
-    border-radius: .25rem;
-    color: #aaa;
-    border: 1px solid #aaa;
-}
+        .giveaway__badge--type {
+            order: 3;
+        }
 
-.badge--primary {
-    color: #fff;
-    background-color: #7f5e8f;
-}
+        .giveaway__description {
+            margin-bottom: 14px;
+            overflow: hidden;
+        }
 
-.badge--pill {
-    padding-right: .6em;
-    padding-left: .6em;
-    border-radius: 10rem;
-}
+        .giveaway__button-container {
+            display: flex;
+            justify-content: flex-end;
+        }
 
-/* Link styles */
-.link {
-    display: inline-block;
-    background-color: #7f5e8f;
-    color: white;
-    padding: 8px 16px;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
+        .giveaway__button {
+            border: 1px solid #FFF;
+            background-color: #4D498C;
+            color: #FFF;
+            width: 100%;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            cursor: pointer;
+            text-align: center;
+        }
 
-.link:hover {
-    background-color: #916bbf;
-}
+        .giveaway__users-claimed {
+            font-size: 12px;
+            margin-top: 8px;
+        }
 
 /* Pagination styles */
 .pagination {
@@ -302,37 +288,36 @@ h1 {
 /* Media queries */
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
-    .giveaway {
-        -webkit-box-flex: 0;
-        -ms-flex: 0 0 25%;
-        flex: 0 0 25%;
-        max-width: 25%;
+    .game-item {
+        width: calc(25% - 20px); /* Adjusted width for large devices */
     }
 }
 
 /* Medium devices (tablets, 768px and up) */
-@media (min-width: 768px) {
-    .giveaway {
-        -webkit-box-flex: 0;
-        -ms-flex: 0 0 33.3333333333%;
-        flex: 0 0 33.3333333333%;
-        max-width: 33.3333333333%;
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .game-item {
+        width: calc(33.33% - 20px); /* Adjusted width for medium devices */
     }
 }
 
-/* Extra small devices (phones, 576px and down) */
+/* Small devices (phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .game-item {
+        width: calc(40.40% - 20px); /* Adjusted width for small devices */
+    }
+}
+
+/* Extra small devices (phones, 575.98px and down) */
 @media (max-width: 575.98px) {
-    .giveaway {
-        -webkit-box-flex: 0;
-        -ms-flex: 0 0 100%;
-        flex: 0 0 100%;
-        max-width: 100%;
+    .game-item {
+        width: calc(100% - 20px); /* Adjusted width for extra small devices */
     }
 }
 
-@media (prefers-reduced-motion: reduce) {
-    .badge {
-        -webkit-transition: none;
-        transition: none;
-    }
-}
+
+        @media (prefers-reduced-motion: reduce) {
+            .badge {
+                -webkit-transition: none;
+                transition: none;
+            }
+        }
