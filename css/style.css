@@ -1,323 +1,324 @@
 /* Import the Poppins font */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
 /* Global styles */
 body {
-    font-family: 'Poppins', sans-serif;
-    font-size: .9375rem;
-    font-weight: 400;
-    line-height: 1.5;
-    margin: 0;
-    padding: 0;
-    color: #ABA8CE; /* Text color update */
-    text-align: left;
-    background-color: #363175; /* Background color update */
+  font-family: "Poppins", sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+  color: #aba8ce; /* Text color update */
+  text-align: left;
+  background-color: #363175; /* Background color update */
 }
 
 /* Header styles */
 .header {
-    background-color: #bdc586;
-    color: #333;
-    text-align: center;
-    margin-top: 0; /* Remover margem superior */
-    margin-bottom: 0; /* Remover margem inferior */
+  background-color: #bdc586;
+  color: #333;
+  text-align: center;
+  margin-top: 0; /* Remover margem superior */
+  margin-bottom: 0; /* Remover margem inferior */
 }
 
 h1 {
-    margin-top: 0; /* Remover margem superior */
-    margin-bottom: 20px; /* Remover margem inferior */
+  margin-top: 0; /* Remover margem superior */
+  margin-bottom: 20px; /* Remover margem inferior */
 }
 
 /* Container for game items */
 .container {
-    display: flex;
-    flex-wrap: wrap; /* Allow flex items to wrap to the next line */
-    max-width: 1200px; /* Set maximum width for the container */
-    margin: 0 auto; /* Center the container horizontally */
-    justify-content: center; /* Center items horizontally */
-    align-items: center; /* Center items vertically */
+  display: flex;
+  flex-wrap: wrap; /* Allow flex items to wrap to the next line */
+  max-width: 1200px; /* Set maximum width for the container */
+  margin: 0 auto; /* Center the container horizontally */
+  justify-content: center; /* Center items horizontally */
+  align-items: center; /* Center items vertically */
 }
 
-        /* Base styles */
-        .card,
-        .giveaway__card {
-            border: 1px solid #6965A1; /* Border color update */
-            background-color: #4D498C; /* Background color update */
-            border-radius: 4px;
-            margin: 10px; /* Adding margin between cards */
-            box-sizing: border-box; /* Include padding and border in the element's total width and height */
-            position: relative; /* Ensure relative positioning for absolute positioning of children */
-            max-height: fit-content;
-        }
+/* Base styles */
+.card,
+.giveaway__card {
+  border: 1px solid #6965a1; /* Border color update */
+  background-color: #4d498c; /* Background color update */
+  border-radius: 4px;
+  margin: 10px; /* Adding margin between cards */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  position: relative; /* Ensure relative positioning for absolute positioning of children */
+  max-height: fit-content;
+}
 
-        /* Modifier classes */
-        .card--primary {
-            background-color: #8884B6; /* Background color update */
-            color: #fff;
-        }
+/* Modifier classes */
+.card--primary {
+  background-color: #8884b6; /* Background color update */
+  color: #fff;
+}
 
-        .card--info {
-            background-color: #6965A1; /* Background color update */
-            color: #fff;
-        }
+.card--info {
+  background-color: #6965a1; /* Background color update */
+  color: #fff;
+}
 
-        /* Utility classes */
-        .card-title {
-            font-size: 18px;
-            font-weight: bold;
-            color: #ABA8CE; /* Text color update */
-            text-align: center;
-        }
+/* Utility classes */
+.card-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #aba8ce; /* Text color update */
+  text-align: center;
+}
 
-        .card-title a:link,
-        .card-title a:visited {
-            color: #ABA8CE; /* Default link color */
-            text-decoration: none;
-        }
+.card-title a:link,
+.card-title a:visited {
+  color: #aba8ce; /* Default link color */
+  text-decoration: none;
+}
 
-        .card-title a:hover {
-            color: #8884B6; /* Link color on hover */
-        }
+.card-title a:hover {
+  color: #8884b6; /* Link color on hover */
+}
 
-        .card-title a:active {
-            color: #FFF; /* Link color when clicked */
-        }
+.card-title a:active {
+  color: #fff; /* Link color when clicked */
+}
 
-        .card-text {
-            font-size: 14px;
-            color: #ABA8CE; /* Text color update */
-            margin: 0;
-            margin-top: 10px;
-            padding: 0;
-        }
+.card-text {
+  font-size: 14px;
+  color: #aba8ce; /* Text color update */
+  margin: 0;
+  margin-top: 10px;
+  padding: 0;
+}
 
-        /* Custom giveaway styles */
-        .game-item {
-            display: flex;
-            flex-direction: column;
-            width: calc(25% - 20px); /* Calculating width for four game items with margin */
-            margin-bottom: 20px; /* Adding margin between game items */
-            height: fit-content;
-        }
+/* Custom giveaway styles */
+.game-item {
+  display: flex;
+  flex-direction: column;
+  width: calc(
+    25% - 20px
+  ); /* Calculating width for four game items with margin */
+  margin-bottom: 20px; /* Adding margin between game items */
+  height: fit-content;
+}
 
-        .giveaway__thumbnail-container {
-            position: relative;
-        }
+.giveaway__thumbnail-container {
+  position: relative;
+}
 
-        .giveaway__thumbnail-container img {
-            display: block;
-            width: 100%;
-            height: auto;
-            border-top-left-radius: 4px;
-            border-top-right-radius: 4px;
-        }
+.giveaway__thumbnail-container img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
 
-        .giveaway__badge--position {
-            position: absolute;
-            top: 8px;
-            right: 0; /* Align badges to the right side */
-            display: flex;
-            justify-content: flex-start; /* Align items to the right */
-            align-items: center;
-            width: calc(100% - 10px); /* Take full width minus margin */
-        }
+.giveaway__badge--position {
+  position: absolute;
+  top: 8px;
+  right: 0; /* Align badges to the right side */
+  display: flex;
+  justify-content: flex-start; /* Align items to the right */
+  align-items: center;
+  width: calc(100% - 10px); /* Take full width minus margin */
+}
 
-        .giveaway__badge--no-end-date {
-            Display: none !important;
-        }
+.giveaway__badge--no-end-date {
+  display: none !important;
+}
 
-        .badge--pill {
-            border-radius: 50rem !important;
-        }
+.badge--pill {
+  border-radius: 50rem !important;
+}
 
-        .giveaway__platform-icons {
-            display: inline-flex; /* Change to inline-flex */
-            align-items: center;
-            justify-content: center; /* Center the icons horizontally and vertically */
-            padding: 4px; /* Padding to add space between icons and the box */
-            margin-left: auto; /* Move the platform icons to the right */
-            margin-right: 10px; /* Add some margin between badges and icons */
-        }
-        
-        .giveaway__platform-icons i {
-            color: #FFF; /* Icon color */
-            margin-left: 8px; /* Add margin between icons */
-            background-color: #303136bd; /* Background color for the rounded box */
-            border-radius: 9999rem; /* Rounded corners */
-            box-shadow: 0rem 0rem 3rem rgb(0, 0, 0) !important; /* Box shadow for the rounded box */
-        }              
+.giveaway__platform-icons {
+  display: inline-flex; /* Change to inline-flex */
+  align-items: center;
+  justify-content: center; /* Center the icons horizontally and vertically */
+  padding: 4px; /* Padding to add space between icons and the box */
+  margin-left: auto; /* Move the platform icons to the right */
+  margin-right: 10px; /* Add some margin between badges and icons */
+}
 
-        .giveaway__section {
-            padding: 16px;
-        }
+.giveaway__platform-icons i {
+  color: #fff; /* Icon color */
+  margin-left: 8px; /* Add margin between icons */
+  background-color: #303136bd; /* Background color for the rounded box */
+  border-radius: 9999rem; /* Rounded corners */
+  box-shadow: 0rem 0rem 3rem rgb(0, 0, 0) !important; /* Box shadow for the rounded box */
+}
+
+.giveaway__section {
+  padding: 16px;
+}
 
 /* Custom giveaway styles */
 .giveaway__title {
-    display: flex;
-    align-items: center; /* Center items vertically */
-    font-size: 1.0rem; /* Adjust the font size relative to the root font size */
-    font-weight: bold;
-    margin: 0;
-    margin-bottom: 10px;
-    padding: 0;
-} 
+  display: flex;
+  align-items: center; /* Center items vertically */
+  font-size: 1rem; /* Adjust the font size relative to the root font size */
+  font-weight: bold;
+  margin: 0;
+  margin-bottom: 10px;
+  padding: 0;
+}
 
-        .badges {
-            display: flex;
-            align-items: center; /* Center items vertically */
-        }
+.badges {
+  display: flex;
+  align-items: center; /* Center items vertically */
+}
 
-        .badge,
-        .giveaway__badge,
-        .badge--pill,
-        .badge--primary {
-            background-color: #8884B6;
-            color: #fff;
-            padding: 4px 8px;
-            border-radius: 4px;
-        }
+.badge,
+.giveaway__badge,
+.badge--pill,
+.badge--primary {
+  background-color: #8884b6;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
 
-        .badge--danger {
-            background-color: #FF0000;
-            font-weight: bold;
-        }
+.badge--danger {
+  background-color: #ff0000;
+  font-weight: bold;
+}
 
-        .badge--free,
-        .giveaway__original-price {
-            flex-grow: 1; /* Let both elements grow to fill available space */
-            text-align: left; /* Align text to the left */
-        }
+.badge--free,
+.giveaway__original-price {
+  flex-grow: 1; /* Let both elements grow to fill available space */
+  text-align: left; /* Align text to the left */
+}
 
-        .badge--free {
-            color: #FFF !important;
-            order: 1; 
-            margin-right: 6px; /* Add margin to create spacing */
-            max-width: fit-content;
-            border: 1px solid #aaa;
-            color: #aaa;
-            background-color: transparent;
-        }
-        
-        .giveaway__original-price {
-            color: #ABA8CE;
-            font-size: 14px;
-            order: 2;
-        }        
+.badge--free {
+  color: #fff !important;
+  order: 1;
+  margin-right: 6px; /* Add margin to create spacing */
+  max-width: fit-content;
+  border: 1px solid #aaa;
+  color: #aaa;
+  background-color: transparent;
+}
 
-        .giveaway__badge--type {
-            order: 3;
-        }
+.giveaway__original-price {
+  color: #aba8ce;
+  font-size: 14px;
+  order: 2;
+}
 
-        .giveaway__description {
-            margin-bottom: 14px;
-            overflow: hidden;
-        }
+.giveaway__badge--type {
+  order: 3;
+}
 
-        .giveaway__button-container {
-            display: flex;
-            justify-content: flex-end;
-        }
+.giveaway__description {
+  margin-bottom: 14px;
+  overflow: hidden;
+}
 
-        .giveaway__button {
-            border: 1px solid #FFF;
-            background-color: #4D498C;
-            color: #FFF;
-            width: 100%;
-            padding: 8px 16px;
-            border-radius: 4px;
-            text-decoration: none;
-            cursor: pointer;
-            text-align: center;
-        }
+.giveaway__button-container {
+  display: flex;
+  justify-content: flex-end;
+}
 
-        .giveaway__users-claimed {
-            font-size: 12px;
-            margin-top: 8px;
-        }
+.giveaway__button {
+  border: 1px solid #fff;
+  background-color: #4d498c;
+  color: #fff;
+  width: 100%;
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  cursor: pointer;
+  text-align: center;
+}
+
+.giveaway__users-claimed {
+  font-size: 12px;
+  margin-top: 8px;
+}
 
 /* Pagination styles */
 .pagination {
-    max-width: 1180px;
-    margin: 0 auto;
-    margin-bottom: 25px;
-    text-align: center;
-    padding: 10px 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  max-width: 1180px;
+  margin: 0 auto;
+  margin-bottom: 25px;
+  text-align: center;
+  padding: 10px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .pagination__button {
-    background-color: #7f5e8f;
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 0 5px;
-    cursor: pointer;
-    border-radius: 5px;
+  background-color: #7f5e8f;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 0 5px;
+  cursor: pointer;
+  border-radius: 5px;
 }
 
 .pagination__button--active {
-    background-color: #916bbf;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    transition: border-radius 0.3s ease;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  background-color: #916bbf;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  transition: border-radius 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .pagination__button:hover:not(.pagination__button--active) {
-    background-color: #916bbf;
+  background-color: #916bbf;
 }
 
 /* Footer styles */
 .footer {
-    background-color: #7f5e8f;
-    color: white;
-    text-align: center;
-    width: 100%; /* Make footer span full width */
-    padding: 10px 0;
+  background-color: #7f5e8f;
+  color: white;
+  text-align: center;
+  width: 100%; /* Make footer span full width */
+  padding: 10px 0;
 }
 
 /* Media queries */
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
-    .game-item {
-        width: calc(25% - 20px); /* Adjusted width for large devices */
-    }
+  .game-item {
+    width: calc(25% - 20px); /* Adjusted width for large devices */
+  }
 }
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) and (max-width: 991.98px) {
-    .game-item {
-        width: calc(33.33% - 20px); /* Adjusted width for medium devices */
-    }
+  .game-item {
+    width: calc(33.33% - 20px); /* Adjusted width for medium devices */
+  }
 }
 
 /* Small devices (phones, 576px and up) */
 @media (min-width: 576px) and (max-width: 767.98px) {
-    .game-item {
-        width: calc(40.40% - 20px); /* Adjusted width for small devices */
-    }
+  .game-item {
+    width: calc(40.4% - 20px); /* Adjusted width for small devices */
+  }
 }
 
 /* Extra small devices (phones, 575.98px and down) */
 @media (max-width: 575.98px) {
-    .game-item {
-        width: calc(100% - 20px); /* Adjusted width for extra small devices */
-    }
+  .game-item {
+    width: calc(100% - 20px); /* Adjusted width for extra small devices */
+  }
 }
 
-
-        @media (prefers-reduced-motion: reduce) {
-            .badge {
-                -webkit-transition: none;
-                transition: none;
-            }
-        }
+@media (prefers-reduced-motion: reduce) {
+  .badge {
+    -webkit-transition: none;
+    transition: none;
+  }
+}
