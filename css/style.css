@@ -19,13 +19,13 @@ body {
   background-color: #bdc586;
   color: #333;
   text-align: center;
-  margin-top: 0; /* Remover margem superior */
-  margin-bottom: 0; /* Remover margem inferior */
+  margin-top: 0; /* Remove top margin */
+  margin-bottom: 0; /* Remove bottom margin */
 }
 
 h1 {
-  margin-top: 0; /* Remover margem superior */
-  margin-bottom: 20px; /* Remover margem inferior */
+  margin-top: 0; /* Remove top margin */
+  margin-bottom: 20px; /* Remove bottom margin */
 }
 
 /* Container for game items */
