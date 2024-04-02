@@ -39,19 +39,34 @@ function expandDescription(event) {
   }
 }
 
-// Reset descriptions to collapsed state when the page loads
-function resetDescriptions() {
-  document.querySelectorAll(".container .giveaway__card").forEach((item) => {
-    collapseDescription({ currentTarget: item }); // Call collapseDescription for each item
-  });
+// Function to collapse the title when the mouse leaves the giveaway item
+function collapseTitle(event) {
+  const title = event.currentTarget.querySelector(".card-title");
+  if (title) {
+    title.classList.remove("expanded"); // Remove expanded class
+  }
+}
+
+// Function to expand the title of the hovered giveaway item
+function expandTitle(event) {
+  const title = event.currentTarget.querySelector(".card-title");
+  if (title) {
+    title.classList.add("expanded"); // Add expanded class
+  }
 }
 
 // Add event listeners to handle mouse enter and leave events for each giveaway item
 function addEventListenersToItems() {
   document.querySelectorAll(".container .giveaway__card").forEach((item) => {
     // Adjusted class name
-    item.addEventListener("mouseenter", expandDescription);
-    item.addEventListener("mouseleave", collapseDescription);
+    item.addEventListener("mouseenter", (event) => {
+      expandDescription(event);
+      expandTitle(event);
+    });
+    item.addEventListener("mouseleave", (event) => {
+      collapseDescription(event);
+      collapseTitle(event);
+    });
   });
 }
 
@@ -367,6 +382,16 @@ function displayGiveawaysData(giveaways, page) {
   });
 
   addEventListenersToItems(); // Add event listeners after displaying data
+
+  resetDescriptions(); // Reset descriptions when the page changes
+}
+
+// Function to reset descriptions to collapsed state
+function resetDescriptions() {
+  document.querySelectorAll(".container .giveaway__card").forEach((item) => {
+    collapseDescription({ currentTarget: item }); // Collapse descriptions
+    collapseTitle({ currentTarget: item }); // Remove expanded class from titles
+  });
 }
 
 // Function to update pagination

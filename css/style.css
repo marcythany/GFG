@@ -67,6 +67,15 @@ h1 {
   font-weight: bold;
   color: #aba8ce; /* Text color update */
   text-align: center;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.card-title.expanded {
+  white-space: normal;
+  overflow: visible;
 }
 
 .card-title a:link,
