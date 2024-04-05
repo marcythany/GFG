@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const sortingOptions = {
       Platforms: [
+        "Show all", // New item added here
         "PC",
         "Steam",
         "Epic Games",
@@ -75,7 +76,11 @@ document.addEventListener("DOMContentLoaded", function () {
   function handleSorting(optionGroup, option) {
     switch (optionGroup) {
       case "Platforms":
-        sortGamesByPlatform(option);
+        if (option === "Show all") {
+          displayGiveawaysData(allGiveaways);
+        } else {
+          sortGamesByPlatform(option);
+        }
         break;
       case "SortBy":
         const sortedGiveaways = sortGamesByCriteria(option, allGiveaways);
