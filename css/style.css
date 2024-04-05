@@ -6,11 +6,59 @@ html {
   font-size: 0.625rem;
 }
 
+/* Variables */
+:root {
+  --primary-color: #4d498c;
+  --background-color: #363175;
+  --accent-color: #bdc586;
+  --highlight-color: #aba8ce;
+  --secondary-color: #6965a1;
+  --overlay-color: #303136bd;
+  --text-color: #fff;
+  --alt-text-color: #aaa;
+  --danger-color: #dc3545;
+  --warning-color: #ffc107;
+}
+
+a {
+  color: var(--accent-color);
+  text-decoration: initial;
+}
+
+/* Adjusted global CSS rule for platform icons */
+i {
+  display: inline-block; /* Change display to inline-block */
+  margin-right: 0.5rem;
+  margin: 0.25rem !important;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem !important;
+  width: 1.5rem !important;
+  text-align: center;
+  color: var(--text-color);
+  background: var(--overlay-color);
+  border-radius: 0.5rem;
+}
+
+.custom-icon {
+  display: inline-block; /* Change display to inline-block */
+  /* Add any additional styling for the img elements */
+}
+
+/* Adjusted global CSS rule for users claimed icon */
+.fa-users {
+  color: var(--highlight-color) !important;
+  background: none !important;
+}
+
+/* Body styles */
 body {
+  display: grid;
   font-family: "Poppins", sans-serif;
   font-size: 1.2rem;
   font-weight: 400;
   line-height: 1.5;
+  height: 100vh;
   margin: 0;
   padding: 0;
   color: #aba8ce;
@@ -19,232 +67,339 @@ body {
 }
 
 /* Header styles */
-.header {
+header {
+  text-align: center;
+  margin-bottom: 1rem;
   background-color: #4d498c;
   color: #bdc586;
   text-align: center;
+}
+
+header h1 {
   margin: 0;
 }
 
-h1 {
-  margin: 0;
-  margin-bottom: 20px;
+header h1 a {
+  text-decoration: none;
+  color: var(--accent-color);
 }
 
-/* Container for game items */
-.container {
+/* Navigation styles */
+nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
   display: flex;
-  flex-wrap: wrap;
-  max-width: 1200px;
-  margin: 0 auto;
   justify-content: center;
 }
 
-/* Base styles */
-.card,
-.giveaway__card {
-  position: relative; /* Adicionando position: relative aqui */
-  z-index: 1; /* Definindo z-index para 1 */
+nav ul li {
+  margin: 0 10px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+/* Main content styles */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.game-list {
+  display: grid;
+  grid-template-columns: repeat(
+    4,
+    1fr
+  ); /* Adjust to display four items side by side */
+  gap: 10px;
+  padding: 0;
+  position: relative; /* Add position relative */
+}
+
+.game-item {
   border: 1px solid #6965a1;
   background-color: #4d498c;
   border-radius: 4px;
   margin: 10px;
-  box-sizing: border-box;
-  max-height: fit-content;
+  width: fit-content;
 }
 
-/* Modifier classes */
-.card--primary {
-  background-color: #8884b6;
-  color: #fff;
-}
-
-.card--info {
-  background-color: #6965a1;
-  color: #fff;
-}
-
-/* Utility classes */
-.card-title {
-  font-weight: bold;
-  color: #aba8ce;
-  text-align: center;
-  max-width: 300px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.card-title.expanded {
-  white-space: normal;
-  overflow: visible;
-}
-
-.card-title a:link,
-.card-title a:visited {
-  color: #aba8ce;
-  text-decoration: none;
-}
-
-.card-title a:hover {
-  color: #8884b6;
-}
-
-.card-title a:active {
-  color: #fff;
-}
-
-.card-text {
-  font-size: 1.2rem;
-  color: #aba8ce;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  margin: 0;
-  margin-top: 10px;
-  padding: 0;
-}
-
-.card-text.expanded {
-  white-space: normal;
-  overflow: visible;
-}
-
-/* Custom giveaway styles */
-.game-item {
-  position: relative; /* Adicionando position: relative aqui */
-}
-
-.giveaway__thumbnail-container {
+.game-thumbnail {
   position: relative;
-}
-
-.giveaway__thumbnail-container img {
-  display: block;
-  width: 100%;
-  height: auto;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
 }
 
-.giveaway__badge--position {
-  position: absolute;
-  top: 8px;
-  right: 0;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  width: calc(100% - 10px);
-}
-
-.giveaway__badge--no-end-date {
-  display: none !important;
-}
-
-.badge--pill {
-  border-radius: 50rem !important;
-}
-
-.giveaway__platform-icons {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 4px;
-  margin-left: auto;
-  margin-right: 10px;
-}
-
-.giveaway__platform-icons i {
-  color: #fff;
-  margin-left: 8px;
-  background-color: #303136bd;
-  border-radius: 9999rem;
-  box-shadow: 0rem 0rem 3rem rgb(0, 0, 0) !important;
-}
-
-.giveaway__section {
-  padding: 12px;
-}
-
-/* Custom giveaway styles */
-.giveaway__title {
-  font-size: 1.4rem;
-  font-weight: bold;
-  margin: 0;
-  margin-bottom: 10px;
+.game-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .badges {
   display: flex;
+  width: 100%;
+  margin-top: 0.2rem;
+  justify-content: space-between;
+  position: absolute;
+  top: 0;
   align-items: center;
+  cursor: pointer;
 }
 
-.badge,
-.giveaway__badge,
-.badge--pill,
-.badge--primary {
-  background-color: #8884b6;
-  color: #fff;
-  padding: 4px 8px;
-  border-radius: 4px;
+.badge--timeleft {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-color);
+  font-weight: 500;
+  height: 1rem;
+  background-color: var(--secondary-color);
+  border-radius: 50rem !important;
+  padding: 0.5rem 1rem;
+  left: 0;
+  margin-left: 5px;
 }
 
-.badge--danger {
-  background-color: #ff0000;
+.badge--timeleft:empty {
+  display: none;
+}
+
+.brands {
+  display: flex;
+  padding-left: 0px;
+  margin-left: auto;
+  margin-right: 2px;
+  height: 25px;
+  align-items: center;
+  align-self: center;
+}
+
+.game-details {
+  display: grid;
+  place-items: center;
+  padding: 0.5rem;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.game-title {
+  font-size: 1.6rem;
   font-weight: bold;
+  margin: 0;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: var(--accent-color);
+  text-align: center;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.badge--free,
-.giveaway__original-price {
-  flex-grow: 1;
-  text-align: left;
+.price {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  color: var(--highlight-color);
 }
 
-.badge--free {
-  color: #fff !important;
-  order: 1;
-  margin-right: 6px;
+.description {
+  font-size: 1.4rem; /* Default font size */
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Dropdown menu styles */
+#dropdown-button {
+  position: relative;
+  background-color: #4d498c;
+  border: none;
+  color: #bdc586;
+  padding: 10px 20px;
+  font-weight: 400;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 0 5px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 3.8rem;
+}
+
+#dropdown-menu {
+  display: none;
+}
+
+#dropdown-menu.show {
+  display: flex;
+  position: absolute;
   max-width: fit-content;
-  border: 1px solid #aaa;
-  color: #aaa;
+  top: 8rem;
+  margin: 0;
+  padding: 0;
+  font-size: 1rem;
+  color: var(--text-color);
+  text-align: left;
+  z-index: 1000;
+}
+
+.dropdown-item {
+  display: block;
+  padding-bottom: 0.5rem;
+  font-weight: 400;
+  color: var(--text-color);
+  text-align: left;
+  white-space: nowrap;
+  background-color: transparent;
+  border: 0;
+  text-decoration: none;
+  transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out;
+}
+
+.dropdown-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0.5rem;
+  padding: 0;
+  list-style: none;
+  border: 1px solid var(--secondary-color);
+  border-radius: 0.25rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.dropdown-item:focus,
+.dropdown-item:hover {
+  cursor: pointer;
+  color: var(--accent-color);
+  box-shadow: inset -2px 0 0 0 var(--accent-color),
+    inset 2px 0 0 0 var(--accent-color);
+  transition: box-shadow 0.3s ease;
+}
+
+.dropdown-group ul li {
+  background-color: var(--background-color);
+  color: var(--highlight-color);
+  font-weight: 400;
+  font-size: 1.2rem;
+  height: 2rem;
+  display: flex;
+  padding: 0.5rem;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+.dropdown-group ul {
+  background-color: var(--background-color);
+  margin: 0;
+  height: 100%;
+  display: flex;
+  padding: 0;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.dropdown-group li {
+  background-color: var(--accent-color);
+  color: var(--background-color);
+  font-weight: 700;
+  font-size: 1.4rem;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+.dropdown-item ul {
+  margin: 0;
+  padding: 0;
+}
+.dropdown-item li {
+  margin: 0;
+}
+
+/* Button styles */
+.btn {
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn--free,
+.btn--type,
+.btn--claim {
+  padding: 1rem 1.5rem;
+  color: var(--text-color);
+}
+
+.btn--free {
+  color: var(--text-color);
+  font-weight: 500;
+  order: 1;
+  margin-left: 1rem;
+  box-shadow: inset 0 0 0 1px var(--accent-color); /* Inset border */
   background-color: transparent;
 }
 
-.giveaway__original-price {
-  color: #aba8ce;
-  font-size: 14px;
+.price-muted {
+  text-decoration: line-through;
+  font-size: 1.4rem;
+  font-weight: 500;
   order: 2;
+  margin-left: 10px;
 }
 
-.giveaway__badge--type {
+.btn--type {
+  color: var(--alt-text-color);
+  font-weight: 600;
   order: 3;
+  margin-right: 1rem;
+  margin-left: auto;
+  background-color: var(--background-color);
 }
 
-/* Adjust transition for description only */
-.giveaway__description {
-  z-index: 0 !important;
+.btn--claim {
+  background-color: var(--primary-color);
+  font-weight: 500;
+  box-shadow: inset 0 0 0 1px var(--accent-color); /* Inset border */
+  background-color: transparent;
+  color: var(--accent-color);
 }
 
-.giveaway__button-container {
+/* Users claimed styles */
+.game-claimed {
   display: flex;
-  justify-content: flex-end;
-}
-
-.giveaway__button {
-  border: 1px solid #fff;
-  background-color: #4d498c;
-  color: #fff;
   width: 100%;
-  padding: 8px 16px;
-  border-radius: 4px;
-  text-decoration: none;
-  cursor: pointer;
-  text-align: center;
+  align-items: center; /* Align items vertically */
+  margin: 0;
 }
 
-.giveaway__users-claimed {
-  font-size: 12px;
-  margin-top: 8px;
+.users-claimed {
+  margin-left: 1rem;
+  padding: 0;
+  display: flex; /* Use flexbox */
+  align-items: center; /* Align items vertically */
+}
+
+.users-claimed i {
+  margin-right: 0.5rem; /* Add some spacing between the icon and the text */
 }
 
 /* Pagination styles */
@@ -294,7 +449,7 @@ h1 {
 }
 
 /* Footer styles */
-.footer {
+.copy {
   background-color: #4d498c;
   color: #bdc586;
   text-align: center;
@@ -305,25 +460,25 @@ h1 {
 
 /* Media queries */
 @media (min-width: 992px) {
-  .game-item {
-    width: calc(25% - 20px);
+  .game-list {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
 @media (min-width: 768px) and (max-width: 991.98px) {
-  .game-item {
-    width: calc(33.33% - 20px);
+  .game-list {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
 @media (min-width: 576px) and (max-width: 767.98px) {
-  .game-item {
-    width: calc(40.4% - 20px);
+  .game-list {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 575.98px) {
-  .game-item {
-    width: calc(100% - 20px);
+  .game-list {
+    grid-template-columns: repeat(1, 1fr);
   }
 }
