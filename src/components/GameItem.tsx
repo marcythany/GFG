@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+
 import {
   faWindows,
   faSteam,
@@ -36,6 +37,7 @@ interface GameItemProps {
 
 function calculateTimeLeft(endDate: string) {
   if (!endDate || endDate === 'N/A') {
+
     return null;
   }
   const endDateTime = new Date(endDate).getTime();
@@ -48,6 +50,7 @@ function calculateTimeLeft(endDate: string) {
 
   const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
   const hours = Math.floor(
+
     (timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
   );
 
@@ -70,6 +73,7 @@ const platformIcons: { [key: string]: IconDefinition } = {
   iOS: faApple,
   'Itch.io': faItchIo,
   'Xbox 360': faXbox,
+
 };
 
 export default function GameItem({ giveaway }: GameItemProps) {
@@ -78,6 +82,7 @@ export default function GameItem({ giveaway }: GameItemProps) {
   return (
     <div className="border border-secondary-color rounded-lg overflow-hidden bg-primary-color flex flex-col">
       <div className="relative">
+
         <a
           href={giveaway.open_giveaway_url}
           target="_blank"
@@ -98,6 +103,7 @@ export default function GameItem({ giveaway }: GameItemProps) {
             </div>
           )}
           <div className="flex gap-2">
+
             {giveaway.platforms.split(', ').map((platform) => {
               const icon = platformIcons[platform.trim()];
               return icon ? (

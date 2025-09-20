@@ -25,12 +25,6 @@ To get a local copy up and running, follow these simple steps.
 You will need to have [Node.js](https://nodejs.org/en/) (version 20.x or later) and [npm](https://www.npmjs.com/) installed on your machine.
 
 ### Installation & Running
-
-1.  **Install NPM packages:**
-    ```sh
-    npm install
-    ```
-2.  **Run the development server:**
     ```sh
     npm run dev
     ```

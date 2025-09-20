@@ -24,6 +24,7 @@ interface Giveaway {
 
 const GAMES_PER_PAGE = 12;
 
+
 // Mapping for platform names to API slugs
 const platformApiMap: { [key: string]: string } = {
   'Show all': 'all',
@@ -42,16 +43,20 @@ const platformApiMap: { [key: string]: string } = {
   'Xbox 360': 'xbox-360',
 };
 
+
 export default function GameList() {
   const [giveaways, setGiveaways] = useState<Giveaway[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
   const [sortCriteria, setSortCriteria] = useState('date');
   const [platform, setPlatform] = useState('all');
+
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     async function fetchGiveaways() {
+
       setLoading(true);
       setError(null);
       try {
@@ -78,12 +83,14 @@ export default function GameList() {
         setError(
           err instanceof Error ? err.message : 'An unknown error occurred',
         );
+
       } finally {
         setLoading(false);
       }
     }
 
     fetchGiveaways();
+
   }, [sortCriteria, platform]);
 
   const paginatedGiveaways = giveaways.slice(
