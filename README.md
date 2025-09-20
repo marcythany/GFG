@@ -25,16 +25,6 @@ To get a local copy up and running, follow these simple steps.
 You will need to have [Node.js](https://nodejs.org/en/) (version 20.x or later) and [npm](https://www.npmjs.com/) installed on your machine.
 
 ### Installation & Running
-
-1.  **Clone the repository:**
-    ```sh
-    git clone https://github.com/your_username/your_repository.git
-    ```
-2.  **Install NPM packages:**
-    ```sh
-    npm install
-    ```
-3.  **Run the development server:**
     ```sh
     npm run dev
     ```

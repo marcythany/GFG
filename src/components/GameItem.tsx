@@ -1,5 +1,7 @@
-import Image from "next/image";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Image from 'next/image';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+
 import {
   faWindows,
   faSteam,
@@ -9,8 +11,8 @@ import {
   faAndroid,
   faApple,
   faItchIo,
-} from "@fortawesome/free-brands-svg-icons";
-import { faUsers } from "@fortawesome/free-solid-svg-icons";
+} from '@fortawesome/free-brands-svg-icons';
+import { faUsers } from '@fortawesome/free-solid-svg-icons';
 
 // Define the type for a single giveaway
 interface Giveaway {
@@ -34,7 +36,8 @@ interface GameItemProps {
 }
 
 function calculateTimeLeft(endDate: string) {
-  if (!endDate || endDate === "N/A") {
+  if (!endDate || endDate === 'N/A') {
+
     return null;
   }
   const endDateTime = new Date(endDate).getTime();
@@ -47,28 +50,30 @@ function calculateTimeLeft(endDate: string) {
 
   const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
   const hours = Math.floor(
-    (timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+
+    (timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
   );
 
   if (days > 0) {
-    return `${days} day${days > 1 ? "s" : ""} left`;
+    return `${days} day${days > 1 ? 's' : ''} left`;
   } else {
-    return `${hours} hour${hours > 1 ? "s" : ""} left`;
+    return `${hours} hour${hours > 1 ? 's' : ''} left`;
   }
 }
 
-const platformIcons: { [key: string]: any } = {
+const platformIcons: { [key: string]: IconDefinition } = {
   PC: faWindows,
   Steam: faSteam,
   GOG: faGog,
-  "Playstation 5": faPlaystation,
-  "Xbox Series X|S": faXbox,
-  "Playstation 4": faPlaystation,
-  "Xbox One": faXbox,
+  'Playstation 5': faPlaystation,
+  'Xbox Series X|S': faXbox,
+  'Playstation 4': faPlaystation,
+  'Xbox One': faXbox,
   Android: faAndroid,
   iOS: faApple,
-  "Itch.io": faItchIo,
-  "Xbox 360": faXbox,
+  'Itch.io': faItchIo,
+  'Xbox 360': faXbox,
+
 };
 
 export default function GameItem({ giveaway }: GameItemProps) {
@@ -77,7 +82,12 @@ export default function GameItem({ giveaway }: GameItemProps) {
   return (
     <div className="border border-secondary-color rounded-lg overflow-hidden bg-primary-color flex flex-col">
       <div className="relative">
-        <a href={giveaway.open_giveaway_url} target="_blank" rel="noopener noreferrer">
+
+        <a
+          href={giveaway.open_giveaway_url}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <Image
             src={giveaway.thumbnail}
             alt={giveaway.title}
@@ -93,18 +103,31 @@ export default function GameItem({ giveaway }: GameItemProps) {
             </div>
           )}
           <div className="flex gap-2">
-            {giveaway.platforms.split(", ").map((platform) => {
+
+            {giveaway.platforms.split(', ').map((platform) => {
               const icon = platformIcons[platform.trim()];
-              return icon ? <FontAwesomeIcon key={platform} icon={icon} className="text-text-color h-5 w-5" /> : null;
+              return icon ? (
+                <FontAwesomeIcon
+                  key={platform}
+                  icon={icon}
+                  className="text-text-color h-5 w-5"
+                />
+              ) : null;
             })}
           </div>
         </div>
       </div>
       <div className="p-4 flex flex-col flex-grow">
-        <h2 className="text-xl font-bold text-accent-color truncate">{giveaway.title}</h2>
-        <p className="text-sm text-highlight-color mt-1 truncate flex-grow">{giveaway.description}</p>
+        <h2 className="text-xl font-bold text-accent-color truncate">
+          {giveaway.title}
+        </h2>
+        <p className="text-sm text-highlight-color mt-1 truncate flex-grow">
+          {giveaway.description}
+        </p>
         <div className="flex justify-between items-center mt-4">
-          <span className="text-lg font-bold text-accent-color line-through">{giveaway.worth}</span>
+          <span className="text-lg font-bold text-accent-color line-through">
+            {giveaway.worth}
+          </span>
           <span className="text-lg font-bold text-accent-color">Free</span>
           <span className="text-sm text-alt-text-color bg-background-color px-2 py-1 rounded">
             {giveaway.type}

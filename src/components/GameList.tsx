@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { useState, useEffect, useMemo } from "react";
-import GameItem from "./GameItem";
-import Dropdown from "./Dropdown";
-import Pagination from "./Pagination";
+import { useState, useEffect } from 'react';
+import GameItem from './GameItem';
+import Dropdown from './Dropdown';
+import Pagination from './Pagination';
 
 // Define the type for a single giveaway
 interface Giveaway {
@@ -24,71 +24,89 @@ interface Giveaway {
 
 const GAMES_PER_PAGE = 12;
 
+
+// Mapping for platform names to API slugs
+const platformApiMap: { [key: string]: string } = {
+  'Show all': 'all',
+  PC: 'pc',
+  Steam: 'steam',
+  'Epic Games': 'epic-games-store',
+  GOG: 'gog',
+  'Nintendo Switch': 'switch',
+  'Playstation 5': 'ps5',
+  'Xbox Series X|S': 'xbox-series-xs',
+  'Playstation 4': 'ps4',
+  'Xbox One': 'xbox-one',
+  Android: 'android',
+  iOS: 'ios',
+  'Itch.io': 'itchio',
+  'Xbox 360': 'xbox-360',
+};
+
+
 export default function GameList() {
   const [giveaways, setGiveaways] = useState<Giveaway[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [sortCriteria, setSortCriteria] = useState("Date");
-  const [platform, setPlatform] = useState("Show all");
+
+  const [sortCriteria, setSortCriteria] = useState('date');
+  const [platform, setPlatform] = useState('all');
+
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     async function fetchGiveaways() {
+
+      setLoading(true);
+      setError(null);
       try {
-        const response = await fetch(
-          "https://gfg-proxy-kohl.vercel.app/api/liveGiveaways"
-        );
+        const params = new URLSearchParams({
+          'sort-by': sortCriteria,
+          platform: platform,
+        });
+
+        const response = await fetch(`/api/giveaways?${params.toString()}`);
+
         if (!response.ok) {
-          throw new Error("Failed to fetch giveaways");
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'Failed to fetch giveaways');
         }
+
         const data = await response.json();
-        setGiveaways(data);
+        // The API returns a 204 with an empty body if no giveaways are found
+        if (response.status === 204 || !data) {
+          setGiveaways([]);
+        } else {
+          setGiveaways(data);
+        }
       } catch (err) {
-        setError(err instanceof Error ? err.message : "An unknown error occurred");
+        setError(
+          err instanceof Error ? err.message : 'An unknown error occurred',
+        );
+
       } finally {
         setLoading(false);
       }
     }
 
     fetchGiveaways();
-  }, []);
 
-  const filteredAndSortedGiveaways = useMemo(() => {
-    let result = [...giveaways];
+  }, [sortCriteria, platform]);
 
-    // Filter by platform
-    if (platform !== "Show all") {
-      result = result.filter((giveaway) =>
-        giveaway.platforms.toLowerCase().includes(platform.toLowerCase())
-      );
-    }
+  const paginatedGiveaways = giveaways.slice(
+    (currentPage - 1) * GAMES_PER_PAGE,
+    currentPage * GAMES_PER_PAGE,
+  );
 
-    // Sort by criteria
-    switch (sortCriteria) {
-      case "Date":
-        result.sort(
-          (a, b) => new Date(b.published_date).getTime() - new Date(a.published_date).getTime()
-        );
-        break;
-      case "Value":
-        result.sort((a, b) => {
-          const worthA = parseFloat(a.worth.replace("$", ""));
-          const worthB = parseFloat(b.worth.replace("$", ""));
-          return worthB - worthA;
-        });
-        break;
-      case "Popularity":
-        result.sort((a, b) => b.users - a.users);
-        break;
-    }
+  const handlePlatformChange = (selectedPlatform: string) => {
+    setPlatform(platformApiMap[selectedPlatform] || 'all');
+    setCurrentPage(1);
+  };
 
-    return result;
-  }, [giveaways, sortCriteria, platform]);
-
-  const paginatedGiveaways = useMemo(() => {
-    const startIndex = (currentPage - 1) * GAMES_PER_PAGE;
-    return filteredAndSortedGiveaways.slice(startIndex, startIndex + GAMES_PER_PAGE);
-  }, [filteredAndSortedGiveaways, currentPage]);
+  const handleSortChange = (selectedSort: string) => {
+    setSortCriteria(selectedSort.toLowerCase());
+    setCurrentPage(1);
+  };
 
   if (loading) {
     return <p className="text-center">Loading giveaways...</p>;
@@ -101,19 +119,30 @@ export default function GameList() {
   return (
     <div>
       <div className="flex justify-center mb-8">
-        <Dropdown onSortChange={setSortCriteria} onPlatformChange={setPlatform} />
+        <Dropdown
+          onSortChange={handleSortChange}
+          onPlatformChange={handlePlatformChange}
+        />
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {paginatedGiveaways.map((giveaway) => (
-          <GameItem key={giveaway.id} giveaway={giveaway} />
-        ))}
-      </div>
-      <Pagination
-        totalItems={filteredAndSortedGiveaways.length}
-        itemsPerPage={GAMES_PER_PAGE}
-        currentPage={currentPage}
-        onPageChange={setCurrentPage}
-      />
+      {giveaways.length > 0 ? (
+        <>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {paginatedGiveaways.map((giveaway) => (
+              <GameItem key={giveaway.id} giveaway={giveaway} />
+            ))}
+          </div>
+          <Pagination
+            totalItems={giveaways.length}
+            itemsPerPage={GAMES_PER_PAGE}
+            currentPage={currentPage}
+            onPageChange={setCurrentPage}
+          />
+        </>
+      ) : (
+        <p className="text-center">
+          No giveaways found for the selected criteria.
+        </p>
+      )}
     </div>
   );
 }

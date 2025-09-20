@@ -1,6 +1,7 @@
-"use client";
+'use client';
 
-import { useState } from "react";
+import { useState } from 'react';
+
 
 interface DropdownProps {
   onSortChange: (criteria: string) => void;
@@ -9,25 +10,30 @@ interface DropdownProps {
 
 const sortingOptions = {
   Platforms: [
-    "Show all",
-    "PC",
-    "Steam",
-    "Epic Games",
-    "GOG",
-    "Nintendo Switch",
-    "Playstation 5",
-    "Xbox Series X|S",
-    "Playstation 4",
-    "Xbox One",
-    "Android",
-    "iOS",
-    "Itch.io",
-    "Xbox 360",
+
+    'Show all',
+    'PC',
+    'Steam',
+    'Epic Games',
+    'GOG',
+    'Nintendo Switch',
+    'Playstation 5',
+    'Xbox Series X|S',
+    'Playstation 4',
+    'Xbox One',
+    'Android',
+    'iOS',
+    'Itch.io',
+    'Xbox 360',
   ],
-  SortBy: ["Date", "Value", "Popularity"],
+  SortBy: ['Date', 'Value', 'Popularity'],
 };
 
-export default function Dropdown({ onSortChange, onPlatformChange }: DropdownProps) {
+export default function Dropdown({
+  onSortChange,
+  onPlatformChange,
+}: DropdownProps) {
+
   const [isOpen, setIsOpen] = useState(false);
 
   const handleSortClick = (criteria: string) => {
@@ -58,7 +64,14 @@ export default function Dropdown({ onSortChange, onPlatformChange }: DropdownPro
           className="origin-top-right absolute right-0 mt-2 w-auto rounded-md shadow-lg bg-primary-color ring-1 ring-black ring-opacity-5 flex"
           onMouseLeave={() => setIsOpen(false)}
         >
-          <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+
+          <div
+            className="py-1"
+            role="menu"
+            aria-orientation="vertical"
+            aria-labelledby="options-menu"
+          >
+
             <div className="px-4 py-2">
               <h3 className="font-bold text-lg text-accent-color">Platforms</h3>
               <div className="flex flex-col">

@@ -1,11 +1,12 @@
-import type { Metadata } from "next";
-import GameList from "@/components/GameList";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import type { Metadata } from 'next';
+import GameList from '@/components/GameList';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
-  title: "GFG - Good Free Games for you!",
-  description: "The latest free games from platforms like Epic Games, GOG, Steam, and more!",
+  title: 'GFG - Good Free Games for you!',
+  description:
+    'The latest free games from platforms like Epic Games, GOG, Steam, and more!',
 };
 
 export default function Home() {

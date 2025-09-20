@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 interface PaginationProps {
   totalItems: number;
@@ -27,8 +27,8 @@ export default function Pagination({
           onClick={() => onPageChange(page)}
           className={`px-4 py-2 rounded-md transition-colors ${
             currentPage === page
-              ? "bg-highlight-color text-primary-color font-bold"
-              : "bg-primary-color text-highlight-color hover:bg-secondary-color"
+              ? 'bg-highlight-color text-primary-color font-bold'
+              : 'bg-primary-color text-highlight-color hover:bg-secondary-color'
           }`}
         >
           {page}
