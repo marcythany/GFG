@@ -1,41 +1,36 @@
-# GFG - Game Freebie Grabber
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-Welcome to GFG - Game Freebie Grabber, where you can grab the latest free games from platforms like Epic Games, GOG, Steam, and more!
+## Getting Started
 
-## About
+First, run the development server:
 
-GFG is a web application that displays the latest giveaways of games and loots. Stay updated with the latest freebies and never miss out on any exciting game offers again!
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
-## Features
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-- Browse the latest giveaways from various gaming platforms.
-- Stay informed about the newest game offers and promotions.
-- Simple and intuitive user interface for easy navigation.
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-## Technologies Used
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-This project is made with the following technologies:
+## Learn More
 
-- HTML 5
-- CSS 3
-- JavaScript
+To learn more about Next.js, take a look at the following resources:
 
-## API
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-The latest giveaways data is sourced from the [GamerPower API](https://www.gamerpower.com/api-read). This API provides information about free game offers from various platforms.
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## How to Use
+## Deploy on Vercel
 
-To use GFG, simply visit the website and start browsing the latest free game offers. Click on the games you're interested in to view more details and grab your free copy!
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-## Contributions
-
-Contributions to GFG are welcome! If you have any ideas for new features, improvements, or bug fixes, feel free to submit a pull request or open an issue.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
-## Acknowledgements
-
-Special thanks to all the gaming platforms for offering these amazing freebies to the community!
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
