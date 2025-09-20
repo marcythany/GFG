@@ -4,6 +4,7 @@ import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import {
   faWindows,
   faSteam,
+  faGog,
   faPlaystation,
   faXbox,
   faAndroid,
@@ -60,7 +61,7 @@ function calculateTimeLeft(endDate: string) {
 const platformIcons: { [key: string]: IconDefinition } = {
   PC: faWindows,
   Steam: faSteam,
-  // GOG icon is not available in the free set, so it's removed.
+  GOG: faGog,
   'Playstation 5': faPlaystation,
   'Xbox Series X|S': faXbox,
   'Playstation 4': faPlaystation,

@@ -22,11 +22,11 @@ interface Giveaway {
   type: string;
 }
 
-const GAMES_PER_PAGE = 12; // This seems to be handled by the proxy, but we'll keep it for pagination logic if needed.
+const GAMES_PER_PAGE = 12;
 
 // Mapping for platform names to API slugs
 const platformApiMap: { [key: string]: string } = {
-  'Show all': 'all', // Custom value for our logic
+  'Show all': 'all',
   PC: 'pc',
   Steam: 'steam',
   'Epic Games': 'epic-games-store',
@@ -46,65 +46,34 @@ export default function GameList() {
   const [giveaways, setGiveaways] = useState<Giveaway[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [sortCriteria, setSortCriteria] = useState('date'); // Default to API's 'date'
+  const [sortCriteria, setSortCriteria] = useState('date');
   const [platform, setPlatform] = useState('all');
-  const [currentPage, setCurrentPage] = useState(1); // Pagination may need to be re-evaluated
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     async function fetchGiveaways() {
       setLoading(true);
       setError(null);
       try {
-        // Using the proxy URL from the original project
-        const proxyUrl = 'https://gfg-proxy-kohl.vercel.app/api/liveGiveaways';
+        const params = new URLSearchParams({
+          'sort-by': sortCriteria,
+          platform: platform,
+        });
 
-        // The proxy seems to handle the filtering, let's assume it forwards the params.
-        // If not, we would construct the URL like this:
-        // const baseUrl = "https://www.gamerpower.com/api/giveaways";
-        // const platformParam = platform === "all" ? "" : `&platform=${platformApiMap[platform]}`;
-        // const sortParam = `&sort-by=${sortCriteria}`;
-        // const apiUrl = `${baseUrl}?${platformParam}${sortParam}`;
-
-        const response = await fetch(proxyUrl); // For now, we stick to the simpler proxy call
+        const response = await fetch(`/api/giveaways?${params.toString()}`);
 
         if (!response.ok) {
-          throw new Error('Failed to fetch giveaways');
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'Failed to fetch giveaways');
         }
+
         const data = await response.json();
-
-        // The API doesn't seem to support pagination, so we'll do it on the client
-        // Also, we need to filter and sort on the client since we are using a simple proxy endpoint
-        let processedData = [...data];
-
-        // Filter by platform
-        if (platform !== 'all') {
-          processedData = processedData.filter((giveaway) =>
-            giveaway.platforms.toLowerCase().includes(platform.toLowerCase()),
-          );
+        // The API returns a 204 with an empty body if no giveaways are found
+        if (response.status === 204 || !data) {
+          setGiveaways([]);
+        } else {
+          setGiveaways(data);
         }
-
-        // Sort by criteria
-        switch (sortCriteria) {
-          case 'date':
-            processedData.sort(
-              (a, b) =>
-                new Date(b.published_date).getTime() -
-                new Date(a.published_date).getTime(),
-            );
-            break;
-          case 'value':
-            processedData.sort((a, b) => {
-              const worthA = parseFloat(a.worth.replace('$', ''));
-              const worthB = parseFloat(b.worth.replace('$', ''));
-              return worthB - worthA;
-            });
-            break;
-          case 'popularity':
-            processedData.sort((a, b) => b.users - a.users);
-            break;
-        }
-
-        setGiveaways(processedData);
       } catch (err) {
         setError(
           err instanceof Error ? err.message : 'An unknown error occurred',
@@ -148,17 +117,25 @@ export default function GameList() {
           onPlatformChange={handlePlatformChange}
         />
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {paginatedGiveaways.map((giveaway) => (
-          <GameItem key={giveaway.id} giveaway={giveaway} />
-        ))}
-      </div>
-      <Pagination
-        totalItems={giveaways.length}
-        itemsPerPage={GAMES_PER_PAGE}
-        currentPage={currentPage}
-        onPageChange={setCurrentPage}
-      />
+      {giveaways.length > 0 ? (
+        <>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {paginatedGiveaways.map((giveaway) => (
+              <GameItem key={giveaway.id} giveaway={giveaway} />
+            ))}
+          </div>
+          <Pagination
+            totalItems={giveaways.length}
+            itemsPerPage={GAMES_PER_PAGE}
+            currentPage={currentPage}
+            onPageChange={setCurrentPage}
+          />
+        </>
+      ) : (
+        <p className="text-center">
+          No giveaways found for the selected criteria.
+        </p>
+      )}
     </div>
   );
 }
