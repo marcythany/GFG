@@ -620,16 +620,12 @@ img:not([alt]) {
    ============================================== */
 
 /* Screen reader testing utilities */
-.sr-test-mode * {
-  outline: 2px solid red !important;
-}
-
 .sr-test-mode .sr-only {
   position: static !important;
   width: auto !important;
   height: auto !important;
-  padding: var(--space-sm) !important;
-  margin: var(--space-sm) !important;
+  padding: var(--spacing-sm) !important;
+  margin: var(--spacing-sm) !important;
   overflow: visible !important;
   clip: auto !important;
   white-space: normal !important;
@@ -662,10 +658,6 @@ img:not([alt]) {
 }
 
 /* Keyboard navigation testing */
-.keyboard-test-mode * {
-  transition: none !important;
-}
-
 .keyboard-test-mode *:focus {
   background: yellow !important;
   outline: 3px solid red !important;
@@ -680,10 +672,6 @@ img:not([alt]) {
   border: 2px solid purple !important;
 }
 
-.aria-test-mode *[aria-describedby] {
-  border: 2px solid orange !important;
-}
-
 .aria-test-mode *[role] {
   border: 2px solid blue !important;
 }
@@ -696,15 +684,15 @@ img:not([alt]) {
 .landmark-test-mode aside,
 .landmark-test-mode section {
   border: 3px solid red !important;
-  margin: var(--space-sm);
-  padding: var(--space-sm);
+  margin: var(--spacing-sm);
+  padding: var(--spacing-sm);
 }
 
 .landmark-test-mode main::before {
   content: 'MAIN';
   background: red;
   color: white;
-  padding: var(--space-xs);
+  padding: var(--spacing-xs);
   font-weight: bold;
 }
 
@@ -712,7 +700,7 @@ img:not([alt]) {
   content: 'NAV';
   background: blue;
   color: white;
-  padding: var(--space-xs);
+  padding: var(--spacing-xs);
   font-weight: bold;
 }
 
@@ -720,7 +708,7 @@ img:not([alt]) {
   content: 'HEADER';
   background: green;
   color: white;
-  padding: var(--space-xs);
+  padding: var(--spacing-xs);
   font-weight: bold;
 }
 
@@ -728,427 +716,6 @@ img:not([alt]) {
   content: 'FOOTER';
   background: purple;
   color: white;
-  padding: var(--space-xs);
+  padding: var(--spacing-xs);
   font-weight: bold;
-}
-
-.landmark-test-mode aside::before {
-  content: 'ASIDE';
-  background: orange;
-  color: black;
-  padding: var(--space-xs);
-  font-weight: bold;
-}
-
-.landmark-test-mode section::before {
-  content: 'SECTION';
-  background: yellow;
-  color: black;
-  padding: var(--space-xs);
-  font-weight: bold;
-}
-
-/* Responsive testing utilities */
-.responsive-test-mode * {
-  background: rgba(255, 0, 0, 0.1) !important;
-}
-
-.responsive-test-mode .container {
-  background: rgba(0, 255, 0, 0.1) !important;
-}
-
-.responsive-test-mode .card-grid {
-  background: rgba(0, 0, 255, 0.1) !important;
-}
-
-/* Performance testing indicators */
-.performance-test-mode .lazy-load {
-  background: linear-gradient(45deg, #ff0000, #00ff00) !important;
-  min-height: 100px;
-}
-
-.performance-test-mode .loading {
-  background: yellow !important;
-  animation: pulse 1s infinite;
-}
-
-@keyframes pulse {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-/* Accessibility validation helpers */
-.a11y-validation {
-  position: fixed;
-  bottom: var(--space-md);
-  right: var(--space-md);
-  background: var(--color-background-color);
-  border: 2px solid var(--color-accent-color);
-  border-radius: var(--radius-md);
-  padding: var(--space-md);
-  font-size: 0.875rem;
-  z-index: 1000;
-  max-width: 300px;
-}
-
-.a11y-validation h3 {
-  margin: 0 0 var(--space-sm) 0;
-  color: var(--color-accent-color);
-}
-
-.a11y-validation ul {
-  margin: 0;
-  padding-left: var(--space-md);
-}
-
-.a11y-validation li {
-  margin-bottom: var(--space-xs);
-}
-
-/* WCAG compliance indicators */
-.wcag-indicator {
-  position: fixed;
-  top: var(--space-md);
-  right: var(--space-md);
-  background: var(--color-accent-color);
-  color: var(--color-primary-color);
-  padding: var(--space-xs) var(--space-sm);
-  border-radius: var(--radius-sm);
-  font-size: 0.75rem;
-  font-weight: bold;
-  z-index: 1000;
-}
-
-.wcag-indicator.aa {
-  background: var(--color-accent-color);
-  content: 'WCAG AA';
-}
-
-.wcag-indicator.aaa {
-  background: var(--color-danger-color);
-  content: 'WCAG AAA';
-}
-
-/* Testing mode toggle */
-.testing-controls {
-  position: fixed;
-  top: var(--space-md);
-  left: var(--space-md);
-  background: var(--color-background-color);
-  border: 2px solid var(--color-secondary-color);
-  border-radius: var(--radius-md);
-  padding: var(--space-md);
-  z-index: 1000;
-  display: none;
-}
-
-.testing-controls.visible {
-  display: block;
-}
-
-.testing-controls button {
-  display: block;
-  width: 100%;
-  margin-bottom: var(--space-sm);
-  padding: var(--space-sm);
-  background: var(--color-primary-color);
-  color: var(--color-text-color);
-  border: 1px solid var(--color-secondary-color);
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-}
-
-.testing-controls button:hover {
-  background: var(--color-secondary-color);
-}
-
-.testing-controls button.active {
-  background: var(--color-accent-color);
-  color: var(--color-primary-color);
-}
-
-/* ==============================================
-   RESPONSIVE DESIGN VALIDATION UTILITIES
-   ============================================== */
-
-/* Device simulation utilities */
-.device-mobile {
-  max-width: 375px;
-  margin: 0 auto;
-  border: 10px solid var(--color-secondary-color);
-  border-radius: 20px;
-  overflow: hidden;
-  position: relative;
-}
-
-.device-mobile::before {
-  content: '';
-  position: absolute;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60px;
-  height: 4px;
-  background: var(--color-secondary-color);
-  border-radius: 2px;
-  z-index: 10;
-}
-
-.device-tablet {
-  max-width: 768px;
-  margin: 0 auto;
-  border: 10px solid var(--color-secondary-color);
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.device-desktop {
-  max-width: 1200px;
-  margin: 0 auto;
-  border: 2px solid var(--color-secondary-color);
-  border-radius: 5px;
-  overflow: hidden;
-}
-
-/* Responsive breakpoint indicators */
-.breakpoint-indicator {
-  position: fixed;
-  top: 0;
-  left: 0;
-  background: var(--color-accent-color);
-  color: var(--color-primary-color);
-  padding: var(--space-xs) var(--space-sm);
-  font-size: 0.75rem;
-  font-weight: bold;
-  z-index: 1000;
-  border-radius: 0 0 var(--radius-sm) 0;
-}
-
-.breakpoint-indicator.mobile::after {
-  content: 'Mobile (< 640px)';
-}
-
-.breakpoint-indicator.tablet::after {
-  content: 'Tablet (640px - 1024px)';
-}
-
-.breakpoint-indicator.desktop::after {
-  content: 'Desktop (> 1024px)';
-}
-
-/* Grid overlay for responsive testing */
-.grid-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  pointer-events: none;
-  z-index: 999;
-  background:
-    linear-gradient(rgba(255, 0, 0, 0.1) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 0, 0, 0.1) 1px, transparent 1px);
-  background-size: 20px 20px;
-}
-
-.grid-overlay.baseline {
-  background:
-    linear-gradient(rgba(0, 255, 0, 0.1) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 255, 0, 0.1) 1px, transparent 1px);
-  background-size: 8px 8px;
-}
-
-.grid-overlay.column {
-  background:
-    linear-gradient(rgba(0, 0, 255, 0.1) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 0, 255, 0.1) 1px, transparent 1px);
-  background-size: 100px 100px;
-}
-
-/* Responsive testing panels */
-.responsive-panel {
-  position: fixed;
-  bottom: var(--space-md);
-  left: var(--space-md);
-  background: var(--color-background-color);
-  border: 2px solid var(--color-secondary-color);
-  border-radius: var(--radius-md);
-  padding: var(--space-md);
-  max-width: 300px;
-  z-index: 1000;
-}
-
-.responsive-panel h3 {
-  margin: 0 0 var(--space-sm) 0;
-  color: var(--color-accent-color);
-}
-
-.responsive-panel .viewport-info {
-  font-size: 0.875rem;
-  margin-bottom: var(--space-sm);
-}
-
-.responsive-panel .device-list {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-xs);
-}
-
-.responsive-panel button {
-  padding: var(--space-xs) var(--space-sm);
-  background: var(--color-primary-color);
-  color: var(--color-text-color);
-  border: 1px solid var(--color-secondary-color);
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  font-size: 0.75rem;
-}
-
-.responsive-panel button:hover {
-  background: var(--color-secondary-color);
-}
-
-.responsive-panel button.active {
-  background: var(--color-accent-color);
-  color: var(--color-primary-color);
-}
-
-/* Touch target validation */
-.touch-target-validation * {
-  background: rgba(255, 255, 0, 0.3) !important;
-}
-
-.touch-target-validation button,
-.touch-target-validation a,
-.touch-target-validation input,
-.touch-target-validation select,
-.touch-target-validation [role='button'] {
-  min-height: 44px;
-  min-width: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
-.touch-target-validation button::after,
-.touch-target-validation a::after,
-.touch-target-validation input::after,
-.touch-target-validation select::after,
-.touch-target-validation [role='button']::after {
-  content: '';
-  position: absolute;
-  border: 2px solid red;
-  border-radius: var(--radius-sm);
-  pointer-events: none;
-  z-index: 10;
-}
-
-/* Typography scale validation */
-.typography-validation * {
-  background: rgba(0, 255, 255, 0.1) !important;
-  border: 1px solid rgba(0, 255, 255, 0.5) !important;
-}
-
-.typography-validation h1,
-.typography-validation h2,
-.typography-validation h3,
-.typography-validation h4,
-.typography-validation h5,
-.typography-validation h6 {
-  background: rgba(255, 0, 255, 0.2) !important;
-  border: 2px solid magenta !important;
-}
-
-/* Color contrast validation */
-.contrast-validation * {
-  background: white !important;
-  color: black !important;
-  border: 2px solid black !important;
-}
-
-.contrast-validation .sr-only {
-  background: yellow !important;
-  color: black !important;
-  border: 2px solid red !important;
-}
-
-/* Layout validation */
-.layout-validation {
-  background: rgba(255, 0, 0, 0.1) !important;
-}
-
-.layout-validation .container {
-  background: rgba(0, 255, 0, 0.1) !important;
-  border: 2px solid green !important;
-}
-
-.layout-validation .card-grid {
-  background: rgba(0, 0, 255, 0.1) !important;
-  border: 2px solid blue !important;
-}
-
-/* Performance validation */
-.performance-validation .lazy-load {
-  background: linear-gradient(45deg, red, yellow) !important;
-  animation: pulse 2s infinite;
-}
-
-.performance-validation .loading {
-  background: orange !important;
-  border: 2px solid red !important;
-}
-
-/* Accessibility validation summary */
-.validation-summary {
-  position: fixed;
-  top: 50%;
-  right: var(--space-md);
-  transform: translateY(-50%);
-  background: var(--color-background-color);
-  border: 2px solid var(--color-accent-color);
-  border-radius: var(--radius-md);
-  padding: var(--space-md);
-  max-width: 250px;
-  z-index: 1000;
-}
-
-.validation-summary h3 {
-  margin: 0 0 var(--space-sm) 0;
-  color: var(--color-accent-color);
-  font-size: 0.875rem;
-}
-
-.validation-summary .score {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-  margin-bottom: var(--space-sm);
-}
-
-.validation-summary .score-value {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: var(--color-accent-color);
-}
-
-.validation-summary .score-max {
-  color: var(--color-alt-text-color);
-}
-
-.validation-summary .issues {
-  font-size: 0.75rem;
-  color: var(--color-danger-color);
-}
-
-.validation-summary .checks {
-  font-size: 0.75rem;
-  color: var(--color-accent-color);
 }
