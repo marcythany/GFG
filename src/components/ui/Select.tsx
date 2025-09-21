@@ -2,7 +2,7 @@
 
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useEffect, useId, useRef, useState } from 'react';
+import { useEffect, useId, useMemo, useRef, useState } from 'react';
 
 const cn = (...classes: (string | undefined | null | false)[]) =>
   classes.filter(Boolean).join(' ');
@@ -42,6 +42,10 @@ export function Select({
   const id = useId();
 
   const selectedOption = options.find((opt) => opt.value === value);
+  const filteredOptions = useMemo(
+    () => options.filter((opt) => opt.value !== value),
+    [options, value],
+  );
 
   const handleToggle = () => {
     if (!disabled) {
@@ -68,7 +72,7 @@ export function Select({
           setHighlightedIndex(0);
         } else {
           setHighlightedIndex((prev) =>
-            prev < options.length - 1 ? prev + 1 : 0,
+            prev < filteredOptions.length - 1 ? prev + 1 : 0,
           );
         }
         break;
@@ -76,7 +80,7 @@ export function Select({
         e.preventDefault();
         if (isOpen) {
           setHighlightedIndex((prev) =>
-            prev > 0 ? prev - 1 : options.length - 1,
+            prev > 0 ? prev - 1 : filteredOptions.length - 1,
           );
         }
         break;
@@ -84,7 +88,7 @@ export function Select({
       case ' ':
         e.preventDefault();
         if (isOpen && highlightedIndex >= 0) {
-          handleSelect(options[highlightedIndex].value);
+          handleSelect(filteredOptions[highlightedIndex].value);
         } else {
           setIsOpen(true);
           setHighlightedIndex(0);
@@ -221,7 +225,7 @@ export function Select({
           role="listbox"
           aria-label={ariaLabel}
         >
-          {options.map((option, index) => (
+          {filteredOptions.map((option, index) => (
             <li
               key={option.value}
               id={`${id}-option-${index}`}
@@ -230,11 +234,9 @@ export function Select({
                 'flex items-center gap-2 px-4 py-3 cursor-pointer transition-colors duration-200',
                 'hover:bg-accent/10 focus:bg-accent/10',
                 index === highlightedIndex && 'bg-accent/20',
-                option.value === value &&
-                  'bg-accent/30 text-accent font-semibold',
               )}
               role="option"
-              aria-selected={option.value === value}
+              aria-selected={false}
             >
               {option.icon && (
                 <span className="flex-shrink-0 ">
