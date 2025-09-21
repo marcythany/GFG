@@ -8,30 +8,24 @@ import {
   useEffect,
   useMemo,
   useOptimistic,
-  useRef,
   useState,
+  useTransition,
 } from 'react';
 
 const GAMES_PER_PAGE = 12;
 
 export function useGiveaways(initialFilters: GiveawayFilters = {}) {
   const [giveaways, setGiveaways] = useState<Giveaway[]>([]);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [filters, setFilters] = useState<GiveawayFilters>(initialFilters);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isPending, startTransition] = useTransition();
 
   // Optimistic search for instant UI feedback
   const [optimisticSearch, setOptimisticSearch] = useOptimistic('');
-  const optimisticSearchRef = useRef('');
 
   useEffect(() => {
-    optimisticSearchRef.current = optimisticSearch;
-  }, [optimisticSearch]);
-
-  useEffect(() => {
-    async function loadGiveaways() {
-      setLoading(true);
+    startTransition(async () => {
       setError(null);
       try {
         const data = await fetchGiveaways(filters);
@@ -41,24 +35,18 @@ export function useGiveaways(initialFilters: GiveawayFilters = {}) {
         setError(
           err instanceof Error ? err.message : 'An unknown error occurred',
         );
-      } finally {
-        setLoading(false);
       }
-    }
-
-    loadGiveaways();
+    });
   }, [filters]);
 
-  const updateFilters = (newFilters: Partial<GiveawayFilters>) => {
+  const updateFilters = useCallback((newFilters: Partial<GiveawayFilters>) => {
     setFilters((prev) => ({ ...prev, ...newFilters }));
-  };
+  }, []);
 
   const searchGiveaways = useCallback(
     (query: string) => {
       startTransition(() => {
-        if (query !== optimisticSearchRef.current) {
-          setOptimisticSearch(query);
-        }
+        setOptimisticSearch(query);
       });
     },
     [setOptimisticSearch],
@@ -66,18 +54,16 @@ export function useGiveaways(initialFilters: GiveawayFilters = {}) {
 
   // Filter giveaways based on search query
   const filteredGiveaways = useMemo(() => {
-    const result = giveaways.filter((giveaway) => {
-      if (!optimisticSearch.trim()) return true;
+    if (!optimisticSearch.trim()) return giveaways;
 
-      const searchTerm = optimisticSearch.toLowerCase();
-      return (
+    const searchTerm = optimisticSearch.toLowerCase();
+    return giveaways.filter(
+      (giveaway) =>
         giveaway.title.toLowerCase().includes(searchTerm) ||
         giveaway.description.toLowerCase().includes(searchTerm) ||
         giveaway.platforms.toLowerCase().includes(searchTerm) ||
-        giveaway.type.toLowerCase().includes(searchTerm)
-      );
-    });
-    return result;
+        giveaway.type.toLowerCase().includes(searchTerm),
+    );
   }, [giveaways, optimisticSearch]);
 
   const paginatedGiveaways = useMemo(
@@ -95,7 +81,7 @@ export function useGiveaways(initialFilters: GiveawayFilters = {}) {
     giveaways: paginatedGiveaways, // This is the paginated list for the current page
     unfilteredGiveaways: giveaways, // This is the list from the API, before client-side search
     filteredGiveaways, // This is the full list after client-side search
-    loading,
+    loading: isPending,
     error,
     filters,
     currentPage,

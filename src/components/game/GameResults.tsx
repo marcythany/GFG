@@ -1,3 +1,5 @@
+'use client';
+
 import Pagination from '@/components/common/Pagination';
 import { Giveaway } from '@/types/giveaway';
 import { motion } from 'framer-motion';

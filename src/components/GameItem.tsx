@@ -1,3 +1,6 @@
+'use client';
+
+import { Giveaway } from '@/types/giveaway';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from 'framer-motion';
@@ -14,23 +17,6 @@ import {
   faXbox,
 } from '@fortawesome/free-brands-svg-icons';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
-
-// Define the type for a single giveaway
-interface Giveaway {
-  id: number;
-  title: string;
-  worth: string;
-  thumbnail: string;
-  image: string;
-  description: string;
-  instructions: string;
-  open_giveaway_url: string;
-  published_date: string;
-  end_date: string;
-  platforms: string;
-  users: number;
-  type: string;
-}
 
 interface GameItemProps {
   giveaway: Giveaway;

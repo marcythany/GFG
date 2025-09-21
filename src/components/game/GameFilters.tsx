@@ -1,3 +1,5 @@
+'use client';
+
 import Breadcrumb from '@/components/common/Breadcrumb';
 import Dropdown from '@/components/common/Dropdown';
 import { motion } from 'framer-motion';

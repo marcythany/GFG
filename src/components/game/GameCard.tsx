@@ -1,3 +1,5 @@
+'use client';
+
 import { Giveaway } from '@/types/giveaway';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import {

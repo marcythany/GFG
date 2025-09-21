@@ -1,48 +1,61 @@
 import { Giveaway, GiveawayFilters } from '@/types/giveaway';
 import { headers } from 'next/headers';
 
-async function getBaseUrl() {
+// Cache base URL to avoid repeated async calls
+let cachedBaseUrl: string | null = null;
+
+async function getBaseUrl(): Promise<string | null> {
   if (typeof window !== 'undefined') {
-    // Client side - use relative URLs
-    return '';
+    return null; // Client side - use relative URLs
   }
-  // Server side - construct absolute URL
+
+  if (cachedBaseUrl !== null) {
+    return cachedBaseUrl;
+  }
+
   const headersList = await headers();
   const host = headersList.get('host') || 'localhost:3000';
   const protocol = headersList.get('x-forwarded-proto') || 'http';
-  return `${protocol}://${host}`;
+  cachedBaseUrl = `${protocol}://${host}`;
+  return cachedBaseUrl;
 }
 
 const API_BASE_URL = '/api/giveaways';
 
+function buildUrl(
+  baseUrl: string | null,
+  params: Record<string, string | number | boolean | undefined> = {},
+): string {
+  const url = baseUrl
+    ? new URL(API_BASE_URL, baseUrl)
+    : new URL(API_BASE_URL, 'http://localhost:3000');
+
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined && value !== null && value !== 'all') {
+      url.searchParams.append(key, value.toString());
+    }
+  });
+
+  return baseUrl ? url.toString() : url.pathname + url.search;
+}
+
 export async function fetchGiveaways(
   filters: GiveawayFilters = {},
 ): Promise<Giveaway[]> {
-  const params = new URLSearchParams();
-
-  if (filters.platform && filters.platform !== 'all') {
-    params.append('platform', filters.platform);
-  }
-
-  if (filters.type && filters.type !== 'all') {
-    params.append('type', filters.type);
-  }
-
-  if (filters['sort-by']) {
-    params.append('sort-by', filters['sort-by']);
-  }
-
-  const queryString = params.toString();
   const baseUrl = await getBaseUrl();
-  const url = baseUrl
-    ? `${baseUrl}${API_BASE_URL}${queryString ? `?${queryString}` : ''}`
-    : `${API_BASE_URL}${queryString ? `?${queryString}` : ''}`;
+  const url = buildUrl(baseUrl, {
+    platform: filters.platform,
+    type: filters.type,
+    'sort-by': filters['sort-by'],
+  });
 
   const response = await fetch(url);
 
   if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.message || 'Failed to fetch giveaways');
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(
+      errorData.message || `Failed to fetch giveaways: ${response.status}`,
+    );
   }
 
   const data = await response.json();
@@ -56,25 +69,26 @@ export async function fetchGiveaways(
     return [];
   }
 
-  return data;
+  return data as Giveaway[];
 }
 
 export async function fetchGiveawayById(id: number): Promise<Giveaway | null> {
   const baseUrl = await getBaseUrl();
-  const url = baseUrl
-    ? `${baseUrl}${API_BASE_URL}?id=${id}`
-    : `${API_BASE_URL}?id=${id}`;
+  const url = buildUrl(baseUrl, { id });
+
   const response = await fetch(url);
 
   if (!response.ok) {
     if (response.status === 404) {
       return null;
     }
-    const errorData = await response.json();
-    throw new Error(errorData.message || 'Failed to fetch giveaway');
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(
+      errorData.message || `Failed to fetch giveaway: ${response.status}`,
+    );
   }
 
-  return await response.json();
+  return (await response.json()) as Giveaway;
 }
 
 export async function fetchGiveawayStats(): Promise<{
@@ -82,14 +96,13 @@ export async function fetchGiveawayStats(): Promise<{
   totalCount: number;
 } | null> {
   const baseUrl = await getBaseUrl();
-  const url = baseUrl
-    ? `${baseUrl}${API_BASE_URL}?stats=true`
-    : `${API_BASE_URL}?stats=true`;
+  const url = buildUrl(baseUrl, { stats: true });
+
   const response = await fetch(url);
 
   if (!response.ok) {
     return null;
   }
 
-  return await response.json();
+  return (await response.json()) as { totalWorth: string; totalCount: number };
 }

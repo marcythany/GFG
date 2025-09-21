@@ -1,12 +1,15 @@
 // SVG loader utility for inline SVG rendering with color theming support
 const svgCache = new Map<string, string>();
 
+type SvgPath = string;
+type SvgContent = string;
+
 /**
  * Loads and caches SVG content from the public folder
  * @param svgPath - Path to SVG file relative to public folder (e.g., '/epic-games.svg')
  * @returns Promise resolving to processed SVG content
  */
-export async function loadSvgContent(svgPath: string): Promise<string> {
+export async function loadSvgContent(svgPath: SvgPath): Promise<SvgContent> {
   // Check cache first
   if (svgCache.has(svgPath)) {
     return svgCache.get(svgPath)!;
@@ -16,7 +19,7 @@ export async function loadSvgContent(svgPath: string): Promise<string> {
     // Fetch SVG content
     const response = await fetch(svgPath);
     if (!response.ok) {
-      throw new Error(`Failed to load SVG: ${svgPath}`);
+      throw new Error(`Failed to load SVG: ${svgPath} (${response.status})`);
     }
 
     let svgContent = await response.text();
@@ -40,13 +43,18 @@ export async function loadSvgContent(svgPath: string): Promise<string> {
  * @param svgContent - Raw SVG content
  * @returns Processed SVG content
  */
-function processSvgContent(svgContent: string): string {
+function processSvgContent(svgContent: SvgContent): SvgContent {
   // Replace hardcoded fill colors with currentColor
-  // This regex matches fill="..." attributes with hex colors, named colors, or rgb values
+  // This regex matches fill="..." attributes with hex colors, named colors, rgb, hsl values
   const colorRegex =
-    /fill="(#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})(?:[0-9a-fA-F]{2})?|rgb\([^)]+\)|rgba\([^)]+\)|[a-zA-Z]+)"/g;
+    /fill="(#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})(?:[0-9a-fA-F]{2})?|rgb\([^)]+\)|rgba\([^)]+\)|hsl\([^)]+\)|hsla\([^)]+\)|[a-zA-Z]+)"/g;
 
   svgContent = svgContent.replace(colorRegex, 'fill="currentColor"');
+
+  // Also handle stroke colors
+  const strokeRegex =
+    /stroke="(#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})(?:[0-9a-fA-F]{2})?|rgb\([^)]+\)|rgba\([^)]+\)|hsl\([^)]+\)|hsla\([^)]+\)|[a-zA-Z]+)"/g;
+  svgContent = svgContent.replace(strokeRegex, 'stroke="currentColor"');
 
   // Remove width and height attributes from the <svg> tag to allow container-based sizing
   svgContent = svgContent.replace(
@@ -65,7 +73,7 @@ function processSvgContent(svgContent: string): string {
  * Preloads SVG content for better performance
  * @param svgPaths - Array of SVG paths to preload
  */
-export async function preloadSvgs(svgPaths: string[]): Promise<void> {
+export async function preloadSvgs(svgPaths: SvgPath[]): Promise<void> {
   const promises = svgPaths.map((path) => loadSvgContent(path));
   await Promise.all(promises);
 }
