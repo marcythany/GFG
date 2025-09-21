@@ -101,10 +101,6 @@ export default function Home() {
 
           {/* Search functionality */}
           <SearchBar
-            onSearch={(query) => {
-              // This will be handled by the GameList component
-              console.log('Search query:', query);
-            }}
             placeholder="Search giveaways by title, platform, or type..."
             className="mb-6"
           />
