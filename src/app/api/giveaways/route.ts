@@ -199,12 +199,18 @@ async function handleGiveawaysList(searchParams: URLSearchParams) {
   } catch (error) {
     console.error('Giveaways API Error:', error);
 
-    // Return empty array instead of error for better UX
-    return NextResponse.json([], {
-      status: 200,
-      headers: {
-        'Cache-Control': 'no-cache',
+    const errorMessage =
+      error instanceof Error ? error.message : 'An unknown error occurred';
+
+    // Return a proper error response
+    return NextResponse.json(
+      { message: `Failed to fetch giveaways: ${errorMessage}` },
+      {
+        status: 500,
+        headers: {
+          'Cache-Control': 'no-cache',
+        },
       },
-    });
+    );
   }
 }
