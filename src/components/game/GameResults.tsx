@@ -1,6 +1,7 @@
 import Pagination from '@/components/common/Pagination';
 import { Giveaway } from '@/types/giveaway';
 import { motion } from 'framer-motion';
+import React from 'react';
 import GameItem from './GameItem';
 
 interface GameResultsProps {
@@ -13,7 +14,7 @@ interface GameResultsProps {
   onPageChange: (page: number) => void;
 }
 
-export default function GameResults({
+export default React.memo(function GameResults({
   giveaways,
   totalFiltered,
   totalAll,
@@ -89,4 +90,4 @@ export default function GameResults({
       </motion.div>
     </>
   );
-}
+});

@@ -13,6 +13,7 @@ import { faUsers } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import React from 'react';
 
 interface GameCardProps {
   giveaway: Giveaway;
@@ -33,7 +34,7 @@ const platformIcons: { [key: string]: IconDefinition } = {
   'Xbox 360': faXbox,
 };
 
-export default function GameCard({
+export default React.memo(function GameCard({
   giveaway,
   timeLeft,
   index = 0,
@@ -196,4 +197,4 @@ export default function GameCard({
       </div>
     </motion.article>
   );
-}
+});
