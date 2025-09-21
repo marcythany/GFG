@@ -1,8 +1,8 @@
 'use client';
 
+import { Input } from '@/components/ui/input';
 import { Search, X } from 'lucide-react';
 import { useRef, useState } from 'react';
-import { Input } from '@/components/ui/input';
 
 interface SearchBarProps {
   onSearch?: (query: string) => void;
@@ -42,42 +42,46 @@ export default function SearchBar({
   };
 
   return (
-    <div className={`relative max-w-md mx-auto mb-8 ${className}`}>
-      <div className="relative">
-        <Search
-          className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-secondary"
-          aria-hidden="true"
-        />
-        <Input
-          ref={inputRef}
-          type="search"
-          value={query}
-          onChange={handleChange}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
-          onKeyDown={handleKeyDown}
-          placeholder={placeholder}
-          className={`
-            pl-10 pr-10 py-3 rounded-lg transition-all duration-200
-            text-muted placeholder-secondary focus:ring-opacity-20
-            ${isFocused ? 'shadow-lg' : 'shadow-sm'}
-          `}
-          aria-describedby="search-help"
-        />
-        {query && (
-          <button
-            type="button"
-            onClick={handleClear}
-            className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-secondary transition-colors duration-200"
-            aria-label="Clear search"
-          >
-            <X className="h-4 w-4 text-secondary" aria-hidden="true" />
-          </button>
-        )}
-      </div>
+    <form className={`mx-auto mb-8 ${className}`} role="search">
+      <fieldset>
+        <legend className="sr-only">Search Controls</legend>
+        <div className="search-bar">
+          <Search
+            className="h-5 w-5 text-secondary flex-shrink-0"
+            aria-hidden="true"
+          />
+          <Input
+            ref={inputRef}
+            type="search"
+            id="search-input"
+            value={query}
+            onChange={handleChange}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
+            onKeyDown={handleKeyDown}
+            placeholder={placeholder}
+            className={`
+              flex-1 py-3 rounded-lg transition-all duration-200
+              text-muted placeholder-secondary focus:ring-opacity-20
+              ${isFocused ? 'shadow-lg' : 'shadow-sm'}
+            `}
+            aria-describedby="search-help"
+          />
+          {query && (
+            <button
+              type="button"
+              onClick={handleClear}
+              className="p-1 rounded-full hover:bg-secondary transition-colors duration-200 flex-shrink-0"
+              aria-label="Clear search"
+            >
+              <X className="h-4 w-4 text-secondary" aria-hidden="true" />
+            </button>
+          )}
+        </div>
+      </fieldset>
       <div id="search-help" className="sr-only">
         Search through available game giveaways. Press Escape to clear.
       </div>
-    </div>
+    </form>
   );
 }
