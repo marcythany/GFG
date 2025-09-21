@@ -1,38 +1,41 @@
-import { fetchGiveaways } from '@/lib/api';
-import { Giveaway, GiveawayFilters } from '@/types/giveaway';
+import GiveawayContainer from '@/components/game/GiveawayContainer';
 import Footer from '@/components/layout/Footer';
 import Header from '@/components/layout/Header';
 import Navigation from '@/components/layout/Navigation';
-import GiveawayContainer from '@/components/game/GiveawayContainer';
+import { fetchGiveaways } from '@/lib/api';
+import { Giveaway, GiveawayFilters } from '@/types/giveaway';
+import { Metadata } from 'next';
 import { Suspense } from 'react';
 
 interface HomeProps {
-  searchParams: {
+  searchParams: Promise<{
     platform?: string;
     'sort-by'?: string;
     search?: string;
     page?: string;
-  };
+  }>;
 }
 
 export default async function Home({ searchParams }: HomeProps) {
+  const params = await searchParams;
+
   const filters: GiveawayFilters = {
-    platform: searchParams.platform,
-    'sort-by': searchParams['sort-by'],
+    platform: params.platform,
+    'sort-by': params['sort-by'],
   };
 
   // Fetch all giveaways based on platform/sort filters
   const allGiveaways = await fetchGiveaways(filters);
 
   // Apply search query filtering on the server
-  const searchQuery = searchParams.search || '';
+  const searchQuery = params.search || '';
   const filteredGiveaways = searchQuery
     ? allGiveaways.filter((giveaway: Giveaway) =>
-        giveaway.title.toLowerCase().includes(searchQuery.toLowerCase())
+        giveaway.title.toLowerCase().includes(searchQuery.toLowerCase()),
       )
     : allGiveaways;
 
-  const currentPage = parseInt(searchParams.page || '1', 10);
+  const currentPage = parseInt(params.page || '1', 10);
 
   return (
     <div className="min-h-screen bg-background">
@@ -116,4 +119,18 @@ export default async function Home({ searchParams }: HomeProps) {
       />
     </div>
   );
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: 'Free Game Giveaways & Gaming Deals | GFG',
+    description:
+      'Discover the latest free games and giveaways from platforms like Epic Games, Steam, GOG, and more. Your ultimate destination for gaming deals!',
+    openGraph: {
+      title: 'Free Game Giveaways & Gaming Deals | GFG',
+      description:
+        'Discover the latest free games and giveaways from platforms like Epic Games, Steam, GOG, and more.',
+      type: 'website',
+    },
+  };
 }
