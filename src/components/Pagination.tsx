@@ -20,20 +20,33 @@ export default function Pagination({
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return (
-    <div className="flex justify-center items-center space-x-2 mt-8">
+    <nav
+      className="flex justify-center items-center space-x-2 mt-8"
+      role="navigation"
+      aria-label="Pagination navigation"
+      aria-describedby="pagination-info"
+    >
+      <div id="pagination-info" className="sr-only">
+        Page {currentPage} of {totalPages}, showing {itemsPerPage} items per
+        page
+      </div>
+
       {pages.map((page) => (
         <button
           key={page}
           onClick={() => onPageChange(page)}
-          className={`px-4 py-2 rounded-md transition-colors ${
+          className={`px-4 py-2 rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-accent-color focus:ring-offset-2 ${
             currentPage === page
-              ? 'bg-highlight-color text-primary-color font-bold'
-              : 'bg-primary-color text-highlight-color hover:bg-secondary-color'
+              ? 'bg-accent-color text-primary-color font-bold shadow-md'
+              : 'bg-primary-color text-highlight-color hover:bg-secondary-color border border-secondary-color'
           }`}
+          aria-current={currentPage === page ? 'page' : undefined}
+          aria-label={`Go to page ${page}${currentPage === page ? ' (current page)' : ''}`}
+          role="tab"
         >
           {page}
         </button>
       ))}
-    </div>
+    </nav>
   );
 }

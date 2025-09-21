@@ -2,15 +2,35 @@
 
 import { useState } from 'react';
 
-
 interface DropdownProps {
   onSortChange: (criteria: string) => void;
   onPlatformChange: (platform: string) => void;
+  onTypeChange?: (type: string) => void;
+  platform?: string;
+  sortCriteria?: string;
+  type?: string;
 }
+
+// Mapping for platform names to API slugs
+const platformApiMap: { [key: string]: string } = {
+  'Show all': 'all',
+  PC: 'pc',
+  Steam: 'steam',
+  'Epic Games': 'epic-games-store',
+  GOG: 'gog',
+  'Nintendo Switch': 'switch',
+  'Playstation 5': 'ps5',
+  'Xbox Series X|S': 'xbox-series-xs',
+  'Playstation 4': 'ps4',
+  'Xbox One': 'xbox-one',
+  Android: 'android',
+  iOS: 'ios',
+  'Itch.io': 'itchio',
+  'Xbox 360': 'xbox-360',
+};
 
 const sortingOptions = {
   Platforms: [
-
     'Show all',
     'PC',
     'Steam',
@@ -27,13 +47,17 @@ const sortingOptions = {
     'Xbox 360',
   ],
   SortBy: ['Date', 'Value', 'Popularity'],
+  Types: ['All', 'Game', 'DLC', 'Early Access', 'Beta'],
 };
 
 export default function Dropdown({
   onSortChange,
   onPlatformChange,
+  onTypeChange,
+  platform = 'all',
+  sortCriteria = 'date',
+  type = 'all',
 }: DropdownProps) {
-
   const [isOpen, setIsOpen] = useState(false);
 
   const handleSortClick = (criteria: string) => {
@@ -46,65 +70,149 @@ export default function Dropdown({
     setIsOpen(false);
   };
 
+  const handleTypeClick = (selectedType: string) => {
+    if (onTypeChange) {
+      onTypeChange(selectedType);
+    }
+    setIsOpen(false);
+  };
+
   return (
-    <div className="relative inline-block text-left">
-      <div>
-        <button
-          type="button"
-          className="inline-flex justify-center w-full rounded-md border border-secondary-color shadow-sm px-4 py-2 bg-primary-color text-sm font-medium text-highlight-color hover:bg-secondary-color focus:outline-none"
-          onClick={() => setIsOpen(!isOpen)}
-          onMouseEnter={() => setIsOpen(true)}
+    <>
+      {/* Platform Filter */}
+      <div className="relative">
+        <label htmlFor="platform-select" className="sr-only">
+          Filter by gaming platform
+        </label>
+        <select
+          id="platform-select"
+          value={platform}
+          onChange={(e) => handlePlatformClick(e.target.value)}
+          className="appearance-none bg-primary-color border border-secondary-color text-highlight-color px-4 py-2 pr-8 rounded-lg focus:border-accent-color focus:ring-2 focus:ring-accent-color focus:ring-offset-2 focus:outline-none transition-all"
+          aria-describedby="platform-help"
+          aria-label="Filter giveaways by gaming platform"
+          aria-expanded="false"
+          role="combobox"
         >
-          Sort by
-        </button>
+          {sortingOptions.Platforms.map((platform) => (
+            <option key={platform} value={platformApiMap[platform] || 'all'}>
+              {platform}
+            </option>
+          ))}
+        </select>
+        <div
+          className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"
+          aria-hidden="true"
+        >
+          <svg
+            className="w-4 h-4 text-alt-text-color"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
+        </div>
+        <div id="platform-help" className="sr-only">
+          Select a gaming platform to filter giveaways. Current selection:{' '}
+          {platform}
+        </div>
       </div>
 
-      {isOpen && (
-        <div
-          className="origin-top-right absolute right-0 mt-2 w-auto rounded-md shadow-lg bg-primary-color ring-1 ring-black ring-opacity-5 flex"
-          onMouseLeave={() => setIsOpen(false)}
+      {/* Sort Options */}
+      <div className="relative">
+        <label htmlFor="sort-select" className="sr-only">
+          Sort giveaways by
+        </label>
+        <select
+          id="sort-select"
+          value={sortCriteria}
+          onChange={(e) => handleSortClick(e.target.value)}
+          className="appearance-none bg-primary-color border border-secondary-color text-highlight-color px-4 py-2 pr-8 rounded-lg focus:border-accent-color focus:ring-2 focus:ring-accent-color focus:ring-offset-2 focus:outline-none transition-all"
+          aria-describedby="sort-help"
+          aria-label="Sort giveaways by criteria"
+          aria-expanded="false"
+          role="combobox"
         >
-
-          <div
-            className="py-1"
-            role="menu"
-            aria-orientation="vertical"
-            aria-labelledby="options-menu"
+          {sortingOptions.SortBy.map((criteria) => (
+            <option key={criteria} value={criteria.toLowerCase()}>
+              {criteria}
+            </option>
+          ))}
+        </select>
+        <div
+          className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"
+          aria-hidden="true"
+        >
+          <svg
+            className="w-4 h-4 text-alt-text-color"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
           >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
+        </div>
+        <div id="sort-help" className="sr-only">
+          Choose how to sort the giveaways. Current sorting: {sortCriteria}
+        </div>
+      </div>
 
-            <div className="px-4 py-2">
-              <h3 className="font-bold text-lg text-accent-color">Platforms</h3>
-              <div className="flex flex-col">
-                {sortingOptions.Platforms.map((platform) => (
-                  <a
-                    key={platform}
-                    href="#"
-                    className="block px-4 py-2 text-sm text-highlight-color hover:bg-secondary-color"
-                    onClick={() => handlePlatformClick(platform)}
-                  >
-                    {platform}
-                  </a>
-                ))}
-              </div>
-            </div>
-            <div className="px-4 py-2">
-              <h3 className="font-bold text-lg text-accent-color">Sort By</h3>
-              <div className="flex flex-col">
-                {sortingOptions.SortBy.map((criteria) => (
-                  <a
-                    key={criteria}
-                    href="#"
-                    className="block px-4 py-2 text-sm text-highlight-color hover:bg-secondary-color"
-                    onClick={() => handleSortClick(criteria)}
-                  >
-                    {criteria}
-                  </a>
-                ))}
-              </div>
-            </div>
+      {/* Type Filter */}
+      {onTypeChange && (
+        <div className="relative">
+          <label htmlFor="type-select" className="sr-only">
+            Filter by giveaway type
+          </label>
+          <select
+            id="type-select"
+            value={type}
+            onChange={(e) => handleTypeClick(e.target.value)}
+            className="appearance-none bg-primary-color border border-secondary-color text-highlight-color px-4 py-2 pr-8 rounded-lg focus:border-accent-color focus:ring-2 focus:ring-accent-color focus:ring-offset-2 focus:outline-none transition-all"
+            aria-describedby="type-help"
+            aria-label="Filter giveaways by type"
+            aria-expanded="false"
+            role="combobox"
+          >
+            {sortingOptions.Types.map((typeOption) => (
+              <option key={typeOption} value={typeOption.toLowerCase()}>
+                {typeOption}
+              </option>
+            ))}
+          </select>
+          <div
+            className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"
+            aria-hidden="true"
+          >
+            <svg
+              className="w-4 h-4 text-alt-text-color"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </div>
+          <div id="type-help" className="sr-only">
+            Select a giveaway type to filter results. Current type: {type}
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }

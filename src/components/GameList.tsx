@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import GameItem from './GameItem';
+import { useEffect, useState } from 'react';
 import Dropdown from './Dropdown';
+import GameItem from './GameItem';
 import Pagination from './Pagination';
 
 // Define the type for a single giveaway
@@ -24,7 +24,6 @@ interface Giveaway {
 
 const GAMES_PER_PAGE = 12;
 
-
 // Mapping for platform names to API slugs
 const platformApiMap: { [key: string]: string } = {
   'Show all': 'all',
@@ -43,7 +42,6 @@ const platformApiMap: { [key: string]: string } = {
   'Xbox 360': 'xbox-360',
 };
 
-
 export default function GameList() {
   const [giveaways, setGiveaways] = useState<Giveaway[]>([]);
   const [loading, setLoading] = useState(true);
@@ -51,12 +49,12 @@ export default function GameList() {
 
   const [sortCriteria, setSortCriteria] = useState('date');
   const [platform, setPlatform] = useState('all');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     async function fetchGiveaways() {
-
       setLoading(true);
       setError(null);
       try {
@@ -83,14 +81,12 @@ export default function GameList() {
         setError(
           err instanceof Error ? err.message : 'An unknown error occurred',
         );
-
       } finally {
         setLoading(false);
       }
     }
 
     fetchGiveaways();
-
   }, [sortCriteria, platform]);
 
   const paginatedGiveaways = giveaways.slice(
@@ -108,29 +104,104 @@ export default function GameList() {
     setCurrentPage(1);
   };
 
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+    setCurrentPage(1);
+  };
+
   if (loading) {
-    return <p className="text-center">Loading giveaways...</p>;
+    return (
+      <div
+        className="flex justify-center items-center py-12"
+        role="status"
+        aria-live="polite"
+        aria-label="Loading game giveaways"
+      >
+        <div
+          className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent-color"
+          aria-hidden="true"
+        ></div>
+        <span className="sr-only">Loading giveaways...</span>
+      </div>
+    );
   }
 
   if (error) {
-    return <p className="text-center text-danger-color">Error: {error}</p>;
+    return (
+      <div className="text-center py-8" role="alert" aria-live="assertive">
+        <p className="text-danger-color font-medium">Error: {error}</p>
+        <p className="text-alt-text-color text-sm mt-2">
+          Please try again later or refresh the page.
+        </p>
+      </div>
+    );
   }
 
   return (
-    <div>
-      <div className="flex justify-center mb-8">
+    <section aria-labelledby="giveaways-section-heading" role="region">
+      <h2 id="giveaways-section-heading" className="sr-only">
+        Game Giveaways List
+      </h2>
+
+      <div
+        className="flex-responsive mb-8"
+        role="toolbar"
+        aria-label="Filter and sort controls"
+      >
         <Dropdown
           onSortChange={handleSortChange}
           onPlatformChange={handlePlatformChange}
+          platform={platform}
+          sortCriteria={sortCriteria}
         />
       </div>
-      {giveaways.length > 0 ? (
+
+      {loading && (
+        <div
+          className="flex justify-center items-center py-12"
+          role="status"
+          aria-live="polite"
+          aria-label="Loading game giveaways"
+        >
+          <div
+            className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent-color"
+            aria-hidden="true"
+          ></div>
+          <span className="sr-only">Loading giveaways...</span>
+        </div>
+      )}
+
+      {error && (
+        <div className="text-center py-8" role="alert" aria-live="assertive">
+          <p className="text-danger-color font-medium">Error: {error}</p>
+          <p className="text-alt-text-color text-sm mt-2">
+            Please try again later or refresh the page.
+          </p>
+        </div>
+      )}
+
+      {!loading && !error && giveaways.length > 0 && (
         <>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="mb-4 text-center" aria-live="polite">
+            <p className="text-highlight-color text-sm" id="results-count">
+              Showing {paginatedGiveaways.length} of {giveaways.length}{' '}
+              giveaways
+            </p>
+          </div>
+
+          <div
+            className="card-grid"
+            role="list"
+            aria-label="Game giveaways"
+            aria-describedby="results-count"
+          >
             {paginatedGiveaways.map((giveaway) => (
-              <GameItem key={giveaway.id} giveaway={giveaway} />
+              <div key={giveaway.id} role="listitem">
+                <GameItem giveaway={giveaway} />
+              </div>
             ))}
           </div>
+
           <Pagination
             totalItems={giveaways.length}
             itemsPerPage={GAMES_PER_PAGE}
@@ -138,11 +209,22 @@ export default function GameList() {
             onPageChange={setCurrentPage}
           />
         </>
-      ) : (
-        <p className="text-center">
-          No giveaways found for the selected criteria.
-        </p>
       )}
-    </div>
+
+      {!loading && !error && giveaways.length === 0 && (
+        <div className="text-center py-12" role="status" aria-live="polite">
+          <div className="text-6xl mb-4" aria-hidden="true">
+            🎮
+          </div>
+          <h2 className="text-xl font-semibold text-highlight-color mb-2">
+            No giveaways found
+          </h2>
+          <p className="text-alt-text-color">
+            No giveaways match your current filters. Try adjusting your search
+            criteria.
+          </p>
+        </div>
+      )}
+    </section>
   );
 }
