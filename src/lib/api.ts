@@ -19,7 +19,8 @@ export async function fetchGiveaways(
     params.append('sort-by', filters['sort-by']);
   }
 
-  const url = `${API_BASE_URL}?${params.toString()}`;
+  const queryString = params.toString();
+  const url = queryString ? `${API_BASE_URL}?${queryString}` : API_BASE_URL;
 
   const response = await fetch(url);
 
