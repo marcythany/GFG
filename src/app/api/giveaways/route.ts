@@ -1,11 +1,38 @@
 import { NextResponse } from 'next/server';
 
-// Valid platforms according to GamerPower API
+// Simple in-memory rate limiter (4 requests per second as per API docs)
+const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
+
+function checkRateLimit(clientIP: string): boolean {
+  const now = Date.now();
+  const windowMs = 1000; // 1 second window
+  const maxRequests = 4; // 4 requests per second
+
+  const clientData = rateLimitMap.get(clientIP);
+
+  if (!clientData || now > clientData.resetTime) {
+    // Reset or initialize
+    rateLimitMap.set(clientIP, {
+      count: 1,
+      resetTime: now + windowMs,
+    });
+    return true;
+  }
+
+  if (clientData.count >= maxRequests) {
+    return false; // Rate limit exceeded
+  }
+
+  clientData.count++;
+  return true;
+}
+
+// Valid platforms according to GamerPower API documentation
 const VALID_PLATFORMS = [
   'pc',
   'steam',
   'epic-games-store',
-  'uplay',
+  'ubisoft',
   'gog',
   'itchio',
   'ps4',
@@ -17,6 +44,9 @@ const VALID_PLATFORMS = [
   'ios',
   'vr',
   'battlenet',
+  'origin',
+  'drm-free',
+  'xbox-360',
 ];
 
 // Valid giveaway types
@@ -26,6 +56,31 @@ const VALID_TYPES = ['game', 'loot', 'beta'];
 const VALID_SORT_OPTIONS = ['date', 'value', 'popularity'];
 
 export async function GET(request: Request) {
+  // Get client IP for rate limiting
+  const clientIP =
+    request.headers.get('x-forwarded-for') ||
+    request.headers.get('x-real-ip') ||
+    'unknown';
+
+  // Check rate limit
+  if (!checkRateLimit(clientIP)) {
+    return NextResponse.json(
+      {
+        error:
+          'Rate limit exceeded. Please wait before making another request.',
+      },
+      {
+        status: 429,
+        headers: {
+          'Retry-After': '1',
+          'X-RateLimit-Limit': '4',
+          'X-RateLimit-Remaining': '0',
+          'X-RateLimit-Reset': new Date(Date.now() + 1000).toISOString(),
+        },
+      },
+    );
+  }
+
   const url = new URL(request.url);
   const stats = url.searchParams.get('stats');
   const giveawayId = url.searchParams.get('id');
@@ -45,7 +100,7 @@ export async function GET(request: Request) {
 }
 
 async function handleSpecificGiveaway(giveawayId: string) {
-  const apiUrl = `https://www.gamerpower.com/api/giveaway?id=${giveawayId}`;
+  const apiUrl = `https://gamerpower.com/api/giveaway?id=${giveawayId}`;
 
   try {
     const res = await fetch(apiUrl, {
@@ -80,7 +135,7 @@ async function handleSpecificGiveaway(giveawayId: string) {
 }
 
 async function handleStatsEndpoint() {
-  const statsUrl = 'https://www.gamerpower.com/api/worth';
+  const statsUrl = 'https://gamerpower.com/api/worth';
 
   try {
     const res = await fetch(statsUrl, {
@@ -144,7 +199,7 @@ async function handleGiveawaysList(searchParams: URLSearchParams) {
   }
 
   // Build API URL
-  const baseUrl = 'https://www.gamerpower.com/api/giveaways';
+  const baseUrl = 'https://gamerpower.com/api/giveaways';
   let apiUrl = baseUrl;
 
   const queryParams = new URLSearchParams();
@@ -177,14 +232,27 @@ async function handleGiveawaysList(searchParams: URLSearchParams) {
     });
 
     if (!res.ok) {
+      if (res.status === 404) {
+        return NextResponse.json(
+          { error: 'Giveaways endpoint not found' },
+          { status: 404 },
+        );
+      }
+      if (res.status === 500) {
+        return NextResponse.json(
+          { error: 'GamerPower API server error' },
+          { status: 500 },
+        );
+      }
       throw new Error(`Failed to fetch API: ${res.status} ${res.statusText}`);
     }
 
     const data = await res.json();
 
-    // Handle empty responses gracefully
+    // Handle empty responses gracefully (201 status indicates no giveaways)
     if (!data || (Array.isArray(data) && data.length === 0)) {
       return NextResponse.json([], {
+        status: 201, // No giveaways found
         headers: {
           'Cache-Control': 'public, s-maxage=60', // Cache empty results for 1 minute
         },

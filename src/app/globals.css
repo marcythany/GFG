@@ -345,6 +345,16 @@ body {
     .stagger-5 {
       animation-delay: 0s;
     }
+
+    /* Disable overlay transitions for reduced motion */
+    .overlay-transition {
+      transition: none !important;
+    }
+
+    .group:hover .overlay-transition,
+    .group:focus .overlay-transition {
+      opacity: 0 !important;
+    }
   }
 }
 

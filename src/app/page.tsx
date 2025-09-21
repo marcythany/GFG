@@ -5,13 +5,12 @@ import GameList from '@/components/GameList';
 import Header from '@/components/Header';
 import Navigation from '@/components/Navigation';
 import SearchBar from '@/components/SearchBar';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 
 export default function Home() {
-  const [searchQuery, setSearchQuery] = useState('');
-
   const handleSearch = useCallback((query: string) => {
-    setSearchQuery(query);
+    // Search functionality is now handled internally by GameList component
+    console.log('Search query:', query);
   }, []);
 
   return (
@@ -57,7 +56,7 @@ export default function Home() {
             className="mb-6"
           />
 
-          <GameList onSearch={handleSearch} />
+          <GameList />
         </section>
       </main>
 
