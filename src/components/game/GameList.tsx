@@ -99,9 +99,9 @@ export default function GameList({ searchQuery = '' }: GameListProps = {}) {
         onSortChange={handleSortChange}
       />
 
-      {!loading && !error && giveaways.length > 0 && (
+      {!loading && !error && filteredGiveaways.length > 0 && (
         <GameResults
-          giveaways={giveaways}
+          giveaways={filteredGiveaways}
           totalFiltered={filteredGiveaways.length}
           totalAll={giveaways.length}
           searchQuery={searchQuery}

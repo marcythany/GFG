@@ -707,6 +707,7 @@ body {
     grid-template-columns: 1fr;
     gap: var(--spacing-md);
     margin-bottom: var(--spacing-lg);
+    align-items: stretch;
   }
 
   @media (min-width: 640px) {
