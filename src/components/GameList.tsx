@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import Breadcrumb from './Breadcrumb';
 import Dropdown from './Dropdown';
 import GameItem from './GameItem';
 import Pagination from './Pagination';
@@ -42,13 +43,18 @@ const platformApiMap: { [key: string]: string } = {
   'Xbox 360': 'xbox-360',
 };
 
-export default function GameList() {
+interface GameListProps {
+  onSearch?: (query: string) => void;
+}
+
+export default function GameList({ onSearch }: GameListProps = {}) {
   const [giveaways, setGiveaways] = useState<Giveaway[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const [sortCriteria, setSortCriteria] = useState('date');
   const [platform, setPlatform] = useState('all');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -88,7 +94,26 @@ export default function GameList() {
     fetchGiveaways();
   }, [sortCriteria, platform]);
 
-  const paginatedGiveaways = giveaways.slice(
+  // Reset search when filters change
+  useEffect(() => {
+    setSearchQuery('');
+    setCurrentPage(1);
+  }, [sortCriteria, platform]);
+
+  // Filter giveaways based on search query
+  const filteredGiveaways = giveaways.filter((giveaway) => {
+    if (!searchQuery.trim()) return true;
+
+    const query = searchQuery.toLowerCase();
+    return (
+      giveaway.title.toLowerCase().includes(query) ||
+      giveaway.description.toLowerCase().includes(query) ||
+      giveaway.platforms.toLowerCase().includes(query) ||
+      giveaway.type.toLowerCase().includes(query)
+    );
+  });
+
+  const paginatedGiveaways = filteredGiveaways.slice(
     (currentPage - 1) * GAMES_PER_PAGE,
     currentPage * GAMES_PER_PAGE,
   );
@@ -99,9 +124,20 @@ export default function GameList() {
   };
 
   const handleSortChange = (selectedSort: string) => {
-    setSortCriteria(selectedSort.toLowerCase());
+    setSortCriteria(selectedSort);
     setCurrentPage(1);
   };
+
+  const handleSearch = useCallback(
+    (query: string) => {
+      setSearchQuery(query);
+      setCurrentPage(1);
+      if (onSearch) {
+        onSearch(query);
+      }
+    },
+    [onSearch],
+  );
 
   if (loading) {
     return (
@@ -138,16 +174,15 @@ export default function GameList() {
       </h2>
 
       <div
-        className="flex flex-col sm:flex-row gap-4 mb-8"
+        className="flex flex-col gap-6 mb-8"
         role="toolbar"
         aria-label="Filter and sort controls"
       >
-        <Dropdown
-          onSortChange={handleSortChange}
+        <Breadcrumb
+          selectedPlatform={platform}
           onPlatformChange={handlePlatformChange}
-          platform={platform}
-          sortCriteria={sortCriteria}
         />
+        <Dropdown onSortChange={handleSortChange} sortCriteria={sortCriteria} />
       </div>
 
       {loading && (
@@ -178,8 +213,14 @@ export default function GameList() {
         <>
           <div className="mb-4 text-center" aria-live="polite">
             <p className="text-accent text-sm" id="results-count">
-              Showing {paginatedGiveaways.length} of {giveaways.length}{' '}
+              Showing {paginatedGiveaways.length} of {filteredGiveaways.length}{' '}
               giveaways
+              {searchQuery && (
+                <span className="text-muted">
+                  {' '}
+                  (filtered from {giveaways.length} total)
+                </span>
+              )}
             </p>
           </div>
 
@@ -197,7 +238,7 @@ export default function GameList() {
           </div>
 
           <Pagination
-            totalItems={giveaways.length}
+            totalItems={filteredGiveaways.length}
             itemsPerPage={GAMES_PER_PAGE}
             currentPage={currentPage}
             onPageChange={setCurrentPage}

@@ -2,66 +2,46 @@
 
 interface DropdownProps {
   onSortChange: (criteria: string) => void;
-  onPlatformChange: (platform: string) => void;
   onTypeChange?: (type: string) => void;
-  platform?: string;
   sortCriteria?: string;
   type?: string;
 }
 
-// Mapping for platform names to API slugs
-const platformApiMap: { [key: string]: string } = {
-  'Show all': 'all',
-  PC: 'pc',
-  Steam: 'steam',
-  'Epic Games': 'epic-games-store',
-  GOG: 'gog',
-  'Nintendo Switch': 'switch',
-  'Playstation 5': 'ps5',
-  'Xbox Series X|S': 'xbox-series-xs',
-  'Playstation 4': 'ps4',
-  'Xbox One': 'xbox-one',
-  Android: 'android',
-  iOS: 'ios',
-  'Itch.io': 'itchio',
-  'Xbox 360': 'xbox-360',
-};
-
 const sortingOptions = {
-  Platforms: [
-    'Show all',
-    'PC',
-    'Steam',
-    'Epic Games',
-    'GOG',
-    'Nintendo Switch',
-    'Playstation 5',
-    'Xbox Series X|S',
-    'Playstation 4',
-    'Xbox One',
-    'Android',
-    'iOS',
-    'Itch.io',
-    'Xbox 360',
+  SortBy: [
+    'Date (Newest First)',
+    'Date (Oldest First)',
+    'Value (High to Low)',
+    'Value (Low to High)',
+    'Popularity (Most to Least)',
+    'Popularity (Least to Most)',
+    'Title (A to Z)',
+    'Title (Z to A)',
+    'Ending Soonest',
   ],
-  SortBy: ['Date', 'Value', 'Popularity'],
   Types: ['All', 'Game', 'DLC', 'Early Access', 'Beta'],
 };
 
 export default function Dropdown({
   onSortChange,
-  onPlatformChange,
   onTypeChange,
-  platform = 'all',
   sortCriteria = 'date',
   type = 'all',
 }: DropdownProps) {
   const handleSortClick = (criteria: string) => {
-    onSortChange(criteria);
-  };
-
-  const handlePlatformClick = (platform: string) => {
-    onPlatformChange(platform);
+    // Extract the actual sort criteria from the display text
+    const sortMapping: { [key: string]: string } = {
+      'Date (Newest First)': 'date',
+      'Date (Oldest First)': 'date-asc',
+      'Value (High to Low)': 'value',
+      'Value (Low to High)': 'value-asc',
+      'Popularity (Most to Least)': 'popularity',
+      'Popularity (Least to Most)': 'popularity-asc',
+      'Title (A to Z)': 'title',
+      'Title (Z to A)': 'title-desc',
+      'Ending Soonest': 'end-date',
+    };
+    onSortChange(sortMapping[criteria] || criteria.toLowerCase());
   };
 
   const handleTypeClick = (selectedType: string) => {
@@ -72,51 +52,6 @@ export default function Dropdown({
 
   return (
     <>
-      {/* Platform Filter */}
-      <div className="relative">
-        <label htmlFor="platform-select" className="sr-only">
-          Filter by gaming platform
-        </label>
-        <select
-          id="platform-select"
-          value={platform}
-          onChange={(e) => handlePlatformClick(e.target.value)}
-          className="appearance-none bg-primary border border-secondary text-accent px-4 py-2 pr-8 rounded-lg focus:border-accent focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:outline-none transition-all duration-200"
-          aria-describedby="platform-help"
-          aria-label="Filter giveaways by gaming platform"
-          aria-expanded="false"
-          role="combobox"
-        >
-          {sortingOptions.Platforms.map((platform) => (
-            <option key={platform} value={platformApiMap[platform] || 'all'}>
-              {platform}
-            </option>
-          ))}
-        </select>
-        <div
-          className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"
-          aria-hidden="true"
-        >
-          <svg
-            className="w-4 h-4 text-muted"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M19 9l-7 7-7-7"
-            />
-          </svg>
-        </div>
-        <div id="platform-help" className="sr-only">
-          Select a gaming platform to filter giveaways. Current selection:{' '}
-          {platform}
-        </div>
-      </div>
-
       {/* Sort Options */}
       <div className="relative">
         <label htmlFor="sort-select" className="sr-only">
@@ -133,7 +68,7 @@ export default function Dropdown({
           role="combobox"
         >
           {sortingOptions.SortBy.map((criteria) => (
-            <option key={criteria} value={criteria.toLowerCase()}>
+            <option key={criteria} value={criteria}>
               {criteria}
             </option>
           ))}

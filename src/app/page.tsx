@@ -1,68 +1,19 @@
+'use client';
+
 import Footer from '@/components/Footer';
 import GameList from '@/components/GameList';
 import Header from '@/components/Header';
 import Navigation from '@/components/Navigation';
 import SearchBar from '@/components/SearchBar';
-import type { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'GFG - Free Game Giveaways | Latest Gaming Deals & Promotions',
-  description:
-    'Discover the latest free games and giveaways from platforms like Epic Games, Steam, GOG, and more. Find exclusive gaming deals, promotions, and free game offers updated daily.',
-  keywords:
-    'free games, game giveaways, gaming deals, Epic Games free, Steam free games, GOG giveaways, gaming promotions',
-  authors: [{ name: 'Marcy' }],
-  creator: 'Marcy',
-  publisher: 'GFG',
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
-  openGraph: {
-    title: 'GFG - Free Game Giveaways',
-    description:
-      'Discover the latest free games and giveaways from top gaming platforms',
-    type: 'website',
-    locale: 'en_US',
-    siteName: 'GFG - Game Freebie Grabber',
-    images: [
-      {
-        url: '/og-image.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'GFG - Free Game Giveaways',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'GFG - Free Game Giveaways',
-    description:
-      'Discover the latest free games and giveaways from top gaming platforms',
-    images: ['/og-image.jpg'],
-    creator: '@marcythany',
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
-  verification: {
-    google: 'your-google-site-verification-code',
-  },
-  alternates: {
-    canonical: 'https://your-domain.com',
-  },
-};
+import { useCallback, useState } from 'react';
 
 export default function Home() {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearch = useCallback((query: string) => {
+    setSearchQuery(query);
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       {/* Skip link for keyboard navigation */}
@@ -101,11 +52,12 @@ export default function Home() {
 
           {/* Search functionality */}
           <SearchBar
+            onSearch={handleSearch}
             placeholder="Search giveaways by title, platform, or type..."
             className="mb-6"
           />
 
-          <GameList />
+          <GameList onSearch={handleSearch} />
         </section>
       </main>
 
