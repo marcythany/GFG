@@ -1,8 +1,6 @@
 'use client';
 
-import { faFilter } from '@fortawesome/free-solid-svg-icons';
-import { faArrowsUpDown } from '@fortawesome/free-solid-svg-icons/faArrowsUpDown';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Select } from './ui/Select';
 
 interface DropdownProps {
   onSortChange: (criteria: string) => void;
@@ -46,49 +44,14 @@ export default function Dropdown({
     <div className="flex flex-col sm:flex-row gap-4">
       {/* Sort Options */}
       <div className="relative">
-        <label htmlFor="sort-select" className="sr-only">
-          Sort giveaways by
-        </label>
-
-        {/* Modern dropdown container */}
-        <div className="relative group">
-          <select
-            id="sort-select"
-            value={sortCriteria}
-            onChange={(e) => handleSortClick(e.target.value)}
-            className="
-              appearance-none bg-gradient-to-r from-primary to-secondary/50
-              border-2 border-secondary hover:border-accent/50
-              text-accent px-4 py-3 pr-12 rounded-xl
-              focus:border-accent focus:ring-2 focus:ring-accent/20 focus:outline-none
-              transition-all duration-300 cursor-pointer
-              hover:shadow-lg hover:shadow-accent/10
-              min-w-[180px]
-            "
-            aria-describedby="sort-help"
-            aria-label="Sort giveaways by criteria"
-            aria-expanded="false"
-            role="combobox"
-          >
-            {sortingOptions.SortBy.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.icon} {option.label}
-              </option>
-            ))}
-          </select>
-
-          {/* Custom dropdown arrow */}
-          <div className="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none">
-            <FontAwesomeIcon
-              icon={faArrowsUpDown}
-              className="w-5 h-5 text-accent transition-transform duration-300 group-hover:scale-110"
-              aria-hidden="true"
-            />
-          </div>
-
-          {/* Dropdown glow effect */}
-          <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-accent/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-        </div>
+        <Select
+          options={sortingOptions.SortBy}
+          value={sortCriteria}
+          onChange={handleSortClick}
+          aria-label="Sort giveaways by criteria"
+          aria-describedby="sort-help"
+          className="min-w-[180px]"
+        />
 
         <div id="sort-help" className="sr-only">
           Choose how to sort the giveaways. Current sorting: {sortCriteria}
@@ -98,49 +61,14 @@ export default function Dropdown({
       {/* Type Filter */}
       {onTypeChange && (
         <div className="relative">
-          <label htmlFor="type-select" className="sr-only">
-            Filter by giveaway type
-          </label>
-
-          {/* Modern dropdown container */}
-          <div className="relative group">
-            <select
-              id="type-select"
-              value={type}
-              onChange={(e) => handleTypeClick(e.target.value)}
-              className="
-                appearance-none bg-gradient-to-r from-primary to-secondary/50
-                border-2 border-secondary hover:border-accent/50
-                text-accent px-4 py-3 pr-12 rounded-xl
-                focus:border-accent focus:ring-2 focus:ring-accent/20 focus:outline-none
-                transition-all duration-300 cursor-pointer
-                hover:shadow-lg hover:shadow-accent/10
-                min-w-[160px]
-              "
-              aria-describedby="type-help"
-              aria-label="Filter giveaways by type"
-              aria-expanded="false"
-              role="combobox"
-            >
-              {sortingOptions.Types.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.icon} {option.label}
-                </option>
-              ))}
-            </select>
-
-            {/* Custom dropdown arrow */}
-            <div className="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none">
-              <FontAwesomeIcon
-                icon={faFilter}
-                className="w-5 h-5 text-accent transition-transform duration-300 group-hover:scale-110"
-                aria-hidden="true"
-              />
-            </div>
-
-            {/* Dropdown glow effect */}
-            <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-accent/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
-          </div>
+          <Select
+            options={sortingOptions.Types}
+            value={type}
+            onChange={handleTypeClick}
+            aria-label="Filter giveaways by type"
+            aria-describedby="type-help"
+            className="min-w-[160px]"
+          />
 
           <div id="type-help" className="sr-only">
             Select a giveaway type to filter results. Current type: {type}

@@ -1,20 +1,8 @@
 'use client';
 
-import {
-  faAndroid,
-  faApple,
-  faPlaystation,
-  faSteam,
-  faXbox,
-} from '@fortawesome/free-brands-svg-icons';
-import {
-  faDesktop,
-  faGamepad,
-  faGlobe,
-  faStar,
-} from '@fortawesome/free-solid-svg-icons';
+import { faGamepad, faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Image from 'next/image';
+import Image from './Image';
 
 // Mapping for platform names to API slugs
 const platformApiMap: { [key: string]: string } = {
@@ -37,53 +25,6 @@ const platformApiMap: { [key: string]: string } = {
   'Battle.net': 'battlenet',
   Origin: 'origin',
   'DRM-Free': 'drm-free',
-};
-
-// Platform icons mapping using FontAwesome icons and SVG images
-const platformIcons: { [key: string]: React.ReactNode } = {
-  'Show all': <FontAwesomeIcon icon={faGlobe} className="w-6 h-6" />,
-  PC: <FontAwesomeIcon icon={faDesktop} className="w-6 h-6" />,
-  Steam: <FontAwesomeIcon icon={faSteam} className="w-6 h-6" />,
-  'Epic Games': (
-    <Image
-      src="/epic-games.svg"
-      alt="Epic Games"
-      width={24}
-      height={24}
-      className="w-6 h-6 filter brightness-0 invert transition-all duration-300"
-    />
-  ),
-  Ubisoft: <FontAwesomeIcon icon={faGamepad} className="w-6 h-6" />,
-  GOG: (
-    <Image
-      src="/gog.svg"
-      alt="GOG"
-      width={24}
-      height={24}
-      className="w-6 h-6 filter brightness-0 invert transition-all duration-300"
-    />
-  ),
-  'Nintendo Switch': (
-    <Image
-      src="/switch.svg"
-      alt="Nintendo Switch"
-      width={24}
-      height={24}
-      className="w-6 h-6 filter brightness-0 invert transition-all duration-300"
-    />
-  ),
-  'Playstation 5': <FontAwesomeIcon icon={faPlaystation} className="w-6 h-6" />,
-  'Xbox Series X|S': <FontAwesomeIcon icon={faXbox} className="w-6 h-6" />,
-  'Playstation 4': <FontAwesomeIcon icon={faPlaystation} className="w-6 h-6" />,
-  'Xbox One': <FontAwesomeIcon icon={faXbox} className="w-6 h-6" />,
-  Android: <FontAwesomeIcon icon={faAndroid} className="w-6 h-6" />,
-  iOS: <FontAwesomeIcon icon={faApple} className="w-6 h-6" />,
-  'Itch.io': <FontAwesomeIcon icon={faGamepad} className="w-6 h-6" />,
-  'Xbox 360': <FontAwesomeIcon icon={faXbox} className="w-6 h-6" />,
-  VR: <FontAwesomeIcon icon={faGamepad} className="w-6 h-6" />,
-  'Battle.net': <FontAwesomeIcon icon={faGamepad} className="w-6 h-6" />,
-  Origin: <FontAwesomeIcon icon={faGamepad} className="w-6 h-6" />,
-  'DRM-Free': <FontAwesomeIcon icon={faGlobe} className="w-6 h-6" />,
 };
 
 interface BreadcrumbProps {
@@ -124,7 +65,14 @@ export default function Breadcrumb({
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
         {Object.entries(platformApiMap).map(([displayName, slug]) => {
           const isSelected = selectedPlatform === slug;
-          const icon = platformIcons[displayName] || '🎮';
+          const icon = (
+            <Image
+              platform={displayName}
+              alt={displayName}
+              className="w-6 h-6"
+              color={isSelected ? 'text-text' : 'text-accent'}
+            />
+          );
 
           return (
             <button
@@ -139,7 +87,7 @@ export default function Breadcrumb({
                 focus:scale-105 focus:shadow-lg focus:shadow-accent/20
                 ${
                   isSelected
-                    ? 'bg-gradient-to-br from-accent to-accent/80 text-primary border-accent shadow-lg shadow-accent/30'
+                    ? 'bg-gradient-to-br from-accent to-accent/80 text-text border-accent shadow-lg shadow-accent/30'
                     : 'bg-secondary/50 text-accent border-secondary hover:border-accent/50 hover:bg-secondary/70 focus:border-accent/50 focus:bg-secondary/70'
                 }
               `}
@@ -160,7 +108,7 @@ export default function Breadcrumb({
               <span
                 className={`
                  relative z-10 text-sm font-medium text-center transition-all duration-300
-                 ${isSelected ? 'text-primary' : 'text-accent group-hover:text-accent/90'}
+                 ${isSelected ? 'text-text' : 'text-accent group-hover:text-accent/90'}
                `}
               >
                 {displayName}
@@ -171,7 +119,7 @@ export default function Breadcrumb({
                 <div className="absolute top-2 right-2 z-20">
                   <FontAwesomeIcon
                     icon={faStar}
-                    className="w-4 h-4 text-primary animate-pulse"
+                    className="w-4 h-4 text-text animate-pulse"
                     aria-hidden="true"
                   />
                 </div>

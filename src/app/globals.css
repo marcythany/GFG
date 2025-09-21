@@ -131,6 +131,8 @@ body {
 }
 
 @layer components {
+  /* SVG icon coloring now handled via inline SVGs with currentColor */
+
   /* Screen reader only content */
   .sr-only {
     position: absolute;
@@ -166,6 +168,10 @@ body {
 
 @layer utilities {
   /* Utility classes */
+  .z-999 {
+    z-index: 999;
+  }
+
   .line-clamp-2 {
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -354,6 +360,23 @@ body {
     .group:hover .overlay-transition,
     .group:focus .overlay-transition {
       opacity: 0 !important;
+    }
+
+    /* Disable Image component animations for reduced motion */
+    .image-hover-scale {
+      transform: none !important;
+    }
+
+    .image-container-scale {
+      transform: none !important;
+    }
+
+    .image-shadow-transition {
+      transition: none !important;
+    }
+
+    .image-glow-transition {
+      transition: none !important;
     }
   }
 }

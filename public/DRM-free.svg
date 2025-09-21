@@ -1,0 +1,8 @@
+<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <path id="a" d="M85.961 97.259c-49.975 29.173-88.156-27.081-63.218-63.22l-9.15-9.15c-39.613 61.069 30.857 118.17 81.516 81.519z" fill="none" stroke="currentColor" stroke-width="2.7423"/>
+  <use transform="rotate(180 60.109 59.87)" href="#a"/>
+  <text x="60" y="60" text-anchor="middle" dominant-baseline="middle" fill="currentColor">
+    <tspan x="60" dy="-0.6em">DRM</tspan>
+    <tspan x="60" dy="1.2em">FREE</tspan>
+  </text>
+</svg>
