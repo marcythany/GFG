@@ -106,16 +106,18 @@ export default function GameList() {
   if (loading) {
     return (
       <div
-        className="flex justify-center items-center py-12"
+        className="flex flex-col justify-center items-center py-12"
         role="status"
         aria-live="polite"
         aria-label="Loading game giveaways"
       >
         <div
-          className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent-color"
+          className="animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--color-accent-color)] mb-4"
           aria-hidden="true"
         ></div>
-        <span className="sr-only">Loading giveaways...</span>
+        <p className="text-[var(--color-alt-text-color)] text-sm">
+          Loading giveaways...
+        </p>
       </div>
     );
   }
@@ -123,8 +125,10 @@ export default function GameList() {
   if (error) {
     return (
       <div className="text-center py-8" role="alert" aria-live="assertive">
-        <p className="text-danger-color font-medium">Error: {error}</p>
-        <p className="text-alt-text-color text-sm mt-2">
+        <p className="text-[var(--color-danger-color)] font-medium">
+          Error: {error}
+        </p>
+        <p className="text-[var(--color-alt-text-color)] text-sm mt-2">
           Please try again later or refresh the page.
         </p>
       </div>
@@ -138,7 +142,7 @@ export default function GameList() {
       </h2>
 
       <div
-        className="flex-responsive mb-8"
+        className="flex flex-col sm:flex-row gap-4 mb-8"
         role="toolbar"
         aria-label="Filter and sort controls"
       >
@@ -210,10 +214,10 @@ export default function GameList() {
           <div className="text-6xl mb-4" aria-hidden="true">
             🎮
           </div>
-          <h2 className="text-xl font-semibold text-highlight-color mb-2">
+          <h2 className="text-xl font-semibold text-[var(--color-highlight-color)] mb-2">
             No giveaways found
           </h2>
-          <p className="text-alt-text-color">
+          <p className="text-[var(--color-alt-text-color)]">
             No giveaways match your current filters. Try adjusting your search
             criteria.
           </p>

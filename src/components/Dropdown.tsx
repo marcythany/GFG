@@ -81,7 +81,7 @@ export default function Dropdown({
           id="platform-select"
           value={platform}
           onChange={(e) => handlePlatformClick(e.target.value)}
-          className="appearance-none bg-primary-color border border-secondary-color text-highlight-color px-4 py-2 pr-8 rounded-lg focus:border-accent-color focus:ring-2 focus:ring-accent-color focus:ring-offset-2 focus:outline-none transition-all"
+          className="appearance-none bg-[var(--color-primary-color)] border border-[var(--color-secondary-color)] text-[var(--color-highlight-color)] px-4 py-2 pr-8 rounded-lg focus:border-[var(--color-accent-color)] focus:ring-2 focus:ring-[var(--color-accent-color)] focus:ring-offset-2 focus:outline-none transition-all duration-200"
           aria-describedby="platform-help"
           aria-label="Filter giveaways by gaming platform"
           aria-expanded="false"
@@ -126,7 +126,7 @@ export default function Dropdown({
           id="sort-select"
           value={sortCriteria}
           onChange={(e) => handleSortClick(e.target.value)}
-          className="appearance-none bg-primary-color border border-secondary-color text-highlight-color px-4 py-2 pr-8 rounded-lg focus:border-accent-color focus:ring-2 focus:ring-accent-color focus:ring-offset-2 focus:outline-none transition-all"
+          className="appearance-none bg-[var(--color-primary-color)] border border-[var(--color-secondary-color)] text-[var(--color-highlight-color)] px-4 py-2 pr-8 rounded-lg focus:border-[var(--color-accent-color)] focus:ring-2 focus:ring-[var(--color-accent-color)] focus:ring-offset-2 focus:outline-none transition-all duration-200"
           aria-describedby="sort-help"
           aria-label="Sort giveaways by criteria"
           aria-expanded="false"
@@ -171,7 +171,7 @@ export default function Dropdown({
             id="type-select"
             value={type}
             onChange={(e) => handleTypeClick(e.target.value)}
-            className="appearance-none bg-primary-color border border-secondary-color text-highlight-color px-4 py-2 pr-8 rounded-lg focus:border-accent-color focus:ring-2 focus:ring-accent-color focus:ring-offset-2 focus:outline-none transition-all"
+            className="appearance-none bg-[var(--color-primary-color)] border border-[var(--color-secondary-color)] text-[var(--color-highlight-color)] px-4 py-2 pr-8 rounded-lg focus:border-[var(--color-accent-color)] focus:ring-2 focus:ring-[var(--color-accent-color)] focus:ring-offset-2 focus:outline-none transition-all duration-200"
             aria-describedby="type-help"
             aria-label="Filter giveaways by type"
             aria-expanded="false"

@@ -21,7 +21,7 @@ export default function Pagination({
 
   return (
     <nav
-      className="flex justify-center items-center space-x-2 mt-8"
+      className="flex justify-center items-center gap-2 mt-8"
       role="navigation"
       aria-label="Pagination navigation"
       aria-describedby="pagination-info"
@@ -35,10 +35,10 @@ export default function Pagination({
         <button
           key={page}
           onClick={() => onPageChange(page)}
-          className={`px-4 py-2 rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-accent-color focus:ring-offset-2 ${
+          className={`px-4 py-2 rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-color)] focus:ring-offset-2 ${
             currentPage === page
-              ? 'bg-accent-color text-primary-color font-bold shadow-md'
-              : 'bg-primary-color text-highlight-color hover:bg-secondary-color border border-secondary-color'
+              ? 'bg-[var(--color-accent-color)] text-[var(--color-primary-color)] font-bold shadow-md hover:shadow-lg'
+              : 'bg-[var(--color-primary-color)] text-[var(--color-highlight-color)] hover:bg-[var(--color-secondary-color)] border border-[var(--color-secondary-color)] hover:border-[var(--color-accent-color)]'
           }`}
           aria-current={currentPage === page ? 'page' : undefined}
           aria-label={`Go to page ${page}${currentPage === page ? ' (current page)' : ''}`}
