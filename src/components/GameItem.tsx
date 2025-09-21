@@ -1,6 +1,8 @@
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
+import React from 'react';
 
 import {
   faAndroid,
@@ -32,6 +34,7 @@ interface Giveaway {
 
 interface GameItemProps {
   giveaway: Giveaway;
+  index?: number;
 }
 
 function calculateTimeLeft(endDate: string) {
@@ -70,12 +73,26 @@ const platformIcons: { [key: string]: IconDefinition } = {
   'Itch.io': faItchIo,
   'Xbox 360': faXbox,
 };
-export default function GameItem({ giveaway }: GameItemProps) {
+const GameItemComponent = React.memo(function GameItemComponent({
+  giveaway,
+  index = 0,
+}: GameItemProps) {
   const timeLeft = calculateTimeLeft(giveaway.end_date);
 
   return (
-    <article
-      className="border border-secondary rounded-lg overflow-hidden bg-primary flex flex-col shadow-sm hover:shadow-lg transition-all duration-300 hover:border-accent group hover:-translate-y-1"
+    <motion.article
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        duration: 0.3,
+        delay: index * 0.1,
+        ease: 'easeOut',
+      }}
+      whileHover={{
+        y: -4,
+        transition: { duration: 0.2 },
+      }}
+      className="border border-secondary rounded-lg overflow-hidden bg-primary flex flex-col shadow-sm hover:shadow-lg transition-all duration-300 hover:border-accent group"
       role="article"
       aria-labelledby={`giveaway-title-${giveaway.id}`}
     >
@@ -203,6 +220,8 @@ export default function GameItem({ giveaway }: GameItemProps) {
           </a>
         </div>
       </div>
-    </article>
+    </motion.article>
   );
-}
+});
+
+export default GameItemComponent;

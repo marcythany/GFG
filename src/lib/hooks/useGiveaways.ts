@@ -30,13 +30,11 @@ export function useGiveaways(initialFilters: GiveawayFilters = {}) {
   }, [optimisticSearch]);
 
   useEffect(() => {
-    console.log('useEffect running with filters:', filters);
     async function loadGiveaways() {
       setLoading(true);
       setError(null);
       try {
         const data = await fetchGiveaways(filters);
-        console.log('Fetched giveaways, setting state');
         setGiveaways(data);
         setCurrentPage(1); // Reset to first page when filters change
       } catch (err) {
@@ -52,13 +50,11 @@ export function useGiveaways(initialFilters: GiveawayFilters = {}) {
   }, [filters]);
 
   const updateFilters = (newFilters: Partial<GiveawayFilters>) => {
-    console.log('updateFilters called with:', newFilters);
     setFilters((prev) => ({ ...prev, ...newFilters }));
   };
 
   const searchGiveaways = useCallback(
     (query: string) => {
-      console.log('searchGiveaways called with query:', query);
       startTransition(() => {
         if (query !== optimisticSearchRef.current) {
           setOptimisticSearch(query);
@@ -70,13 +66,6 @@ export function useGiveaways(initialFilters: GiveawayFilters = {}) {
 
   // Filter giveaways based on search query
   const filteredGiveaways = useMemo(() => {
-    console.log(
-      'useMemo running with giveaways length:',
-      giveaways.length,
-      'optimisticSearch:',
-      optimisticSearch,
-    );
-    console.time('filter-giveaways');
     const result = giveaways.filter((giveaway) => {
       if (!optimisticSearch.trim()) return true;
 
@@ -88,10 +77,6 @@ export function useGiveaways(initialFilters: GiveawayFilters = {}) {
         giveaway.type.toLowerCase().includes(searchTerm)
       );
     });
-    console.timeEnd('filter-giveaways');
-    console.log(
-      `Filtered ${giveaways.length} giveaways to ${result.length} results for query: "${optimisticSearch}"`,
-    );
     return result;
   }, [giveaways, optimisticSearch]);
 

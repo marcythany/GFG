@@ -1,13 +1,13 @@
 'use client';
 
-import { useState, useTransition } from 'react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { Giveaway, PlatformOption, SortOption } from '@/types/giveaway';
 import SearchBar from '@/components/common/SearchBar';
+import { Giveaway } from '@/types/giveaway';
+import { motion } from 'framer-motion';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useState, useTransition } from 'react';
+import GameEmptyState from './GameEmptyState';
 import GameFilters from './GameFilters';
 import GameResults from './GameResults';
-import GameEmptyState from './GameEmptyState';
-import { motion } from 'framer-motion';
 
 const GAMES_PER_PAGE = 12;
 
@@ -67,10 +67,9 @@ export default function GiveawayContainer({
   };
 
   const showEmptyState = initialGiveaways.length === 0;
-  const totalPages = Math.ceil(initialGiveaways.length / GAMES_PER_PAGE);
   const paginatedGiveaways = initialGiveaways.slice(
     (currentPage - 1) * GAMES_PER_PAGE,
-    currentPage * GAMES_PER_PAGE
+    currentPage * GAMES_PER_PAGE,
   );
 
   return (

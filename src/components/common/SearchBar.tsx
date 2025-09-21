@@ -8,14 +8,16 @@ interface SearchBarProps {
   onSearch?: (query: string) => void;
   placeholder?: string;
   className?: string;
+  initialValue?: string;
 }
 
 export default function SearchBar({
   onSearch,
   placeholder = 'Search giveaways...',
   className = '',
+  initialValue = '',
 }: SearchBarProps) {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState(initialValue);
   const inputRef = useRef<HTMLInputElement>(null);
   const debounceRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
