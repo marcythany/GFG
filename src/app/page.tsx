@@ -1,28 +1,46 @@
-'use client';
-
-import SearchBar from '@/components/common/SearchBar';
-import GameList from '@/components/game/GameList';
+import { fetchGiveaways } from '@/lib/api';
+import { Giveaway, GiveawayFilters } from '@/types/giveaway';
 import Footer from '@/components/layout/Footer';
 import Header from '@/components/layout/Header';
 import Navigation from '@/components/layout/Navigation';
-import { useCallback, useState } from 'react';
+import GiveawayContainer from '@/components/game/GiveawayContainer';
+import { Suspense } from 'react';
 
-export default function Home() {
-  const [searchQuery, setSearchQuery] = useState('');
+interface HomeProps {
+  searchParams: {
+    platform?: string;
+    'sort-by'?: string;
+    search?: string;
+    page?: string;
+  };
+}
 
-  const handleSearch = useCallback((query: string) => {
-    setSearchQuery(query);
-  }, []);
+export default async function Home({ searchParams }: HomeProps) {
+  const filters: GiveawayFilters = {
+    platform: searchParams.platform,
+    'sort-by': searchParams['sort-by'],
+  };
+
+  // Fetch all giveaways based on platform/sort filters
+  const allGiveaways = await fetchGiveaways(filters);
+
+  // Apply search query filtering on the server
+  const searchQuery = searchParams.search || '';
+  const filteredGiveaways = searchQuery
+    ? allGiveaways.filter((giveaway: Giveaway) =>
+        giveaway.title.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : allGiveaways;
+
+  const currentPage = parseInt(searchParams.page || '1', 10);
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Skip link for keyboard navigation */}
       <a href="#main-content" className="skip-link">
         Skip to main content
       </a>
 
       <Header />
-
       <Navigation />
 
       <main
@@ -39,25 +57,14 @@ export default function Home() {
           <h1 id="giveaways-heading" className="sr-only">
             Free Game Giveaways and Promotions
           </h1>
-
-          {/* Live region for dynamic content announcements */}
-          <div
-            aria-live="polite"
-            aria-atomic="true"
-            className="sr-only"
-            id="announcements"
-          >
-            Page loaded with latest game giveaways
-          </div>
-
-          {/* Search functionality */}
-          <SearchBar
-            onSearch={handleSearch}
-            placeholder="Search giveaways by title, platform, or type..."
-            className="mb-6"
-          />
-
-          <GameList searchQuery={searchQuery} />
+          <Suspense fallback={<div>Loading...</div>}>
+            <GiveawayContainer
+              initialGiveaways={filteredGiveaways}
+              initialUnfilteredCount={allGiveaways.length}
+              searchQuery={searchQuery}
+              currentPage={currentPage}
+            />
+          </Suspense>
         </section>
       </main>
 
