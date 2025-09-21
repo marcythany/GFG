@@ -1,16 +1,17 @@
 'use client';
 
-import Footer from '@/components/Footer';
-import GameList from '@/components/GameList';
-import Header from '@/components/Header';
-import Navigation from '@/components/Navigation';
-import SearchBar from '@/components/SearchBar';
-import { useCallback } from 'react';
+import SearchBar from '@/components/common/SearchBar';
+import GameList from '@/components/game/GameList';
+import Footer from '@/components/layout/Footer';
+import Header from '@/components/layout/Header';
+import Navigation from '@/components/layout/Navigation';
+import { useCallback, useState } from 'react';
 
 export default function Home() {
+  const [searchQuery, setSearchQuery] = useState('');
+
   const handleSearch = useCallback((query: string) => {
-    // Search functionality is now handled internally by GameList component
-    console.log('Search query:', query);
+    setSearchQuery(query);
   }, []);
 
   return (
@@ -56,7 +57,7 @@ export default function Home() {
             className="mb-6"
           />
 
-          <GameList />
+          <GameList searchQuery={searchQuery} />
         </section>
       </main>
 

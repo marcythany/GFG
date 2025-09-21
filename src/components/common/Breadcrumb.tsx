@@ -1,8 +1,8 @@
 'use client';
 
+import Image from '@/components/Image';
 import { faGamepad, faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Image from './Image';
 
 // Mapping for platform names to API slugs
 const platformApiMap: { [key: string]: string } = {

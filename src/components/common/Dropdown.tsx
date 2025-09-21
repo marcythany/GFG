@@ -1,6 +1,6 @@
 'use client';
 
-import { Select } from './ui/Select';
+import { Select } from '@/components/ui/Select';
 
 interface DropdownProps {
   onSortChange: (criteria: string) => void;

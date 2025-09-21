@@ -378,6 +378,12 @@ body {
     .image-glow-transition {
       transition: none !important;
     }
+
+    /* Framer Motion reduced motion support */
+    html[data-framer-appear-id] * {
+      animation: none !important;
+      transition: none !important;
+    }
   }
 }
 
