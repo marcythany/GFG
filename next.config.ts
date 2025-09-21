@@ -1,7 +1,16 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'www.gamerpower.com',
+        port: '',
+        pathname: '/offers/**',
+      },
+    ],
+  },
   experimental: {
     // Enable server actions if needed
     serverActions: {
