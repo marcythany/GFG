@@ -2,7 +2,7 @@
 
 import { fetchGiveaways } from '@/lib/api';
 import { Giveaway, GiveawayFilters } from '@/types/giveaway';
-import { useEffect, useOptimistic, useState } from 'react';
+import { startTransition, useEffect, useOptimistic, useState } from 'react';
 
 const GAMES_PER_PAGE = 12;
 
@@ -41,7 +41,9 @@ export function useGiveaways(initialFilters: GiveawayFilters = {}) {
   };
 
   const searchGiveaways = (query: string) => {
-    setOptimisticSearch(query);
+    startTransition(() => {
+      setOptimisticSearch(query);
+    });
   };
 
   // Filter giveaways based on search query
