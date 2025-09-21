@@ -95,17 +95,21 @@ export function useGiveaways(initialFilters: GiveawayFilters = {}) {
     return result;
   }, [giveaways, optimisticSearch]);
 
-  const paginatedGiveaways = filteredGiveaways.slice(
-    (currentPage - 1) * GAMES_PER_PAGE,
-    currentPage * GAMES_PER_PAGE,
+  const paginatedGiveaways = useMemo(
+    () =>
+      filteredGiveaways.slice(
+        (currentPage - 1) * GAMES_PER_PAGE,
+        currentPage * GAMES_PER_PAGE,
+      ),
+    [filteredGiveaways, currentPage],
   );
 
   const totalPages = Math.ceil(filteredGiveaways.length / GAMES_PER_PAGE);
 
   return {
-    giveaways: paginatedGiveaways,
-    allGiveaways: giveaways,
-    filteredGiveaways,
+    giveaways: paginatedGiveaways, // This is the paginated list for the current page
+    unfilteredGiveaways: giveaways, // This is the list from the API, before client-side search
+    filteredGiveaways, // This is the full list after client-side search
     loading,
     error,
     filters,
