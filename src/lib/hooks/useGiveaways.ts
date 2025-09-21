@@ -3,7 +3,6 @@
 import { fetchGiveaways } from '@/lib/api';
 import { Giveaway, GiveawayFilters } from '@/types/giveaway';
 import {
-  startTransition,
   useCallback,
   useEffect,
   useMemo,

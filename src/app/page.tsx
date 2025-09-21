@@ -3,7 +3,12 @@ import Footer from '@/components/layout/Footer';
 import Header from '@/components/layout/Header';
 import Navigation from '@/components/layout/Navigation';
 import { fetchGiveaways } from '@/lib/api';
-import { Giveaway, GiveawayFilters } from '@/types/giveaway';
+import {
+  Giveaway,
+  GiveawayFilters,
+  PLATFORM_OPTIONS,
+  SORT_OPTIONS,
+} from '@/types/giveaway';
 import { Metadata } from 'next';
 import { Suspense } from 'react';
 
@@ -20,8 +25,18 @@ export default async function Home({ searchParams }: HomeProps) {
   const params = await searchParams;
 
   const filters: GiveawayFilters = {
-    platform: params.platform,
-    'sort-by': params['sort-by'],
+    platform:
+      params.platform &&
+      PLATFORM_OPTIONS.includes(
+        params.platform as (typeof PLATFORM_OPTIONS)[number],
+      )
+        ? (params.platform as (typeof PLATFORM_OPTIONS)[number])
+        : undefined,
+    'sort-by':
+      params['sort-by'] &&
+      SORT_OPTIONS.includes(params['sort-by'] as (typeof SORT_OPTIONS)[number])
+        ? (params['sort-by'] as (typeof SORT_OPTIONS)[number])
+        : undefined,
   };
 
   // Fetch all giveaways based on platform/sort filters
