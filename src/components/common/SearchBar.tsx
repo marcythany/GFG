@@ -2,6 +2,7 @@
 
 import { Search, X } from 'lucide-react';
 import { useRef, useState } from 'react';
+import { Input } from '@/components/ui/input';
 
 interface SearchBarProps {
   onSearch?: (query: string) => void;
@@ -47,7 +48,7 @@ export default function SearchBar({
           className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-secondary"
           aria-hidden="true"
         />
-        <input
+        <Input
           ref={inputRef}
           type="search"
           value={query}
@@ -57,10 +58,8 @@ export default function SearchBar({
           onKeyDown={handleKeyDown}
           placeholder={placeholder}
           className={`
-            w-full pl-10 pr-10 py-3 rounded-lg border transition-all duration-200
-            bg-primary border-secondary text-muted
-            placeholder-secondary focus:border-accent focus:ring-2
-            focus:ring-accent focus:ring-opacity-20 focus:outline-none
+            pl-10 pr-10 py-3 rounded-lg transition-all duration-200
+            text-muted placeholder-secondary focus:ring-opacity-20
             ${isFocused ? 'shadow-lg' : 'shadow-sm'}
           `}
           aria-describedby="search-help"
