@@ -16,8 +16,9 @@ const GAMES_PER_PAGE = 12;
 
 export default function GameList({ searchQuery = '' }: GameListProps = {}) {
   const {
-    giveaways,
-    filteredGiveaways,
+    giveaways, // Now paginated
+    unfilteredGiveaways,
+    filteredGiveaways, // Full filtered list
     loading,
     error,
     filters,
@@ -34,12 +35,12 @@ export default function GameList({ searchQuery = '' }: GameListProps = {}) {
 
   const handlePlatformChange = (selectedPlatform: string) => {
     updateFilters({ platform: selectedPlatform as PlatformOption });
-    setCurrentPage(1);
+    // Resetting page is handled by the hook
   };
 
   const handleSortChange = (selectedSort: string) => {
     updateFilters({ 'sort-by': selectedSort.toLowerCase() as SortOption });
-    setCurrentPage(1);
+    // Resetting page is handled by the hook
   };
 
   if (loading) {
@@ -80,6 +81,11 @@ export default function GameList({ searchQuery = '' }: GameListProps = {}) {
     );
   }
 
+  // Show empty state if there are no giveaways after filtering,
+  // or if the initial fetch returns nothing.
+  const showEmptyState =
+    !loading && !error && filteredGiveaways.length === 0;
+
   return (
     <motion.section
       initial={{ opacity: 0, y: 20 }}
@@ -99,24 +105,22 @@ export default function GameList({ searchQuery = '' }: GameListProps = {}) {
         onSortChange={handleSortChange}
       />
 
-      {!loading && !error && filteredGiveaways.length > 0 && (
+      {showEmptyState ? (
+        <GameEmptyState
+          onResetFilters={() => {
+            updateFilters({ platform: 'all', 'sort-by': 'date' });
+            searchGiveaways(''); // Also clear search
+          }}
+        />
+      ) : (
         <GameResults
-          giveaways={filteredGiveaways}
+          giveaways={giveaways} // Pass the paginated giveaways
           totalFiltered={filteredGiveaways.length}
-          totalAll={giveaways.length}
+          totalAll={unfilteredGiveaways.length} // Pass the total from before client search
           searchQuery={searchQuery}
           currentPage={currentPage}
           itemsPerPage={GAMES_PER_PAGE}
           onPageChange={setCurrentPage}
-        />
-      )}
-
-      {!loading && !error && giveaways.length === 0 && (
-        <GameEmptyState
-          onResetFilters={() => {
-            updateFilters({ platform: 'all', 'sort-by': 'date' });
-            setCurrentPage(1);
-          }}
         />
       )}
     </motion.section>
