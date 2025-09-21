@@ -1,7 +1,5 @@
 'use client';
 
-import { useState } from 'react';
-
 interface DropdownProps {
   onSortChange: (criteria: string) => void;
   onPlatformChange: (platform: string) => void;
@@ -58,23 +56,18 @@ export default function Dropdown({
   sortCriteria = 'date',
   type = 'all',
 }: DropdownProps) {
-  const [isOpen, setIsOpen] = useState(false);
-
   const handleSortClick = (criteria: string) => {
     onSortChange(criteria);
-    setIsOpen(false);
   };
 
   const handlePlatformClick = (platform: string) => {
     onPlatformChange(platform);
-    setIsOpen(false);
   };
 
   const handleTypeClick = (selectedType: string) => {
     if (onTypeChange) {
       onTypeChange(selectedType);
     }
-    setIsOpen(false);
   };
 
   return (

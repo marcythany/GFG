@@ -2,11 +2,8 @@
 
 import { ChevronRight, Home } from 'lucide-react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 
 export default function Navigation() {
-  const pathname = usePathname();
-
   const breadcrumbs = [{ name: 'Home', href: '/', icon: Home }];
 
   return (

@@ -25,7 +25,10 @@ export async function GET(request: Request) {
     const res = await fetch(apiUrl, {
       headers: {
         'Content-Type': 'application/json',
+        'User-Agent': 'GFG-Game-Freebie-Grabber/1.0.0',
       },
+      // Add timeout to prevent hanging requests
+      signal: AbortSignal.timeout(10000), // 10 second timeout
     });
 
     if (!res.ok) {
@@ -33,12 +36,22 @@ export async function GET(request: Request) {
     }
 
     const data = await res.json();
+
+    // Handle empty responses gracefully
+    if (!data || (Array.isArray(data) && data.length === 0)) {
+      return NextResponse.json([]);
+    }
+
     return NextResponse.json(data);
   } catch (error) {
-    console.error(error);
-    return NextResponse.json(
-      { message: 'Error fetching from GamerPower API' },
-      { status: 500 },
-    );
+    console.error('API Error:', error);
+
+    // Return empty array instead of error for better UX
+    return NextResponse.json([], {
+      status: 200,
+      headers: {
+        'Cache-Control': 'no-cache',
+      },
+    });
   }
 }

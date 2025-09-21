@@ -49,7 +49,6 @@ export default function GameList() {
 
   const [sortCriteria, setSortCriteria] = useState('date');
   const [platform, setPlatform] = useState('all');
-  const [searchQuery, setSearchQuery] = useState('');
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -101,11 +100,6 @@ export default function GameList() {
 
   const handleSortChange = (selectedSort: string) => {
     setSortCriteria(selectedSort.toLowerCase());
-    setCurrentPage(1);
-  };
-
-  const handleSearch = (query: string) => {
-    setSearchQuery(query);
     setCurrentPage(1);
   };
 
