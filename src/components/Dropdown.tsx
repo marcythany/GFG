@@ -8,17 +8,7 @@ interface DropdownProps {
 }
 
 const sortingOptions = {
-  SortBy: [
-    'Date (Newest First)',
-    'Date (Oldest First)',
-    'Value (High to Low)',
-    'Value (Low to High)',
-    'Popularity (Most to Least)',
-    'Popularity (Least to Most)',
-    'Title (A to Z)',
-    'Title (Z to A)',
-    'Ending Soonest',
-  ],
+  SortBy: ['Date', 'Value', 'Popularity'],
   Types: ['All', 'Game', 'DLC', 'Early Access', 'Beta'],
 };
 
@@ -29,19 +19,7 @@ export default function Dropdown({
   type = 'all',
 }: DropdownProps) {
   const handleSortClick = (criteria: string) => {
-    // Extract the actual sort criteria from the display text
-    const sortMapping: { [key: string]: string } = {
-      'Date (Newest First)': 'date',
-      'Date (Oldest First)': 'date-asc',
-      'Value (High to Low)': 'value',
-      'Value (Low to High)': 'value-asc',
-      'Popularity (Most to Least)': 'popularity',
-      'Popularity (Least to Most)': 'popularity-asc',
-      'Title (A to Z)': 'title',
-      'Title (Z to A)': 'title-desc',
-      'Ending Soonest': 'end-date',
-    };
-    onSortChange(sortMapping[criteria] || criteria.toLowerCase());
+    onSortChange(criteria.toLowerCase());
   };
 
   const handleTypeClick = (selectedType: string) => {

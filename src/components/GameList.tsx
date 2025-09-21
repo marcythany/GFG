@@ -124,7 +124,7 @@ export default function GameList({ onSearch }: GameListProps = {}) {
   };
 
   const handleSortChange = (selectedSort: string) => {
-    setSortCriteria(selectedSort);
+    setSortCriteria(selectedSort.toLowerCase());
     setCurrentPage(1);
   };
 
