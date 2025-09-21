@@ -89,7 +89,7 @@ export default function GameItem({ giveaway }: GameItemProps) {
           aria-describedby={`giveaway-description-${giveaway.id}`}
         >
           <Image
-            src={giveaway.thumbnail}
+            src={giveaway.thumbnail || '/placeholder-game.svg'}
             alt=""
             width={400}
             height={250}
@@ -99,6 +99,12 @@ export default function GameItem({ giveaway }: GameItemProps) {
             loading="lazy"
             placeholder="blur"
             blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              if (target.src !== '/placeholder-game.svg') {
+                target.src = '/placeholder-game.svg';
+              }
+            }}
           />
           <div className="sr-only" id={`giveaway-image-${giveaway.id}`}>
             Game thumbnail for {giveaway.title}
