@@ -75,7 +75,7 @@ export default function GameItem({ giveaway }: GameItemProps) {
 
   return (
     <article
-      className="border border-[var(--color-secondary-color)] rounded-lg overflow-hidden bg-[var(--color-primary-color)] flex flex-col shadow-sm hover:shadow-lg transition-all duration-300 hover:border-[var(--color-accent-color)] group hover:-translate-y-1"
+      className="border border-secondary rounded-lg overflow-hidden bg-primary flex flex-col shadow-sm hover:shadow-lg transition-all duration-300 hover:border-accent group hover:-translate-y-1"
       role="article"
       aria-labelledby={`giveaway-title-${giveaway.id}`}
     >
@@ -84,7 +84,7 @@ export default function GameItem({ giveaway }: GameItemProps) {
           href={giveaway.open_giveaway_url}
           target="_blank"
           rel="noopener noreferrer"
-          className="block focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-color)] focus:ring-offset-2 rounded-t-lg transition-transform duration-300 group-hover:scale-105"
+          className="block focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 rounded-t-lg transition-transform duration-300 group-hover:scale-105"
           aria-label={`View giveaway for ${giveaway.title} - opens in new tab`}
           aria-describedby={`giveaway-description-${giveaway.id}`}
         >
@@ -113,7 +113,7 @@ export default function GameItem({ giveaway }: GameItemProps) {
         <div className="absolute top-2 left-2 right-2 flex justify-between items-start">
           {timeLeft && (
             <div
-              className="bg-[var(--color-secondary-color)] text-[var(--color-text-color)] text-xs font-bold px-2 py-1 rounded-full shadow-md"
+              className="bg-secondary text-primary text-xs font-bold px-2 py-1 rounded-full shadow-md"
               role="timer"
               aria-label={`Time remaining: ${timeLeft}`}
               aria-live="polite"
@@ -141,14 +141,14 @@ export default function GameItem({ giveaway }: GameItemProps) {
         <header className="mb-3">
           <h2
             id={`giveaway-title-${giveaway.id}`}
-            className="text-lg sm:text-xl font-bold text-[var(--color-accent-color)] line-clamp-2 mb-2 group-hover:text-[var(--color-highlight-color)] transition-colors duration-200"
+            className="text-lg sm:text-xl font-bold text-accent line-clamp-2 mb-2 group-hover:text-muted transition-colors duration-200"
           >
             {giveaway.title}
           </h2>
         </header>
         <p
           id={`giveaway-description-${giveaway.id}`}
-          className="text-sm text-[var(--color-highlight-color)] line-clamp-3 flex-grow mb-4 leading-relaxed"
+          className="text-sm text-muted line-clamp-3 flex-grow mb-4 leading-relaxed"
         >
           {giveaway.description}
         </p>
@@ -160,29 +160,26 @@ export default function GameItem({ giveaway }: GameItemProps) {
           >
             <div className="flex items-center gap-2">
               <span
-                className="text-base sm:text-lg font-bold text-[var(--color-accent-color)] line-through"
+                className="text-base sm:text-lg font-bold text-accent line-through"
                 aria-label={`Original price: ${giveaway.worth}`}
               >
                 {giveaway.worth}
               </span>
               <span
-                className="text-base sm:text-lg font-bold text-[var(--color-accent-color)]"
+                className="text-base sm:text-lg font-bold text-accent"
                 aria-label="Current price: Free"
               >
                 Free
               </span>
             </div>
             <span
-              className="text-sm text-[var(--color-alt-text-color)] bg-[var(--color-background-color)] px-2 py-1 rounded-full self-start"
+              className="text-sm text-secondary bg-background px-2 py-1 rounded-full self-start"
               aria-label={`Giveaway type: ${giveaway.type}`}
             >
               {giveaway.type}
             </span>
           </div>
-          <div
-            className="flex items-center text-sm text-[var(--color-highlight-color)]"
-            role="text"
-          >
+          <div className="flex items-center text-sm text-muted" role="text">
             <FontAwesomeIcon
               icon={faUsers}
               className="mr-2 flex-shrink-0"
@@ -198,7 +195,7 @@ export default function GameItem({ giveaway }: GameItemProps) {
             href={giveaway.open_giveaway_url}
             target="_blank"
             rel="noopener noreferrer"
-            className="block w-full text-center bg-[var(--color-accent-color)] text-[var(--color-primary-color)] font-bold py-3 px-4 rounded-lg hover:bg-[var(--color-highlight-color)] focus:bg-[var(--color-highlight-color)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-color)] focus:ring-offset-2 transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-md hover:shadow-lg"
+            className="block w-full text-center bg-accent text-primary font-bold py-3 px-4 rounded-lg hover:bg-muted focus:bg-muted focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-md hover:shadow-lg"
             aria-label={`Claim giveaway for ${giveaway.title} - opens in new tab`}
             role="button"
           >

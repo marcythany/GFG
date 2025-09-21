@@ -9,7 +9,7 @@ export default function Navigation() {
   return (
     <nav
       aria-label="Breadcrumb navigation"
-      className="bg-[var(--color-secondary-color)] border-b border-[var(--color-secondary-color)]"
+      className="bg-secondary border-b border-secondary"
       role="navigation"
     >
       <div className="container mx-auto px-4 py-3 sm:px-6 lg:px-8">
@@ -30,14 +30,14 @@ export default function Navigation() {
               >
                 {index > 0 && (
                   <ChevronRight
-                    className="h-4 w-4 text-[var(--color-alt-text-color)] mx-2 flex-shrink-0"
+                    className="h-4 w-4 text-muted mx-2 flex-shrink-0"
                     aria-hidden="true"
                     aria-label="Breadcrumb separator"
                   />
                 )}
                 {isLast ? (
                   <span
-                    className="flex items-center text-[var(--color-highlight-color)] font-medium"
+                    className="flex items-center text-accent font-medium"
                     aria-current="page"
                     role="text"
                   >
@@ -52,7 +52,7 @@ export default function Navigation() {
                 ) : (
                   <Link
                     href={crumb.href}
-                    className="flex items-center text-[var(--color-alt-text-color)] hover:text-[var(--color-highlight-color)] transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--color-accent-color)] focus:ring-offset-2 rounded px-1 py-0.5 group"
+                    className="flex items-center text-muted hover:text-accent transition-colors focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 rounded px-1 py-0.5 group"
                     aria-label={`Navigate to ${crumb.name}`}
                   >
                     <Icon

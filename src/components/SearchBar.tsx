@@ -44,7 +44,7 @@ export default function SearchBar({
       <form onSubmit={handleSubmit} role="search" aria-label="Search giveaways">
         <div className="relative">
           <Search
-            className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-[var(--color-alt-text-color)]"
+            className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-secondary"
             aria-hidden="true"
           />
           <input
@@ -58,9 +58,9 @@ export default function SearchBar({
             placeholder={placeholder}
             className={`
               w-full pl-10 pr-10 py-3 rounded-lg border transition-all duration-200
-              bg-[var(--color-primary-color)] border-[var(--color-secondary-color)] text-[var(--color-highlight-color)]
-              placeholder-[var(--color-alt-text-color)] focus:border-[var(--color-accent-color)] focus:ring-2
-              focus:ring-[var(--color-accent-color)] focus:ring-opacity-20 focus:outline-none
+              bg-primary border-secondary text-muted
+              placeholder-secondary focus:border-accent focus:ring-2
+              focus:ring-accent focus:ring-opacity-20 focus:outline-none
               ${isFocused ? 'shadow-lg' : 'shadow-sm'}
             `}
             aria-describedby="search-help"
@@ -69,13 +69,10 @@ export default function SearchBar({
             <button
               type="button"
               onClick={handleClear}
-              className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-[var(--color-secondary-color)] transition-colors duration-200"
+              className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-secondary transition-colors duration-200"
               aria-label="Clear search"
             >
-              <X
-                className="h-4 w-4 text-[var(--color-alt-text-color)]"
-                aria-hidden="true"
-              />
+              <X className="h-4 w-4 text-secondary" aria-hidden="true" />
             </button>
           )}
         </div>

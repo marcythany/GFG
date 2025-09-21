@@ -112,12 +112,10 @@ export default function GameList() {
         aria-label="Loading game giveaways"
       >
         <div
-          className="animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--color-accent-color)] mb-4"
+          className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent mb-4"
           aria-hidden="true"
         ></div>
-        <p className="text-[var(--color-alt-text-color)] text-sm">
-          Loading giveaways...
-        </p>
+        <p className="text-muted text-sm">Loading giveaways...</p>
       </div>
     );
   }
@@ -125,10 +123,8 @@ export default function GameList() {
   if (error) {
     return (
       <div className="text-center py-8" role="alert" aria-live="assertive">
-        <p className="text-[var(--color-danger-color)] font-medium">
-          Error: {error}
-        </p>
-        <p className="text-[var(--color-alt-text-color)] text-sm mt-2">
+        <p className="text-destructive font-medium">Error: {error}</p>
+        <p className="text-muted text-sm mt-2">
           Please try again later or refresh the page.
         </p>
       </div>
@@ -162,7 +158,7 @@ export default function GameList() {
           aria-label="Loading game giveaways"
         >
           <div
-            className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent-color"
+            className="animate-spin rounded-full h-8 w-8 border-b-2 border-accent"
             aria-hidden="true"
           ></div>
           <span className="sr-only">Loading giveaways...</span>
@@ -171,8 +167,8 @@ export default function GameList() {
 
       {error && (
         <div className="text-center py-8" role="alert" aria-live="assertive">
-          <p className="text-danger-color font-medium">Error: {error}</p>
-          <p className="text-alt-text-color text-sm mt-2">
+          <p className="text-destructive font-medium">Error: {error}</p>
+          <p className="text-muted text-sm mt-2">
             Please try again later or refresh the page.
           </p>
         </div>
@@ -181,7 +177,7 @@ export default function GameList() {
       {!loading && !error && giveaways.length > 0 && (
         <>
           <div className="mb-4 text-center" aria-live="polite">
-            <p className="text-highlight-color text-sm" id="results-count">
+            <p className="text-accent text-sm" id="results-count">
               Showing {paginatedGiveaways.length} of {giveaways.length}{' '}
               giveaways
             </p>
@@ -214,10 +210,10 @@ export default function GameList() {
           <div className="text-6xl mb-4" aria-hidden="true">
             🎮
           </div>
-          <h2 className="text-xl font-semibold text-[var(--color-highlight-color)] mb-2">
+          <h2 className="text-xl font-semibold text-accent mb-2">
             No giveaways found
           </h2>
-          <p className="text-[var(--color-alt-text-color)]">
+          <p className="text-muted">
             No giveaways match your current filters. Try adjusting your search
             criteria.
           </p>
