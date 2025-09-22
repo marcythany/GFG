@@ -1,16 +1,6 @@
 'use client';
 
 import { Giveaway } from '@/types/giveaway';
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import {
-  faAndroid,
-  faApple,
-  faItchIo,
-  faPlaystation,
-  faSteam,
-  faWindows,
-  faXbox,
-} from '@fortawesome/free-brands-svg-icons';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from 'framer-motion';
@@ -46,19 +36,6 @@ function calculateTimeLeft(endDate: string): string | null {
     return `${hours} hour${hours > 1 ? 's' : ''} left`;
   }
 }
-
-const platformIcons: { [key: string]: IconDefinition } = {
-  PC: faWindows,
-  Steam: faSteam,
-  'Playstation 5': faPlaystation,
-  'Xbox Series X|S': faXbox,
-  'Playstation 4': faPlaystation,
-  'Xbox One': faXbox,
-  Android: faAndroid,
-  iOS: faApple,
-  'Itch.io': faItchIo,
-  'Xbox 360': faXbox,
-};
 
 export default React.memo(function GameCard({
   giveaway,
@@ -140,14 +117,11 @@ export default React.memo(function GameCard({
             role="list"
             aria-label="Available platforms"
           >
-            {giveaway.platforms.split(', ').map((platform) => {
-              const icon = platformIcons[platform.trim()];
-              return icon ? (
-                <div key={platform} role="listitem" className="sr-only">
-                  Available on {platform}
-                </div>
-              ) : null;
-            })}
+            {giveaway.platforms.split(', ').map((platform) => (
+              <div key={platform} role="listitem" className="sr-only">
+                Available on {platform}
+              </div>
+            ))}
           </div>
         </div>
       </div>

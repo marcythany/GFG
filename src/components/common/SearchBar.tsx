@@ -69,10 +69,11 @@ export default function SearchBar({
       className={`mx-auto mb-8 ${className}`}
       role="search"
       onSubmit={handleSubmit}
+      aria-labelledby="search-help"
     >
-      <div className="relative">
+      <div className="flex items-center gap-3 p-2 border border-border rounded-md bg-background transition-all duration-200 focus-within:ring-2 focus-within:ring-[var(--color-focus)]">
         <Search
-          className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-primary"
+          className="h-5 w-5 text-text flex-shrink-0"
           aria-hidden="true"
         />
         <Input
@@ -83,14 +84,14 @@ export default function SearchBar({
           onChange={handleChange}
           onKeyDown={handleKeyDown}
           placeholder={placeholder}
-          className="pl-10 pr-10 text-primary placeholder:text-primary transition-all duration-200"
+          className="flex-1 border-none bg-transparent text-text placeholder:text-text focus:outline-none focus-visible:ring-0"
           aria-describedby="search-help"
         />
         {query && (
           <button
             type="button"
             onClick={handleClear}
-            className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full text-primary hover:bg-secondary transition-colors duration-200"
+            className="p-1 rounded-full text-text hover:bg-secondary transition-colors duration-200 flex-shrink-0"
             aria-label="Clear search"
           >
             <X className="h-4 w-4" aria-hidden="true" />

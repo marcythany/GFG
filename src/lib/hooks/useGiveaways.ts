@@ -11,7 +11,7 @@ import {
   useTransition,
 } from 'react';
 
-const GAMES_PER_PAGE = 12;
+export const GAMES_PER_PAGE = 12;
 
 export function useGiveaways(initialFilters: GiveawayFilters = {}) {
   const [giveaways, setGiveaways] = useState<Giveaway[]>([]);

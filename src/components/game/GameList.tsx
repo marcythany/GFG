@@ -1,6 +1,6 @@
 'use client';
 
-import { useGiveaways } from '@/lib/hooks/useGiveaways';
+import { useGiveaways, GAMES_PER_PAGE } from '@/lib/hooks/useGiveaways';
 import { PlatformOption, SortOption } from '@/types/giveaway';
 import { motion } from 'framer-motion';
 import { useEffect } from 'react';
@@ -11,8 +11,6 @@ import GameResults from './GameResults';
 interface GameListProps {
   searchQuery?: string;
 }
-
-const GAMES_PER_PAGE = 12;
 
 export default function GameList({ searchQuery = '' }: GameListProps = {}) {
   const {
@@ -83,8 +81,7 @@ export default function GameList({ searchQuery = '' }: GameListProps = {}) {
 
   // Show empty state if there are no giveaways after filtering,
   // or if the initial fetch returns nothing.
-  const showEmptyState =
-    !loading && !error && filteredGiveaways.length === 0;
+  const showEmptyState = !loading && !error && filteredGiveaways.length === 0;
 
   return (
     <motion.section

@@ -36,14 +36,6 @@ export default function Breadcrumb({
   selectedPlatform,
   onPlatformChange,
 }: BreadcrumbProps) {
-  // Get the display name for the selected platform
-  const getSelectedPlatformName = (platformSlug: string): string => {
-    const entry = Object.entries(platformApiMap).find(
-      ([, slug]) => slug === platformSlug,
-    );
-    return entry ? entry[0] : 'Show all';
-  };
-
   return (
     <nav aria-label="Platform navigation" className="relative mb-8">
       {/* Modern header with icon */}
@@ -58,7 +50,13 @@ export default function Breadcrumb({
             Gaming Platforms
           </h3>
         </div>
-        <div className="flex-1 h-px bg-gradient-to-r from-accent/30 to-transparent"></div>
+        <div
+          className="flex-1 h-px"
+          style={{
+            background:
+              'linear-gradient(to right, color-mix(in srgb, var(--color-accent), transparent 70%), transparent)',
+          }}
+        ></div>
       </div>
 
       {/* Modern platform selector grid */}
@@ -87,10 +85,18 @@ export default function Breadcrumb({
                 focus:scale-105 focus:shadow-lg focus:shadow-accent/20
                 ${
                   isSelected
-                    ? 'bg-gradient-to-br from-accent to-accent/80 text-text border-accent shadow-lg shadow-accent/30'
+                    ? 'text-text border-accent shadow-lg shadow-accent/30'
                     : 'bg-secondary/50 text-accent border-secondary hover:border-accent/50 hover:bg-secondary/70 focus:border-accent/50 focus:bg-secondary/70'
                 }
               `}
+              style={
+                isSelected
+                  ? {
+                      background:
+                        'linear-gradient(to bottom right, var(--color-accent), color-mix(in srgb, var(--color-accent), transparent 20%))',
+                    }
+                  : undefined
+              }
               aria-current={isSelected ? 'page' : undefined}
               aria-label={`Filter by ${displayName}`}
             >
@@ -128,8 +134,7 @@ export default function Breadcrumb({
               {/* Hover effect overlay - WCAG AAA compliant */}
               <div
                 className={`
-                  absolute inset-0 bg-gradient-to-br from-accent/25 to-transparent
-                  overlay-transition
+                  absolute inset-0 overlay-transition
                   ${
                     isSelected
                       ? 'opacity-40'
@@ -140,24 +145,13 @@ export default function Breadcrumb({
                 style={{
                   // Ensure minimum contrast ratio for WCAG AAA
                   background: isSelected
-                    ? 'linear-gradient(to bottom right, rgba(200, 213, 134, 0.4), transparent)'
-                    : 'linear-gradient(to bottom right, rgba(200, 213, 134, 0.25), transparent)',
+                    ? 'linear-gradient(to bottom right, color-mix(in srgb, var(--color-accent), transparent 60%), transparent)'
+                    : 'linear-gradient(to bottom right, color-mix(in srgb, var(--color-accent), transparent 75%), transparent)',
                 }}
               ></div>
             </button>
           );
         })}
-      </div>
-
-      {/* Selected platform indicator */}
-      <div className="mt-4 flex items-center gap-2 text-sm text-muted">
-        <div className="w-2 h-2 bg-accent rounded-full animate-pulse"></div>
-        <span>
-          Currently showing:{' '}
-          <span className="font-medium text-accent">
-            {getSelectedPlatformName(selectedPlatform)}
-          </span>
-        </span>
       </div>
     </nav>
   );

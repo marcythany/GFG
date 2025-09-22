@@ -176,13 +176,17 @@ export function Select({
         role="combobox"
         className={cn(
           'flex items-center justify-between w-full px-4 py-3 rounded-xl font-medium text-sm',
-          'bg-gradient-to-r from-primary to-secondary/50 border-2 border-secondary',
+          'border-2 border-secondary',
           'hover:border-accent/50 focus:border-accent focus:ring-2 focus:ring-accent/20 focus:outline-none',
           'transition-all duration-300 cursor-pointer hover:shadow-lg hover:shadow-accent/10',
           'min-w-[180px]',
           disabled && 'opacity-50 cursor-not-allowed',
           isOpen && 'border-accent',
         )}
+        style={{
+          background:
+            'linear-gradient(to right, var(--color-primary), color-mix(in srgb, var(--color-secondary), transparent 50%))',
+        }}
       >
         <span className="flex items-center gap-2 truncate">
           {selectedOption?.icon && (
