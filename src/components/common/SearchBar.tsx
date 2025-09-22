@@ -52,11 +52,24 @@ export default function SearchBar({
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Escape') {
       handleClear();
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (onSearch) {
+        onSearch(query);
+      }
     }
   };
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+  };
+
   return (
-    <form className={`mx-auto mb-8 ${className}`} role="search">
+    <form
+      className={`mx-auto mb-8 ${className}`}
+      role="search"
+      onSubmit={handleSubmit}
+    >
       <div className="relative">
         <Search
           className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-primary"
