@@ -37,7 +37,7 @@ export default function Breadcrumb({
   onPlatformChange,
 }: BreadcrumbProps) {
   return (
-    <nav aria-label="Platform navigation" className="relative mb-4 md:mb-6">
+    <nav aria-label="Platform navigation" className="relative mb-2 md:mb-4">
       <div className="flex items-center gap-3 mb-2 md:mb-3">
         <div className="flex items-center gap-2">
           <FontAwesomeIcon
@@ -67,7 +67,7 @@ export default function Breadcrumb({
               key={slug}
               onClick={() => onPlatformChange(slug)}
               className={`
-                group relative overflow-hidden w-36 h-16 md:h-20
+                group relative overflow-hidden h-16 md:h-20
                 flex flex-col items-center gap-1 md:gap-2
                 p-2 md:p-3 rounded-xl border-2 transition-all duration-300
                 hover:scale-105 hover:shadow-lg hover:shadow-accent/20

@@ -41,7 +41,7 @@ export default function Dropdown({
   };
 
   return (
-    <div className="flex flex-col sm:flex-row gap-4">
+    <div className="flex flex-col sm:flex-row gap-2">
       {/* Sort Options */}
       <div className="relative">
         <Select
