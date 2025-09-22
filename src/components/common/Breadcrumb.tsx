@@ -37,16 +37,15 @@ export default function Breadcrumb({
   onPlatformChange,
 }: BreadcrumbProps) {
   return (
-    <nav aria-label="Platform navigation" className="relative mb-8">
-      {/* Modern header with icon */}
-      <div className="flex items-center gap-3 mb-4">
+    <nav aria-label="Platform navigation" className="relative mb-4 md:mb-6">
+      <div className="flex items-center gap-3 mb-2 md:mb-3">
         <div className="flex items-center gap-2">
           <FontAwesomeIcon
             icon={faGamepad}
-            className="w-5 h-5 text-accent"
+            className="w-4 h-4 md:w-5 md:h-5 text-accent"
             aria-hidden="true"
           />
-          <h3 className="text-lg font-semibold text-accent">
+          <h3 className="text-base md:text-lg font-semibold text-accent">
             Gaming Platforms
           </h3>
         </div>
@@ -59,33 +58,24 @@ export default function Breadcrumb({
         ></div>
       </div>
 
-      {/* Modern platform selector grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-1 md:gap-2">
         {Object.entries(platformApiMap).map(([displayName, slug]) => {
           const isSelected = selectedPlatform === slug;
-          const icon = (
-            <Image
-              platform={displayName}
-              alt={displayName}
-              className="w-6 h-6"
-              color={isSelected ? 'text-text' : 'text-accent'}
-            />
-          );
 
           return (
             <button
               key={slug}
               onClick={() => onPlatformChange(slug)}
               className={`
-                group relative overflow-hidden
-                flex flex-col items-center gap-2
-                p-4 rounded-xl border-2 transition-all duration-300
+                group relative overflow-hidden w-36 h-16 md:h-20
+                flex flex-col items-center gap-1 md:gap-2
+                p-2 md:p-3 rounded-xl border-2 transition-all duration-300
                 hover:scale-105 hover:shadow-lg hover:shadow-accent/20
                 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2
                 focus:scale-105 focus:shadow-lg focus:shadow-accent/20
                 ${
                   isSelected
-                    ? 'text-text border-accent shadow-lg shadow-accent/30'
+                    ? 'text-primary border-accent shadow-lg shadow-accent/30'
                     : 'bg-secondary/50 text-accent border-secondary hover:border-accent/50 hover:bg-secondary/70 focus:border-accent/50 focus:bg-secondary/70'
                 }
               `}
@@ -107,25 +97,30 @@ export default function Breadcrumb({
                   ${isSelected ? 'scale-110' : 'group-hover:scale-110'}
                 `}
               >
-                {icon}
+                <Image
+                  platform={displayName}
+                  alt={displayName}
+                  className="w-5 h-5 md:w-6 md:h-6"
+                  color={isSelected ? 'text-primary' : 'text-accent'}
+                />
               </div>
 
               {/* Platform name */}
               <span
                 className={`
-                 relative z-10 text-sm font-medium text-center transition-all duration-300
-                 ${isSelected ? 'text-text' : 'text-accent group-hover:text-accent/90'}
-               `}
+                  relative z-10 text-xs md:text-sm font-medium text-center transition-all duration-300
+                  ${isSelected ? 'text-primary' : 'text-accent group-hover:text-accent/90'}
+                `}
               >
                 {displayName}
               </span>
 
               {/* Active indicator */}
               {isSelected && (
-                <div className="absolute top-2 right-2 z-20">
+                <div className="absolute top-1 right-1 md:top-2 md:right-2 z-20">
                   <FontAwesomeIcon
                     icon={faStar}
-                    className="w-4 h-4 text-text animate-pulse"
+                    className="w-3 h-3 md:w-4 md:h-4 text-primary animate-pulse"
                     aria-hidden="true"
                   />
                 </div>

@@ -47,6 +47,7 @@ export default React.memo(function GameCard({
   useEffect(() => {
     setTimeLeft(calculateTimeLeft(endDate));
   }, [endDate]);
+
   return (
     <motion.article
       initial={{ opacity: 0, y: 20 }}
@@ -186,12 +187,13 @@ export default React.memo(function GameCard({
             href={giveaway.open_giveaway_url}
             target="_blank"
             rel="noopener noreferrer"
-            className="block w-full text-center bg-accent text-primary font-bold py-3 px-4 rounded-lg hover:bg-muted focus:bg-muted focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 shadow-md hover:shadow-lg"
+            className="block w-full text-center bg-accent text-primary font-bold py-3 px-4 rounded-lg shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 transition-all duration-200"
             aria-label={`Claim giveaway for ${giveaway.title} - opens in new tab`}
             role="button"
             whileHover={{
               scale: 1.05,
               boxShadow: '0 10px 25px rgba(0,0,0,0.2)',
+              backgroundColor: 'var(--color-muted)',
             }}
             whileTap={{ scale: 0.95 }}
             transition={{ duration: 0.2 }}

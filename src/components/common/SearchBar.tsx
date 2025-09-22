@@ -1,7 +1,7 @@
 'use client';
 
 import { Input } from '@/components/ui/input';
-import { Search, X } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { useCallback, useRef, useState } from 'react';
 
 interface SearchBarProps {
@@ -87,16 +87,6 @@ export default function SearchBar({
           className="flex-1 border-none bg-transparent text-text placeholder:text-text focus:outline-none focus-visible:ring-0"
           aria-describedby="search-help"
         />
-        {query && (
-          <button
-            type="button"
-            onClick={handleClear}
-            className="p-1 rounded-full text-text hover:bg-secondary transition-colors duration-200 flex-shrink-0"
-            aria-label="Clear search"
-          >
-            <X className="h-4 w-4" aria-hidden="true" />
-          </button>
-        )}
       </div>
       <div id="search-help" className="sr-only">
         Search through available game giveaways. Press Escape to clear.
