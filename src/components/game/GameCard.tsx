@@ -15,12 +15,36 @@ import { faUsers } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface GameCardProps {
   giveaway: Giveaway;
-  timeLeft: string | null;
+  endDate: string;
   index?: number;
+}
+
+function calculateTimeLeft(endDate: string): string | null {
+  if (!endDate || endDate === 'N/A') {
+    return null;
+  }
+  const endDateTime = new Date(endDate).getTime();
+  const now = new Date().getTime();
+  const timeLeft = endDateTime - now;
+
+  if (isNaN(timeLeft) || timeLeft <= 0) {
+    return null;
+  }
+
+  const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+  const hours = Math.floor(
+    (timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+  );
+
+  if (days > 0) {
+    return `${days} day${days > 1 ? 's' : ''} left`;
+  } else {
+    return `${hours} hour${hours > 1 ? 's' : ''} left`;
+  }
 }
 
 const platformIcons: { [key: string]: IconDefinition } = {
@@ -38,9 +62,14 @@ const platformIcons: { [key: string]: IconDefinition } = {
 
 export default React.memo(function GameCard({
   giveaway,
-  timeLeft,
+  endDate,
   index = 0,
 }: GameCardProps) {
+  const [timeLeft, setTimeLeft] = useState<string | null>(null);
+
+  useEffect(() => {
+    setTimeLeft(calculateTimeLeft(endDate));
+  }, [endDate]);
   return (
     <motion.article
       initial={{ opacity: 0, y: 20 }}
