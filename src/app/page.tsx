@@ -40,7 +40,14 @@ export default async function Home({ searchParams }: HomeProps) {
   };
 
   // Fetch all giveaways based on platform/sort filters
-  const allGiveaways = await fetchGiveaways(filters);
+  let allGiveaways: Giveaway[] = [];
+  try {
+    allGiveaways = await fetchGiveaways(filters);
+  } catch (error) {
+    console.error('Failed to fetch giveaways during SSR:', error);
+    // Continue with empty array to prevent build failure
+    allGiveaways = [];
+  }
 
   // Apply search query filtering on the server
   const searchQuery = params.search || '';
