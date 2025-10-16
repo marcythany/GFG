@@ -105,16 +105,19 @@ export default async function Home({ searchParams }: HomeProps) {
             name: 'GFG - Game Freebie Grabber',
             description:
               'Discover the latest free games and giveaways from platforms like Epic Games, Steam, GOG, and more.',
-            url: 'https://your-domain.com',
+            url: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
             potentialAction: {
               '@type': 'SearchAction',
-              target: 'https://your-domain.com/search?q={search_term_string}',
+              target: {
+                '@type': 'EntryPoint',
+                urlTemplate: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}?search={search_term_string}`,
+              },
               'query-input': 'required name=search_term_string',
             },
             publisher: {
               '@type': 'Organization',
               name: 'GFG',
-              url: 'https://your-domain.com',
+              url: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
             },
           }),
         }}
@@ -127,8 +130,8 @@ export default async function Home({ searchParams }: HomeProps) {
             '@context': 'https://schema.org',
             '@type': 'Organization',
             name: 'GFG - Game Freebie Grabber',
-            url: 'https://your-domain.com',
-            logo: 'https://your-domain.com/logo.png',
+            url: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+            logo: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/logo.png`,
             description:
               'Your ultimate destination for free game giveaways and gaming deals',
             founder: {
