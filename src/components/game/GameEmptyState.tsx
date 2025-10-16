@@ -7,9 +7,7 @@ interface GameEmptyStateProps {
   onResetFilters: () => void;
 }
 
-export default function GameEmptyState({
-  onResetFilters,
-}: GameEmptyStateProps) {
+export default function GameEmptyState({}: GameEmptyStateProps) {
   const searchParams = useSearchParams();
   const platform = searchParams.get('platform');
   const searchQuery = searchParams.get('search');
@@ -45,16 +43,21 @@ export default function GameEmptyState({
       'There are currently no active giveaways. Please check back later!';
   }
 
+  const handleResetFilters = () => {
+    // Force a full page reload to reset all state
+    window.location.href = '/';
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5 }}
-      className="flex items-center justify-center min-h-[60vh] px-6"
+      className="flex items-center justify-center min-h-[60vh] px-4 sm:px-6"
       role="status"
       aria-live="polite"
     >
-      <div className="w-full max-w-md text-center">
+      <div className="w-full max-w-2xl text-center">
         <motion.div
           animate={{
             rotate: [0, 10, -10, 0],
@@ -65,20 +68,24 @@ export default function GameEmptyState({
             repeat: Infinity,
             repeatDelay: 3,
           }}
-          className="relative mb-6"
+          className="relative mb-8"
         >
-          <div className="text-8xl mb-4" aria-hidden="true">
+          <div className="text-7xl sm:text-8xl md:text-9xl mb-4" aria-hidden="true">
             🎮
           </div>
         </motion.div>
-        <h2 className="text-2xl font-semibold text-accent mb-3">{title}</h2>
-        <p className="text-muted mb-6 text-base leading-relaxed">{message}</p>
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-accent mb-4">
+          {title}
+        </h2>
+        <p className="text-muted mb-8 text-base sm:text-lg leading-relaxed max-w-xl mx-auto">
+          {message}
+        </p>
 
         {hasFilters && (
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={onResetFilters}
+            onClick={handleResetFilters}
             className="px-6 py-3 text-primary rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl font-medium"
             style={{
               background:
@@ -99,10 +106,10 @@ export default function GameEmptyState({
         )}
 
         {!hasFilters && (
-          <p className="text-sm text-muted mt-4">
-            💡 Tip: New giveaways are added regularly. Bookmark this page and
-            check back soon!
-          </p>
+          <div className="text-sm sm:text-base text-muted mt-6 space-y-2">
+            <p>💡 Tip: New giveaways are added regularly.</p>
+            <p>Bookmark this page and check back soon!</p>
+          </div>
         )}
       </div>
     </motion.div>

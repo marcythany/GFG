@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion';
 import { useEffect } from 'react';
-import Link from 'next/link';
 
 export default function Error({
   error,
@@ -16,13 +15,18 @@ export default function Error({
     console.error('Application error:', error);
   }, [error]);
 
+  const handleGoHome = () => {
+    // Force a full page reload to reset all state
+    window.location.href = '/';
+  };
+
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center px-4">
+    <div className="min-h-screen bg-background flex items-center justify-center px-4 sm:px-6">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="text-center max-w-2xl"
+        className="text-center max-w-3xl w-full"
       >
         <motion.div
           animate={{
@@ -36,25 +40,25 @@ export default function Error({
           }}
           className="mb-8"
         >
-          <div className="text-9xl mb-4" aria-hidden="true">
+          <div className="text-8xl sm:text-9xl mb-4" aria-hidden="true">
             ⚠️
           </div>
         </motion.div>
 
-        <h1 className="text-4xl font-bold text-accent mb-4">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-accent mb-4">
           Oops! Something went wrong
         </h1>
-        <p className="text-muted text-lg mb-2 leading-relaxed">
+        <p className="text-muted text-base sm:text-lg mb-2 leading-relaxed max-w-2xl mx-auto">
           We encountered an unexpected error while loading this page.
         </p>
-        <p className="text-muted text-sm mb-8">
+        <p className="text-muted text-sm sm:text-base mb-8">
           Don&apos;t worry, our team has been notified and we&apos;re working on
           it!
         </p>
 
         {error.message && (
-          <div className="mb-8 p-4 bg-card border border-border rounded-lg text-left">
-            <p className="text-xs text-muted font-mono break-all">
+          <div className="mb-8 p-4 bg-card border border-border rounded-lg text-left max-w-2xl mx-auto">
+            <p className="text-xs sm:text-sm text-muted font-mono break-all">
               {error.message}
             </p>
           </div>
@@ -82,20 +86,19 @@ export default function Error({
             Try Again
           </motion.button>
 
-          <Link href="/">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-8 py-3 bg-card text-foreground rounded-xl transition-all duration-300 shadow-md hover:shadow-lg font-medium border border-border min-w-[200px]"
-            >
-              Go to Homepage
-            </motion.button>
-          </Link>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={handleGoHome}
+            className="px-8 py-3 bg-card text-foreground rounded-xl transition-all duration-300 shadow-md hover:shadow-lg font-medium border border-border min-w-[200px]"
+          >
+            Go to Homepage
+          </motion.button>
         </div>
 
-        <div className="mt-12 text-sm text-muted">
-          <p>💡 If this problem persists, try:</p>
-          <ul className="mt-2 space-y-1">
+        <div className="mt-12 text-sm sm:text-base text-muted">
+          <p className="mb-3">💡 If this problem persists, try:</p>
+          <ul className="space-y-2 text-left max-w-md mx-auto">
             <li>• Refreshing the page</li>
             <li>• Clearing your browser cache</li>
             <li>• Checking your internet connection</li>
