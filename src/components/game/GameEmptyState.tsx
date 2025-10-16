@@ -50,31 +50,32 @@ export default function GameEmptyState({}: GameEmptyStateProps) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
+      initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.5 }}
-      className="flex items-center justify-center min-h-[60vh] px-4 sm:px-6"
+      transition={{ duration: 0.45 }}
+      className="flex items-center justify-center min-h-[60vh] px-4 py-12 sm:px-6 sm:py-16"
       role="status"
       aria-live="polite"
     >
       <div className="w-full max-w-2xl text-center">
         <motion.div
           animate={{
-            rotate: [0, 10, -10, 0],
-            scale: [1, 1.1, 1],
+            rotate: [0, 8, -8, 0],
+            scale: [1, 1.06, 1],
           }}
           transition={{
-            duration: 2,
+            duration: 2.2,
             repeat: Infinity,
-            repeatDelay: 3,
+            repeatDelay: 3.5,
+            ease: 'easeInOut',
           }}
-          className="relative mb-8"
+          className="relative mb-8 flex justify-center"
         >
-          <div className="text-7xl sm:text-8xl md:text-9xl mb-4" aria-hidden="true">
+          <div className="text-6xl sm:text-7xl md:text-8xl mb-6" aria-hidden="true">
             🎮
           </div>
         </motion.div>
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-accent mb-4">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-accent mb-5">
           {title}
         </h2>
         <p className="text-muted mb-8 text-base sm:text-lg leading-relaxed max-w-xl mx-auto">
@@ -83,10 +84,10 @@ export default function GameEmptyState({}: GameEmptyStateProps) {
 
         {hasFilters && (
           <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.98 }}
             onClick={handleResetFilters}
-            className="px-6 py-3 text-primary rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl font-medium"
+            className="px-6 py-3.5 text-primary rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl font-medium min-w-[200px]"
             style={{
               background:
                 'linear-gradient(to right, var(--color-accent), color-mix(in srgb, var(--color-accent), transparent 20%))',
@@ -106,7 +107,7 @@ export default function GameEmptyState({}: GameEmptyStateProps) {
         )}
 
         {!hasFilters && (
-          <div className="text-sm sm:text-base text-muted mt-6 space-y-2">
+          <div className="text-sm sm:text-base text-muted mt-8 space-y-2">
             <p>💡 Tip: New giveaways are added regularly.</p>
             <p>Bookmark this page and check back soon!</p>
           </div>

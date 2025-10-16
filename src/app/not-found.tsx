@@ -14,7 +14,7 @@ export default function NotFound() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center px-4 sm:px-6">
+    <div className="min-h-screen bg-background flex items-center justify-center px-4 sm:px-6 py-12 sm:py-16">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -31,14 +31,14 @@ export default function NotFound() {
             repeat: Infinity,
             repeatDelay: 2,
           }}
-          className="mb-8"
+          className="mb-8 flex justify-center"
         >
-          <div className="text-8xl sm:text-9xl mb-4" aria-hidden="true">
+          <div className="text-7xl sm:text-8xl md:text-9xl mb-6" aria-hidden="true">
             🎮
           </div>
         </motion.div>
 
-        <h1 className="text-5xl sm:text-6xl md:text-7xl font-bold text-accent mb-4">
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-accent mb-5">
           404
         </h1>
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-foreground mb-6">
@@ -54,7 +54,7 @@ export default function NotFound() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={handleGoHome}
-            className="px-8 py-3 text-primary rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl font-medium min-w-[200px]"
+            className="px-8 py-3.5 text-primary rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl font-medium min-w-[200px]"
             style={{
               background:
                 'linear-gradient(to right, var(--color-accent), color-mix(in srgb, var(--color-accent), transparent 20%))',
@@ -75,7 +75,7 @@ export default function NotFound() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={handleBrowseAll}
-            className="px-8 py-3 bg-card text-foreground rounded-xl transition-all duration-300 shadow-md hover:shadow-lg font-medium border border-border min-w-[200px]"
+            className="px-8 py-3.5 bg-card text-foreground rounded-xl transition-all duration-300 shadow-md hover:shadow-lg font-medium border border-border min-w-[200px]"
           >
             Browse All Giveaways
           </motion.button>
